@@ -1,0 +1,391 @@
+<h1 class="title">
+    <img src="assets/images2/excusa.png" width="100 px" height="100px" class="text-right">
+    Historial Asistencia-Estudiante        </h1>
+
+<br>
+
+<div class="form-group col-md-12">
+    <label for="grados">Código</label>
+    <input id="codigo" class="form-control"
+        value="{{codigo_estudiante}}" readonly>
+</div>
+
+<div class="form-group col-md-12">
+    <input type="radio" name="dia" (change)="tipo(1,$event.target.checked)"> Búsqueda por día <br>
+    <input type="radio" name="dia" (change)="tipo(2,$event.target.checked)"> Búsqueda por rango de fechas
+</div>
+
+<div class="form-group col-md-6" *ngIf="tipo_consulta==1">
+    <label class="">Fecha Consulta</label>
+    <input type="date" name="fecha" id="fecha_consulta" class="form-control"
+        (change)="asignar_fecha(1,$event.target.value)">
+</div>
+
+<div class="form-group col-md-6" *ngIf="tipo_consulta==2">
+    <label class="">Fecha Consulta Inicio</label>
+    <input type="date" name="fecha" id="fecha_inicio" class="form-control"
+        (change)="asignar_fecha(2,$event.target.value)">
+</div>
+<div class="form-group col-md-6" *ngIf="tipo_consulta==2">
+    <label class="">Fecha Consulta Fin</label>
+    <input type="date" name="fecha" id="fecha_fin" class="form-control" (change)="asignar_fecha(3,$event.target.value)">
+</div>
+
+<div class="col-md-12 " style="padding-top:3px;">
+</div>
+<div class="col-md-3 pull-right" style="padding-top:3px;" *ngIf="tipo_consulta==2 || tipo_consulta==1">
+    <button class="btn btn-block btn-success pull-right" (click)="consultar();">
+        <span class="spinner-border spinner-border-sm mr-1"></span>
+        Consultar
+    </button>
+</div>
+<div class="col-md-3 pull-right" style="padding-top:3px;" *ngIf="tipo_consulta==2 || tipo_consulta==1">
+
+    <div class="loader" *ngIf="spinner">Loading...</div>
+</div>
+<!--<div class="col-md-3 pull-right" style="padding-top:3px;" >
+    <button  class="btn btn-block btn-primary pull-right red" (click)="DescargarReportePDF();">
+        <span class="spinner-border spinner-border-sm mr-1"></span>
+        Descargar PDF
+    </button>
+</div>-->
+<div class="row">
+    <h3 class="pull-left">Cantidad de registros: {{Cantidad}} </h3>
+</div>
+<div class="row" *ngFor="let semanas of semanas">
+    Semana No.: {{semanas.num_semana}}
+    Fecha-Inicio : {{convFecha_recortar(semanas.fecha_inicio)}}
+    Fecha-Fin: {{convFecha_recortar(semanas.fecha_fin)}}
+</div>
+<div class="portlet-body " *ngIf="pre_primaria">
+    <div id="list" class="table table-bordered table-striped table-condensed flip-content">
+        <tbody>
+            <!--Encabezados de la tabla-->
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Lunes</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Martes</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Miércoles</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Jueves</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px; border-right: solid 2px;">Viernes
+                </th>
+            </tr>
+            <tr>
+                <th style="width: 5%;">Semana</th>
+                <th style="width: 5%;">Clave</th>
+                <th style="width: 10%;">Codigo Alumno</th>
+                <th style="width: 70%;">Alumno Nombre Completo</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+               
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+               
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+            </tr>
+            <tr>
+                <td></td>
+                <td><input (change)="Filtrado_Semana($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td></td>
+                <td><input (change)="Filtrado_Codigo($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td colspan="36"></td>
+            </tr>
+        </tbody>
+        <tbody>
+            <!--CONTENIDO-->
+            <tr *ngFor="let Alumno of ListadoEstudiantes_Filtrado">
+
+
+                <td>{{Alumno.semana}}</td>
+
+                <td>{{Alumno.clave}}</td>
+                <td>{{Alumno.codigo}}</td>
+
+                <td>{{Alumno.nombre}}</td>
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[0].asistencia[0].val}}</td>
+               
+                <td style="border-left: solid 2px;">{{Alumno.periodos[1].asistencia[0].val}}</td>
+                
+
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[2].asistencia[0].val}}</td>
+               
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[3].asistencia[0].val}}</td>
+               
+                <td style="border-left: solid 2px;">{{Alumno.periodos[4].asistencia[0].val}}</td>
+                
+
+            </tr>
+        </tbody>
+
+
+    </div>
+</div>
+<div class="portlet-body " *ngIf="primaria">
+    <div id="list" class="table table-bordered table-striped table-condensed flip-content">
+        <tbody>
+            <!--Encabezados de la tabla-->
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Lunes</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Martes</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Miércoles</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Jueves</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px; border-right: solid 2px;">Viernes
+                </th>
+            </tr>
+            <tr>
+                <th style="width: 5%;">Semana</th>
+                <th style="width: 5%;">Clave</th>
+                <th style="width: 10%;">Codigo Alumno</th>
+                <th style="width: 70%;">Alumno Nombre Completo</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+               
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+              
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+            </tr>
+            <tr>
+                <td></td>
+                <td><input (change)="Filtrado_Semana($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td></td>
+                <td><input (change)="Filtrado_Codigo($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td colspan="41"></td>
+            </tr>
+
+        </tbody>
+        <tbody>
+            <!--CONTENIDO-->
+            <tr *ngFor="let Alumno of ListadoEstudiantes_Filtrado">
+
+
+
+                <td>{{Alumno.semana}}</td>
+
+                <td>{{Alumno.clave}}</td>
+                <td>{{Alumno.codigo}}</td>
+
+                <td>{{Alumno.nombre}}</td>
+
+                <td style="width: 15%; border-left: solid 2px;">{{Alumno.periodos[0].asistencia[0].val}}</td>
+               
+                <td style="width: 15%; border-left: solid 2px;">{{Alumno.periodos[1].asistencia[0].val}}</td>
+                
+                <td style="width: 15%; border-left: solid 2px;">{{Alumno.periodos[2].asistencia[0].val}}</td>
+                
+                <td style="width: 15%; border-left: solid 2px;">{{Alumno.periodos[3].asistencia[0].val}}</td>
+               
+
+                <td style="width: 15%; border-left: solid 2px;">{{Alumno.periodos[4].asistencia[0].val}}</td>
+              
+
+
+            </tr>
+        </tbody>
+
+
+    </div>
+</div>
+<div class="portlet-body " *ngIf="secundaria">
+    <div id="list" class="table table-bordered table-striped table-condensed flip-content">
+        <tbody>
+            <!--Encabezados de la tabla-->
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="3" style="text-align: center; border-left: solid 2px;">Lunes</th>
+                <th colspan="3" style="text-align: center; border-left: solid 2px;">Martes</th>
+                <th colspan="3" style="text-align: center; border-left: solid 2px;">Miércoles</th>
+                <th colspan="3" style="text-align: center; border-left: solid 2px;">Jueves</th>
+                <th colspan="3" style="text-align: center; border-left: solid 2px; border-right: solid 2px;">Viernes
+                </th>
+            </tr>
+            <tr>
+                <th style="width: 5%;">Semana</th>
+                <th style="width: 5%;">Clave</th>
+                <th style="width: 10%;">Codigo Alumno</th>
+                <th style="width: 70%;">Alumno Nombre Completo</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+               
+                <th style="width: 15%;">P9</th>
+                <th style="width: 15%;">P10</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+              
+                <th style="width: 15%;">P9</th>
+                <th style="width: 15%;">P10</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%;">P9</th>
+                <th style="width: 15%;">P10</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                <th style="width: 15%;">P9</th>
+                <th style="width: 15%;">P10</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%;">P9</th>
+                <th style="width: 15%; border-right: solid 2px;">P10</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input (change)="Filtrado_Semana($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td></td>
+                <td><input (change)="Filtrado_Codigo($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td colspan="51"></td>
+            </tr>
+
+        </tbody>
+        <tbody>
+            <!--CONTENIDO-->
+            <tr *ngFor="let Alumno of ListadoEstudiantes_Filtrado">
+
+
+                <td>{{Alumno.semana}}</td>
+
+                <td>{{Alumno.clave}}</td>
+                <td>{{Alumno.codigo}}</td>
+
+                <td>{{Alumno.nombre}}</td>
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[0].asistencia[0].val}}</td>
+              
+                <td>{{Alumno.periodos[0].asistencia[1].val}}</td>
+                <td>{{Alumno.periodos[0].asistencia[2].val}}</td>
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[1].asistencia[0].val}}</td>
+               
+                <td>{{Alumno.periodos[1].asistencia[1].val}}</td>
+                <td>{{Alumno.periodos[1].asistencia[2].val}}</td>
+
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[2].asistencia[0].val}}</td>
+              
+                <td>{{Alumno.periodos[2].asistencia[1].val}}</td>
+                <td>{{Alumno.periodos[2].asistencia[2].val}}</td>
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[3].asistencia[0].val}}</td>
+                
+                <td>{{Alumno.periodos[3].asistencia[1].val}}</td>
+                <td>{{Alumno.periodos[3].asistencia[2].val}}</td>
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[4].asistencia[0].val}}</td>
+               
+                <td>{{Alumno.periodos[4].asistencia[1].val}}</td>
+                <td style="border-right: solid 2px;">{{Alumno.periodos[4].asistencia[2].val}}</td>
+
+
+            </tr>
+        </tbody>
+
+
+    </div>
+</div>
+<div class="portlet-body " *ngIf="nocturna">
+    <div id="list" class="table table-bordered table-striped table-condensed flip-content">
+        <tbody>
+            <!--Encabezados de la tabla-->
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Lunes</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Martes</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Miércoles</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Jueves</th>
+                <th colspan="1" style="text-align: center; border-left: solid 2px;">Viernes</th>
+            </tr>
+            <tr>
+                <th style="width: 5%;">Semana</th>
+                <th style="width: 5%;">Clave</th>
+                <th style="width: 10%;">Codigo Alumno</th>
+                <th style="width: 70%;">Alumno Nombre Completo</th>
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+             
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+             
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+                <th style="width: 15%; border-left: solid 2px;">P1</th>
+                
+            </tr>
+            <tr>
+                <td></td>
+                <td><input (change)="Filtrado_Semana($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td></td>
+                <td><input (change)="Filtrado_Codigo($event.target.value)" type="text" class="form-control"
+                        placeholder="Filtro"></td>
+                <td colspan="31"></td>
+            </tr>
+
+        </tbody>
+        <tbody>
+            <!--CONTENIDO-->
+            <tr *ngFor="let Alumno of ListadoEstudiantes_Filtrado">
+
+
+                <td>{{Alumno.semana}}</td>
+
+                <td>{{Alumno.clave}}</td>
+                <td>{{Alumno.codigo}}</td>
+
+                <td>{{Alumno.nombre}}</td>
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[0].asistencia[0].val}}</td>
+              
+                <td style="border-left: solid 2px;">{{Alumno.periodos[1].asistencia[0].val}}</td>
+                
+                <td style="border-left: solid 2px;">{{Alumno.periodos[2].asistencia[0].val}}</td>
+                
+                <td style="border-left: solid 2px;">{{Alumno.periodos[3].asistencia[0].val}}</td>
+             
+
+                <td style="border-left: solid 2px;">{{Alumno.periodos[4].asistencia[0].val}}</td>
+               
+
+
+            </tr>
+        </tbody>
+
+
+    </div>
+</div>
+<div class="row">
+<strong>Detalle de Asistencia: </strong> <br>
+
+A - Asistencia <br>
+T - LLegadas Tarde <br>
+NR - No hay registro <br>
+I - Inasistencia <br>
+E - Excusa <br>
+EX - Asistencia Exonerada <br>
+</div>
+<ng-template #virtual>
+    <td style="text-align: center;">V</td>
+</ng-template>

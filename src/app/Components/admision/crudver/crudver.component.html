@@ -1,0 +1,299 @@
+<form [formGroup]="form_editar" novalidate id="Editar">
+  <div class="form-control-static">
+    <ol class="breadcrumb">
+      <li> <a href="~/">Alumno </a></li>
+      <li class="active">{{alumno.alumno_primernombre + ' ' + alumno.alumno_primerapellido}}</li>
+    </ol>
+
+
+    <div id="Encabezado" style="display: inline; text-align: center;">
+
+      <h1>FICHA DE ADMISIÓN</h1>
+
+      <img src="{{ImagenResource}}" title="Foto de Perfil" width="200" height="250" style="float: right;" />
+    </div>
+
+
+
+
+
+    <div class="form-group col-md-12">
+      <label>Alumno Código</label>
+      <input type="text" formControlName="Alumno_Codigo" name="Alumno_Codigo" class="form-control" value="">
+    </div>
+
+    <div class="form-group col-md-4">
+      <label>Primer Nombre</label>
+      <input type="text" formControlName="Alumno_PrimerNombre" name="Alumno_PrimerNombre" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_PrimerNombre').hasError('required') || form_editar.get('Alumno_PrimerNombre').hasError('pattern')}"
+        value="{{alumno.alumno_primernombre}}">
+    </div>
+    <div class="form-group col-md-4">
+      <label>Segundo Nombre</label>
+      <input type="text" formControlName="Alumno_SegundoNombre" name="Alumno_SegundoNombre" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_SegundoNombre').hasError('pattern')}"
+        value="{{alumno.alumno_segundonombre}}">
+
+    </div>
+    <div class="form-group col-md-4">
+      <label>Tercer Nombre</label>
+      <input type="text" formControlName="Alumno_TecerNombre" name="Alumno_TecerNombre" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_TecerNombre').hasError('pattern')}"
+        value="{{alumno.alumno_tecernombre}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Primer Apellido</label><br />
+      <input type="text" formControlName="Alumno_PrimerApellido" name="Alumno_PrimerApellido" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_PrimerApellido').hasError('required') || form_editar.get('Alumno_PrimerApellido').hasError('pattern')}"
+        value="{{alumno.alumno_primerapellido}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Segundo Apellido</label>
+      <input type="text" formControlName="Alumno_SegundoApellido" name="Alumno_SegundoApellido" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_SegundoApellido').hasError('required') || form_editar.get('Alumno_SegundoApellido').hasError('pattern')}"
+        value="{{alumno.alumno_segundoapellido}}">
+
+    </div>
+
+    <div class="form-group col-md-6">
+
+      <label for="sexos">Género</label>
+      <select formControlName="sexos" id="sexos" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('sexos').hasError('required')}">
+        <option *ngFor="let sexo of sexos; let i = index" [value]="sexos[i].id_sexo">
+          {{sexos[i].sexo}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Fecha de Nacimiento</label>
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </span>
+
+        <input type="text" [textMask]="{mask: mask_fechanacimiento}" class="form-control" placeholder="dd/mm/yyyy"
+          id="fecha_nacimiento" formControlName="fecha_nacimiento"
+          [ngClass]="{'Incorrecto': form_editar.get('fecha_nacimiento').hasError('required') || form_editar.get('fecha_nacimiento').hasError('pattern')  }"
+          value="{{alumno.fecha_nacimiento}}">
+
+
+      </div>
+
+    </div>
+
+
+
+    <div class="form-group col-md-3">
+      <label>Edad</label>
+      <input type="number" id="edad1" formControlName="edad1" name="edad1" class="form-control" value="{{calc_edad1}"
+        readonly>
+    </div>
+
+    <div class="form-group col-md-5">
+      <label for="nacionalidades">Nacionalidad</label>
+      <select formControlName="nacionalidades" id="nacionalidades" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('nacionalidades').hasError('required')}">
+        <option *ngFor="let nac of nacionalidades; let i = index" [value]="nacionalidades[i].nac_id">
+          {{nacionalidades[i].nacionalidad}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label for="religiones">Religión</label>
+      <select formControlName="religiones" id="religiones" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('religiones').hasError('required')}">
+        <option *ngFor="let nac of religiones; let i = index" [value]="religiones[i].rel_id">
+          {{religiones[i].religion}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-12">
+      <label>Parroquia o Iglesia que asiste?</label>
+      <input type="text" maxlength="200" name="iglesia_asist" id="iglesia_asist" formControlName="iglesia_asist"
+        class="form-control" value="">
+
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Centro Educativo Anterior</label>
+      <input type="text" maxlength="200" name="Centro_proviene" id="Centro_proviene" formControlName="Centro_proviene"
+        class="form-control" value="">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Ubicación del Centro Educativo</label>
+      <input type="text" maxlength="200" name="Centro_ubicacion" id="Centro_ubicacion"
+        formControlName="Centro_ubicacion" class="form-control" value="">
+    </div>
+
+
+
+    <div class="form-group col-md-6">
+      <label for="grados">Grado que cursará</label>
+      <select disabled="grado_disabled" formControlName="grados" id="grados" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('grados').hasError('required')}">
+        <option *ngFor="let nac of grados; let i = index" [value]="grados[i].grad_id">
+          {{grados[i].grad_nombre}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-3">
+      <label>Ha estudiado en el colegio?</label>
+      <select id="Est_antes" name="Est_antes" formControlName="Est_antes" class="form-control">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label>Año</label>
+      <input id="anio" type="number" name="Anio" [readonly]="AnioReadOnly" formControlName="anio" class="form-control"
+        value="@ViewBag.anio" readonly>
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label>Motivo del retiro</label>
+      <input id="mot" type="text" maxlength="200" name="Mot_retiro" class="form-control" formControlName="mot"
+        [readonly]="AnioReadOnly" value="" readonly>
+
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Tiene Hermanos Estudiando aquí?</label>
+      <select id="Alumno_TieneHermanos" name="Alumno_TieneHermanos" formControlName="Alumno_TieneHermanos"
+        class="form-control">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Alguno de los padres es exalumno del colegio?</label>
+      <select id="Alumno_PFExalumno" name="Alumno_PFExalumno" formControlName="Alumno_PFExalumno"
+        class="form-control">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+
+
+
+    <div class="form-group col-md-12" *ngIf="GradosHermanos">
+      <label>Grado</label>
+      <input id="Alumno_Grados" maxlength="500" formControlName="Alumno_Grados" type="text" name="Alumno_Grados"
+        class="form-control" value="{{GradosString}}" readonly>
+    </div>
+
+    <div class="form-group col-md-12">
+      <h2>Datos de los padres</h2>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Nombres del padre</label>
+      <input type="text" name="Alumno_NombrePadre" formControlName="Alumno_NombrePadre" class="form-control"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_NombrePadre').hasError('pattern')}" value="">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Apellidos del padre</label>
+      <input type="text" name="Alumno_ApellidoPadre" formControlName="Alumno_ApellidoPadre" class="form-control"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_ApellidoPadre').hasError('pattern')}" value="">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Profesión</label>
+      <input type="text" name="Alumno_ProfesionPadre" formControlName="Alumno_ProfesionPadre" class="form-control"
+        value="">
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label>Teléfono Padre</label>
+      <input type="text" name="Alumno_TelefonoPadre" formControlName="Alumno_TelefonoPadre"
+        [textMask]="{mask: mask_tel}"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_TelefonoPadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label>Nombres de la madre</label>
+      <input type="text" name="Alumno_NombreMadre" formControlName="Alumno_NombreMadre"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_NombreMadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Apellidos de la madre</label>
+      <input type="text" name="Alumno_ApellidoMadre" formControlName="Alumno_ApellidoMadre"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_ApellidoMadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Profesión</label>
+      <input type="text" name="Alumno_ProfesionMadre" formControlName="Alumno_ProfesionMadre" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Teléfono de la madre</label>
+      <input type="text" name="Alumno_TelefonoMadre" formControlName="Alumno_TelefonoMadre"
+        [textMask]="{mask: mask_tel}"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_TelefonoMadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Dirección Particular</label>
+      <input type="text" name="Alumno_Direc" formControlName="Alumno_Direc" class="form-control"
+        value="@ViewBag.Alumno_Direc">
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="departamentos">Departamento</label>
+      <select formControlName="departamentos" id="departamentos" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('departamentos').hasError('required')}">
+        <option *ngFor="let dep of departamentos; let i = index" [value]="departamentos[i].dep_id">
+          {{departamentos[i].departamento}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-3">
+      <label for="municipios">Municipio</label>
+      <select formControlName="municipios" id="municipios" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('municipios').hasError('required')}">
+        <option *ngFor="let dep of municipios; let i = index" [value]="municipios[i].muni_id">
+          {{municipios[i].municipio}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label>Teléfono Domiciliar</label>
+      <input type="text" id="Alumno_Telefono" name="Alumno_Telefono" formControlName="Alumno_Telefono"
+        [textMask]="{mask: mask_tel}" [ngClass]="{'Incorrecto': form_editar.get('Alumno_Telefono').hasError('pattern')}"
+        class="form-control" value="@ViewBag.Alumno_Telefono">
+    </div>
+
+
+
+
+    <a routerLink="/admision/Index" class="btn btn-danger text-center pull-right">Cancelar</a>
+
+  </div>
+
+
+
+
+  <br><br>
+
+</form>

@@ -1,0 +1,112 @@
+
+
+
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse">
+        <ul class="page-sidebar-menu  page-header-fixed navbar-nav " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+            <li class="sidebar-toggler-wrapper hide">
+                <div class="sidebar-toggler">
+                    <span></span>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="javascript:;" data-toggle="dropdown" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title">Proceso Admisión</span>
+
+                </a>
+                <div class="dropdown-menu contenedor " >
+                    <ul  >
+                   <li class="nav-item" *ngIf="admision"><a routerLink="../admision/Index"  >Admisión</a></li>
+                    </ul>
+                  </div>
+            </li>
+
+
+
+
+            <li class="nav-item dropdown">
+                <a href="javascript:;" data-toggle="dropdown" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title">Proceso Inscripción</span>
+
+                </a>
+                <div class="dropdown-menu contenedor" >
+                     <ul class="">
+                        <li class="sub dropdown-submenu">
+                            <a href="javascript:;" data-toggle="dropdown" class="">
+
+                                Inscripciones
+                            </a>
+                            <div class="dropdown-menu contenedor subsub " >
+                                <ul class="subsub" >
+                           <li class="itemsub" *ngIf="inscribir" ><a class="nav-link" routerLink="../inscripcion/ValidarAdmision">Inscripción Alumno Nuevo</a></li>
+                           <li class="itemsub" *ngIf="reinscribir && pre_inscribir"><a class="nav-link"  routerLink="../inscripcion/PreInscripcion">Pre-Inscripción </a></li>
+                           <li class="itemsub nav-item" *ngIf="reinscribir && re_inscribir"><a class="nav-link"  routerLink="../inscripcion/ReInscripcion">Inscripción Alumno Antiguo </a></li>
+
+                               <li class="itemsub" *ngIf="inscribir"><a class="nav-link" style="color: white;" routerLink="../inscripcion/Index">Proceso Inscripción</a></li>
+                                </ul>
+                              </div>
+                        </li>
+                     </ul>
+
+                  </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="javascript:;" data-toggle="dropdown" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title" style="color: white;">Rendimiento Académico</span>
+
+                </a>
+                <div class="dropdown-menu contenedor " >
+                    <ul  >
+                   <li class="nav-item"><a routerLink="../Academia/Clases"  >Clases</a></li>
+                   <li class="nav-item"><a routerLink="../Academia/Boletin" *ngIf="boletin" >Boletin</a></li>
+
+                </ul>
+                  </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="javascript:;" data-toggle="dropdown" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title" style="color: white;">Estado de Cuenta</span>
+
+                </a>
+                <div class="dropdown-menu contenedor " >
+                    <ul  >
+                   <li class="nav-item"><a routerLink="../Financiera/EstadoCuenta"  >Estado de Cuenta</a></li>
+                    </ul>
+                  </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="javascript:;" data-toggle="dropdown" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title" style="color: white;">Convivencia &nbsp;</span>
+
+                </a>
+                <div class="dropdown-menu contenedor " >
+                    <ul  >
+                   <li class="nav-item"><a routerLink="../Convivencia/Excusas"  >Excusas</a></li>
+                   <li class="nav-item"><a routerLink="../Convivencia/Asistencia">Asistencia</a></li>
+                </ul>
+                  </div>
+            </li>
+
+          <li class="nav-item dropdown" style="display: none;">
+            <a href="javascript:;" data-toggle="dropdown" class="nav-link nav-toggle">
+                <i class="icon-diamond"></i>
+                <span class="title">Pastoral</span>
+
+            </a>
+            <div class="dropdown-menu contenedor " >
+                <ul  >
+                  <li class="nav-item"><a routerLink="../Pastoral/gruposPastorales"  >Grupos Pastorales</a></li>
+                  <li class="nav-item"><a routerLink="../Pastoral/gruposSacramentales"  >Grupos Sacramentales</a></li>
+                </ul>
+              </div>
+        </li>
+
+
+        </ul>
+    </div>

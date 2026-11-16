@@ -1,0 +1,31 @@
+<h1 class="page-header text-center">Convivencia</h1>
+<div style="display: inline;">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Excusas </strong> <img src="assets/images2/convivencia3.png"
+                            width="100 px" height="100px" style=" margin-left: 40%;" class="text-right"></h3>
+
+                    <p class="card-text">Proceso para colocar o consultar las excusas del estudiante</p>
+                    <a [routerLink]="['/Convivencia/Excusas']" ><img src="assets/images2/mas_detalles.png"
+                        width="150px" height="50px" class="text-right"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Asistencia </strong> <img src="assets/images2/convivencia2.png"
+                            width="100 px" height="100px" style=" margin-left: 40%;" class="text-right"></h3>
+
+                    <p class="card-text">Consulta por fecha de la asistencia del estudiante </p>
+                    <a [routerLink]="['/Convivencia/Asistencia']" *ngIf="true"><img src="assets/images2/mas_detalles.png"
+                        width="150px" height="50px" class="text-right"></a>
+                        <span class="label label-info" *ngIf="false">Proceso No Disponible</span>
+                     <!--Bloquear en caso sea necesario-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

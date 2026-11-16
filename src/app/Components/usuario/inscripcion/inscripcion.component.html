@@ -1,0 +1,74 @@
+<h1 class="page-header text-center">Proceso de Inscripción</h1>
+<div style="display: inline;">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-sm-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Proceso Inscripción </strong><img src="assets/images2/proceso1.png"
+                            width="100 px" height="100px" style=" margin-left: 35%;" class="text-right"></h3>
+                    <p class="card-text">Pasos completos para el proceso de inscripción del nuevo ciclo escolar
+                    </p>
+                    <a [routerLink]="['/inscripcion/Index']" *ngIf="inscribir"><img src="assets/images2/ir_proceso.png"
+                        width="150px" height="50px" class="text-right"></a>
+                    <span class="label label-info" *ngIf="!inscribir">Proceso No Disponible</span>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Inscripción Nuevo Estudiante </strong><img
+                            src="assets/images2/nuevo_estudiante.png" width="100 px" height="100px" style=" margin-left: 25%;"
+                            class="text-right"></h3>
+                    <p class="card-text"> Formulario de inscripción estudiante nuevo ingreso
+                    </p>
+
+                    <a [routerLink]="['/inscripcion/ValidarAdmision']"
+                    *ngIf="inscribir"><img src="assets/images2/ir_proceso.png"
+                    width="150px" height="50px" class="text-right"></a>
+                <span class="label label-info" *ngIf="!inscribir">Proceso No Disponible</span>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 50px;" *ngIf="reinscribir">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Pre-Inscripción </strong><img src="assets/images2/apuntar2.png"
+                            width="100 px" height="100px" style=" margin-left: 40%;" class="text-right"></h3>
+                    <p class="card-text">Proceso a realizar al final del ciclo escolar y empezar el proceso de
+                        re-inscripción</p>
+                    <a [routerLink]="['/inscripcion/PreInscripcion']"  *ngIf="pre_inscribir"><img src="assets/images2/ir_proceso.png"
+                        width="150px" height="50px" class="text-right"></a>
+                    <span class="label label-info" *ngIf="!pre_inscribir">Proceso No Disponible</span>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Re-Inscripción </strong><img src="assets/images2/revision.png"
+                            width="100 px" height="100px" style=" margin-left: 43%;" class="text-right"></h3>
+                    <p class="card-text">Proceso a realizar al final el ciclo escolar, luego de que se autorice y se
+                        haya
+                        pre-inscrito al estudiante.</p>
+                    <a [routerLink]="['/inscripcion/ReInscripcion']"  *ngIf="re_inscribir"><img src="assets/images2/ir_proceso.png"
+                        width="150px" height="50px" class="text-right"></a>
+                    <span class="label label-info" *ngIf="!re_inscribir">Proceso No Disponible</span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

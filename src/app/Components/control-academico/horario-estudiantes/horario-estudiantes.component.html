@@ -1,0 +1,67 @@
+<div class="portlet-title">
+    <div class="caption">
+        <h1 class="text-center"><strong> Horario Estudiantes</strong>
+            <div class="text-right ">
+                <img src="assets/images2/portal.png" width="100 px" height="100px" class="text-right">
+                </div>
+        </h1>
+    
+    </div>
+</div>
+<div class="tools">
+    
+</div>
+
+<div  class="portlet-body">
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+            <tr>
+                <th colspan=3>Alumno</th>
+                
+
+
+
+            </tr>
+            <tr>
+                
+                <th style="width:100px;" class="text-center">C&oacute;digo</th>
+                <th scope="col" class="text-center">Nombre Completo</th>
+                <th scope="col" class="text-center">Grado</th>                
+                <th colspan=1 class="text-center">Ir</th>
+
+
+                
+            </tr>   
+       
+
+        </thead>
+        
+       <tbody>
+
+            <tr *ngFor="let Alumno of ListadoEstudiantes"> 
+                    
+    
+                
+          
+                <td>{{Alumno.estu_codigo}}</td> 
+          
+                <td>{{Alumno.estu_primernombre + ' ' +Alumno.estu_segundonombre + ' ' +  (Alumno.estu_tercernombre ? Alumno.estu_tercernombre : ' ')  +  ' '  + Alumno.estu_primerapellido + ' ' + Alumno.estu_segundoapellido}} </td> 
+                <td>{{Alumno.grad_nombre}}</td>
+                
+                <td class="text-center">
+                    <a
+                class="btn btn-info btn-xs" [routerLink]="['../Horarios',Alumno.estu_id]">
+                   
+                            <img src="assets/images2/ir.png" width="10px" height="10px">
+               
+                        
+                    </a>
+                </td>
+                
+                </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>

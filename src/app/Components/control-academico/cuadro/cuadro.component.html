@@ -1,0 +1,77 @@
+<h1 class="text-center">LISTADO DE NOTAS <img src="assets/images2/cuadronota.png" width="100 px" height="100px" class="text-right"> </h1>
+<div class="text-right">
+
+</div>
+
+<div class="loader" *ngIf="spinner">Loading...</div>
+
+<h2 class="text-rigth" style="margin-left: 10%;"> <img src="assets/images2/maestro.png" width="100 px" height="100px" class="text-right">  {{catedratico}}</h2>
+
+<div class="text-right">
+    <h3>UNIDAD : 
+    <select (change)="onChange($event.target.value)">
+        <option value="NA" selected>Elegir Unidad</option>
+        <option value="UNIDAD 1" >UNIDAD 1</option>
+        <option value="UNIDAD 2">UNIDAD 2</option>
+        <option value="UNIDAD 3">UNIDAD 3</option>
+        <option value="UNIDAD 4">UNIDAD 4</option>
+     
+    </select>
+    </h3>
+    </div>
+    
+
+
+<div class="table-responsive" style="margin-left: 15%; margin-right: 15%;">
+    <table  class="table table-bordered ">
+        <thead>
+        
+            <tr >
+                <th class="col">Codigo: {{convCodigo(codigo)}}</th> 
+                <th class="col">Alumno: {{estudiante}}</th>
+           <!--     <th scope="col" *ngFor="let tarea of actividades">
+                    {{ ValidarNombre(tarea.title)}}
+                </th>   -->
+                
+            </tr>   
+       
+            <tr >
+                <th class="col">Actividad</th> 
+                <th class="col">Nota</th> 
+              
+            </tr>   
+
+        </thead>
+        
+       <tbody *ngIf="mostrar">
+   
+        <tr *ngFor="let notas of calificaciones_filtro" > 
+                <td>{{ValidarNombre(notas.title)}}</td>
+                <td class="text-center">{{convNota(notas.assignedgrade,notas.draftgrade,notas.title)}}</td>
+                
+
+        </tr>
+        <tr><td><strong>TOTAL</strong></td>
+            <td class="text-center">
+            {{sumar_notafinal(calificaciones_filtro)}}</td>
+          <!--    <td><strong>TOTAL Sobre 100</strong></td>
+            <td class="text-center">
+            {{sumar_notafinal_reglatres(calificaciones_filtro)}}</td></tr>
+          <tr *ngFor="let notas of cuadro_notas"> 
+
+                <tr  *ngFor="let tarea of actividades">
+                    {{ ValidarNombre(tarea.title)}}
+                </tr>
+                <td>{{convCodigo(notas.estudiante.email)}}</td>
+                <td>{{notas.estudiante.fullname}}</td>
+                <td *ngFor="let nota of notas.notas">
+                    {{convNota(nota.assignedgrade)}}
+                </td>   
+                <td>{{sumar_notafinal(notas.notas)}}</td>
+          
+            </tr>-->
+          
+        </tbody>
+    </table>
+
+    </div>

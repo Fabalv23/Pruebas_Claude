@@ -1,0 +1,243 @@
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
+import { ApiService } from 'src/Services/api.services';
+import { AcademicoService } from 'src/Services/academico.services';
+
+import { AuthService } from 'src/Services/auth.service';
+import { TokenStorageService } from 'src/Services/token-storage.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PastoralService } from 'src/Services/pastoral.service';
+import { HttpClient } from '@angular/common/http';
+import { saveAs } from 'file-saver';
+
+@Component({
+  selector: 'app-grupos-pastorales',
+  templateUrl: './grupos-pastorales.component.html',
+  styleUrls: ['./grupos-pastorales.component.css'],
+})
+export class GruposPastoralesComponent implements OnInit {
+  ListadoEstudiantes: any[];
+  ListadoEstudiantes1: any[];
+  Listado_Estudiantes_original: any[];
+  ListadoEstudiantes_comunion: any[];
+  ListadoEstudiantes_confirmacion: any[];
+  ListadoGrupos: any[];
+  form_registro: FormGroup;
+
+  FileUpload: File = null;
+  files: File[];
+  uploadedFiles: Array<File>;
+
+  grupo_pastoral = 0;
+  enviar = 0;
+
+  constructor(
+    private tokenStorage: TokenStorageService,
+    private apiservice: ApiService,
+    private auth: AuthService,
+    private apiacademico: AcademicoService,
+    private fb: FormBuilder,
+    private apiPastoral: PastoralService,
+    private http: HttpClient
+  ) {}
+
+  ngOnInit(): void {
+
+    this.auth.RevalSesion();
+    var usuid = this.tokenStorage.getUser().usu_id;
+
+    this.apiPastoral.ObtenerGrupoPastoralEstudiante(1,usuid).subscribe(
+      (result) => {
+        this.ListadoEstudiantes1 = result;
+      },
+      (error: any) => {
+        alert('Error al Obtener Listado de Alumnos');
+        return;
+      }
+    );
+
+    this.apiPastoral.ObtenerGrupoPastoralEstudiante(2,usuid).subscribe(
+      (result) => {
+        this.ListadoEstudiantes_comunion = result;
+      },
+      (error: any) => {
+      }
+    );
+
+    this.apiPastoral.ObtenerGrupoPastoralEstudiante(3,usuid).subscribe(
+      (result) => {
+        this.ListadoEstudiantes_confirmacion = result;
+      },
+      (error: any) => {
+      }
+    );
+
+    this.apiacademico.ObtenerListadoEstudiantes(usuid).subscribe(
+      (result) => {
+        this.ListadoEstudiantes = result;
+        this.Listado_Estudiantes_original = result;
+      },
+      (error: any) => {
+        alert('Error al Obtener Listado de Alumnos');
+        return;
+      }
+    );
+
+    this.apiPastoral.ObtenerGrupoPastoral(1).subscribe(
+      (result) => {
+        this.ListadoGrupos = result;
+      },
+      (error: any) => {
+        alert('Error al Obtener Grupos Pastorales');
+        return;
+      }
+    );
+  }
+
+  PresentarRegistro() {
+
+    if (this.enviar == 0) {
+      this.enviar = 1;
+
+      var inscripcion: any = {
+        codigo: this.form_registro.controls['codigo'].value,
+        grupo: this.grupo_pastoral,
+        categoria: '1'
+      };
+
+     this.apiPastoral.InsertarEstudianteGrupoPastoral(inscripcion).subscribe(
+        (data) => {
+          alert(data.mensaje);
+          location.reload();
+        },
+        (err) => {
+          alert('Algo salió mal');
+          location.reload();
+          console.log(err);
+        }
+      );
+    }
+
+
+  }
+
+  change(val) {
+    this.grupo_pastoral = val;
+  }
+
+  @ViewChild('modal_1') modal_1: TemplateRef<any>;
+  @ViewChild('vc', { read: ViewContainerRef }) vc: ViewContainerRef;
+
+  backdrop: any;
+  showDialog() {
+    var new_list_estudiantes = [];
+    for (let index = 0; index < this.Listado_Estudiantes_original.length; index++) {
+      const element = this.Listado_Estudiantes_original[index];
+      if(this.ListadoEstudiantes1.filter(x=>x.codigo == element.codigo).length == 0 && this.ListadoEstudiantes_comunion.filter(x=>x.codigo == element.codigo).length == 0 && this.ListadoEstudiantes_confirmacion.filter(x=>x.codigo == element.codigo).length == 0){
+        new_list_estudiantes.push(element);
+      }      
+    }
+
+    this.ListadoEstudiantes = new_list_estudiantes;
+
+    let view = this.modal_1.createEmbeddedView(null);
+    this.vc.insert(view);
+    this.modal_1.elementRef.nativeElement.previousElementSibling.classList.remove(
+      'fade'
+    );
+    this.modal_1.elementRef.nativeElement.previousElementSibling.classList.add(
+      'modal-open'
+    );
+    this.modal_1.elementRef.nativeElement.previousElementSibling.style.display =
+      'block';
+    this.backdrop = document.createElement('DIV');
+
+    this.form_registro = this.fb.group({
+      codigo: ['', [Validators.required]],
+      grupo: ['', [Validators.required]]
+    });
+    //this.backdrop.className = 'modal-backdrop';
+    document.body.appendChild(this.backdrop);
+  }
+
+  closeDialog() {
+    this.vc.clear();
+    document.body.removeChild(this.backdrop);
+  }
+  Eliminar_GrupoPastoral(id) {
+    this.apiPastoral.EliminarGrupoPastoralEstudiante(id, 1).subscribe((data) => {
+      location.reload();
+    });
+  }
+
+  async fileChange1(element, codigo,grupo,grado,id) {
+    //this.spinner = true;
+    //this.mes_subir = mes;
+    
+    this.uploadedFiles = element.target.files;
+    var ruta = await this.subir_archivo(this.uploadedFiles[0], codigo, grado,grupo);
+    this.apiPastoral.adjuntoCoditoGrupoPastoral(id, '1', ruta).subscribe((res) => {
+      alert('Adjunto con éxito!');
+      location.reload();
+//      this.spinner = false;
+      return;
+    });
+   // this.spinner = false;
+
+
+
+  }
+
+  async subir_archivo(uploadFiles, codigo ,grado,grupo) {
+    const regex = /:/g;
+    var formData_archivo = new FormData();
+    formData_archivo.append("file", uploadFiles, uploadFiles.name);
+    formData_archivo.append('nombre', codigo + '-' + grado + '-' + grupo);
+    var ruta;
+    await this.apiPastoral.AdjuntarAutorizacionGrupoPastoral(formData_archivo).toPromise().then((data) => {
+      ruta = data.data;
+    });
+    return ruta;
+  }
+
+  descargar(url) {
+    // window.location.href=url;
+
+    // var extension_file_array = url.toString().split('.');
+    var name_array = url.toString().split('/');
+
+    var name = name_array[name_array.length - 1];
+
+    this.http.get('http://34.138.40.177:9090/' + url, { responseType: "blob" })
+      .subscribe(blob => {
+        console.log(blob);
+        saveAs(blob, name);
+      });
+
+  }
+  @ViewChild('modal_requisitos') modal_requisitos: TemplateRef<any>;
+
+  showInfo() {
+    let view = this.modal_requisitos.createEmbeddedView(null);
+    this.vc.insert(view);
+    this.modal_requisitos.elementRef.nativeElement.previousElementSibling.classList.remove(
+      'fade'
+    );
+    this.modal_requisitos.elementRef.nativeElement.previousElementSibling.classList.add(
+      'modal-open'
+    );
+    this.modal_requisitos.elementRef.nativeElement.previousElementSibling.style.display =
+      'block';
+    this.backdrop = document.createElement('DIV');
+
+
+    //this.backdrop.className = 'modal-backdrop';
+    document.body.appendChild(this.backdrop);
+  }
+
+}

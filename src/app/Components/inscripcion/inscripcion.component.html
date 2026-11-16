@@ -1,0 +1,140 @@
+
+
+<div class="portlet-title">
+    <div class="caption">
+        <h1>INSCRIPCIONES</h1>
+    </div>
+</div>
+<div class="tools">
+</div>
+<div  class="portlet-body">
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+            <tr>
+                <th colspan=5>Alumno</th>
+
+                <th colspan=1>Impresión</th>
+                <th colspan=1>Contrato</th>
+                <th colspan=1>Compromiso</th>
+                <th colspan=1>Hoja</th>
+                <th colspan=1>Constancia</th>
+
+            </tr>
+            <tr>
+                <th style="width:100px;">C&oacute;digo</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">ESTADO</th>
+
+
+                <th scope="col">MODIFICAR</th>
+
+                <th scope="col">Inscripción</th>
+                <th scope="col">Adhesi&oacute;n</th>
+
+                <th scope="col">Padres</th>
+                <th scope="col">Clinica</th>
+                <th scope="col">Inscripcion</th>
+
+
+                <th align="center">FASE1</th>
+                <th align="center">FASE2</th>
+                <th align="center">FASE3</th>
+                <th align="center">FASE4</th>
+
+            </tr>
+
+
+        </thead>
+        
+       <tbody>
+
+            <tr *ngFor="let Alumno of ListadoEstudiantes"> 
+                    
+    
+                <td>{{Alumno.estu_codigo}}</td> 
+          
+                <td>{{Alumno.estu_primernombre}}</td> 
+                <td>{{Alumno.estu_primerapellido}}</td> 
+                <td *ngIf="Alumno.fase1==0 && Alumno.fase2==0 && Alumno.fase3 ==0
+                && Alumno.fase4==0">FASE 1</td> 
+                <td *ngIf="Alumno.fase1==1 && Alumno.fase2==0 && Alumno.fase3 ==0
+                && Alumno.fase4==0">FASE 2</td> 
+                <td *ngIf="Alumno.fase1==1 && Alumno.fase2==1 && Alumno.fase3 ==0 
+                && Alumno.fase4==0">FASE 3</td> 
+                <td *ngIf="Alumno.fase1==1 && Alumno.fase2==1 && Alumno.fase3 ==1 
+                && Alumno.fase4==0">FASE 4</td>                 
+                <td *ngIf="Alumno.fase1==1 && Alumno.fase2==1 && Alumno.fase3 ==1 
+                && Alumno.fase4==1">INSCRITO</td> 
+            
+                <td class="text-center">
+               <a [routerLink]="['../EditarEstudiante',Alumno.estu_id]"                                                       
+               
+                class="btn btn-info btn-xs">
+                <img src="assets/images2/editar.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>  
+          
+                <td class="text-center">
+                   <!--   <a
+                class="btn btn-info btn-xs">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>-->
+                </td> 
+                <td class="text-center">
+                     <a
+                class="btn btn-info btn-xs" (click)="descargar2(Alumno.estu_codigo);">
+                <img src="assets/images2/contrato.png" width="15 px" height="20px" class="text-right">
+                    </a>
+                </td> 
+
+                <td class="text-center">
+                    <a
+                class="btn btn-info btn-xs" (click)="descargar1(Alumno.estu_codigo);">
+                <img src="assets/images2/contrato.png" width="15 px" height="20px" class="text-right">
+                    </a>
+                </td> 
+          
+          
+                <td class="text-center">
+                    <!--   <a
+                class="btn btn-info btn-xs">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>-->
+                </td> 
+          
+                <td class="text-center">
+                    <a
+                class="btn btn-info btn-xs"  (click)="descargar3(Alumno.estu_codigo);"  *ngIf="Alumno.fase4==1" >
+                <img src="assets/images2/descarga.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td> 
+            
+          
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.fase1==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.fase1==0" /></td>
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.fase2==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.fase2==0" /><br><br> 
+                    <a class="btn btn-info btn-xs"  *ngIf="Alumno.fase1==1" (click)="descargar(Alumno.estu_codigo);">
+                        <img src="assets/images2/descarga.png" width="10 px" height="10px" class="text-right" style="margin-right: 2%;">     Descargar Boleta
+                        </a>
+                        </td>
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.fase3==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.fase3==0" /><br><br> 
+                    <a class="btn btn-info btn-xs"  *ngIf="Alumno.fase2==1 && Alumno.fase4==0" [routerLink]="['../SubirBoleta',Alumno.estu_id]">
+                        <img src="assets/images2/subir.png" width="10 px" height="10px" class="text-right" style="margin-right: 2%;">    Subir Boleta
+                        </a>
+                        </td>
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.fase4==1" /><br><br> 
+                    <a
+                    class="btn btn-info btn-xs"  (click)="descargar3(Alumno.estu_codigo);"  *ngIf="Alumno.fase4==1" >
+                    <img src="assets/images2/descarga.png" width="10 px" height="10px" class="text-right">Descargar Constancia
+                        </a><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.fase4==0" /></td>
+
+
+               </tr> 
+
+        </tbody>
+    </table>
+
+    </div>
+</div>
+

@@ -1,0 +1,125 @@
+
+
+<div class="portlet-title">
+    <div class="caption">
+        <h1> <img src="assets/images2/pendiente.png" width="60 px" height="60px" class="text-right" style="margin-right: 10%;"> <strong> PRE-INSCRIPCIONES</strong></h1>
+    </div>
+</div>
+<div class="tools">
+</div>
+<div  class="portlet-body">
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+            <tr>
+                <th colspan=3>Alumno</th>
+                
+
+
+
+            </tr>
+            <tr>
+                <th style="width:100px;">C&oacute;digo</th>
+                <th scope="col">Nombre Completo</th>
+                <th>DESCARGAR BOLETA</th>
+                <th style="text-align: center">BOLETA PRE-INSCRIPCIÓN</th>
+                <th style="text-align: center">CONVIVENCIA</th>
+                <!--<th style="text-align: center">DIRECCION</th>!>-->
+                <th style="text-align: center">PEDAGOGIA</th>
+                <th style="text-align: center">CONTABILIDAD</th>
+                <th style="text-align: center">PREINSCRIPCIÓN DISPONIBLE</th>
+                <th colspan=1 class="text-center">PRE-INSCRIBIR</th>
+
+
+                
+            </tr>   
+       
+
+        </thead>
+        
+       <tbody>
+
+            <tr *ngFor="let Alumno of ListadoEstudiantes"> 
+                    
+    
+                <td>{{Alumno.estu_codigo}}</td> 
+          
+                <td>{{Alumno.estu_primernombre + ' ' +Alumno.estu_segundonombre + ' ' +  (Alumno.estu_tercernombre ? Alumno.estu_tercernombre : ' ')  +  ' '  + Alumno.estu_primerapellido + ' ' + Alumno.estu_segundoapellido}} </td> 
+                <td class="text-center" >
+                      <a *ngIf="Alumno.direccion==1 && Alumno.validaciones_insolvencia_preinscripcion ==1 
+                && Alumno.convivencia==1 && Alumno.pedagogia==1"
+                class="btn btn-info btn-xs"
+                (click)="descargar_boleta(Alumno.estu_codigo,Alumno.nombre_completo,Alumno.grad_nombre);"> <img src="assets/images2/descarga.png" width="10 px" height="10px" class="text-right"> </a>
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.contabilidad==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.contabilidad==0" /></td>                
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.convivencia==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.convivencia==0" /></td>
+                <!--<td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.direccion==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.direccion==0" /></td>-->
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.pedagogia==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.pedagogia==0" /></td>
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="Alumno.validaciones_insolvencia_preinscripcion==1" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="Alumno.validaciones_insolvencia_preinscripcion==0" /></td>
+                <td colspan=1 align="center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="(Alumno.preinscripcion_fecha_permiso==1 || fecha_valida)" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="(Alumno.preinscripcion_fecha_permiso==0 && !fecha_valida)" /></td>
+               
+                
+                <td class="text-center">
+                    <a
+                class="btn btn-info btn-xs" [routerLink]="['../PreInscripcion',Alumno.estu_id]" *ngIf=" Alumno.direccion==1 && Alumno.validaciones_insolvencia_preinscripcion ==1 && Alumno.contabilidad==1
+                && Alumno.convivencia==1 && Alumno.pedagogia==1 && (Alumno.preinscripcion_fecha_permiso==1 || fecha_valida)">
+                <img src="assets/images2/editar.png" width="10 px" height="10px" class="text-right">  
+                    </a>
+                </td>
+                
+                </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>
+
+
+
+<div class="portlet-title">
+    <div class="caption">
+        <h1><img src="assets/images2/listo.png" width="60 px" height="60px" class="text-right" style="margin-right: 10%;"> <strong>PRE-INSCRITOS</strong></h1>
+    </div>
+</div>
+<div class="tools">
+</div>
+<div  class="portlet-body">
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+            <tr>
+                <th colspan=3>Alumno</th>
+                
+
+
+
+            </tr>
+            <tr>
+                <th style="width:100px;">C&oacute;digo</th>
+                <th scope="col">Nombre Completo</th>
+                <th scope="col">Grado Pre-Inscrito</th>
+
+                
+            </tr>   
+       
+
+        </thead>
+        
+       <tbody>
+
+            <tr *ngFor="let Alumno of ListadoEstudiantes1"> 
+                    
+    
+                <td>{{Alumno.estu_codigo}}</td> 
+          
+                <td>{{Alumno.estu_primernombre + ' ' +Alumno.estu_segundonombre + ' ' +  (Alumno.estu_tercernombre ? Alumno.estu_tercernombre : ' ')  +  ' '  + Alumno.estu_primerapellido + ' ' + Alumno.estu_segundoapellido}} </td> 
+                
+                <td> {{Alumno.grad_nombre}} </td>
+               
+                
+                </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>
+

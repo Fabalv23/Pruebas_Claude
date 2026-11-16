@@ -1,0 +1,82 @@
+<div class="portlet-title">
+    <div class="caption">
+        
+        <div class="text-right    ">
+            <h1 class="text-center" ><strong> Mis clases</strong></h1>
+            <img src="assets/images2/clases.png" width="100 px" height="100px" class="text-right">
+            </div>
+
+            <a class="btn btn-primary" style="margin-bottom: 3%;" [routerLink]="['/Academia/Profesores']"> <img src="assets/images2/lupa.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;" >
+                Buscar Profesores</a>
+    </div>
+</div>
+<div class="tools">
+</div>
+<div  class="portlet-body">
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+            <tr>
+                <th colspan=3>Clase</th>
+                
+
+
+
+            </tr>
+            <tr>
+                
+                <th scope="col" class="text-center">Nombre <img src="assets/images2/clase.png" width="75px" height="50px" style="padding-left: 10px;"> </th>
+                <th scope="col" class="text-center"> Sección <img src="assets/images2/seccion.png" width="50px" height="50px" style="padding-left: 10px;"> </th>  
+                
+                <th scope="col" class="text-center">Catedrático <img src="assets/images2/maestro.png" width="50px" height="50px" style="padding-left: 10px;"> </th>                
+                <th colspan=1 class="text-center">IR</th>
+
+
+                
+            </tr>   
+       
+
+        </thead>
+        <td><input (change)="Filtrado_Nombre($event.target.value)" type="text" class="form-control" placeholder="Filter"></td> 
+        <td><input (change)="Filtrado_Grado1($event.target.value)" type="text" class="form-control" placeholder="Filter"></td>
+        <td><input (change)="Filtrado_catedratico($event.target.value)" type="text" class="form-control" placeholder="Filter"></td>
+
+        <tbody *ngIf="Inicio">  
+
+            <tr *ngFor="let Curso of ListadoClases"> 
+                    
+                
+    
+                <td>{{Curso.nombre}}</td>
+                <td>{{Curso.seccion}}</td>
+                <td>{{Curso.grado}}</td>
+                
+                <td class="text-center">
+                    <a
+                class="btn btn-info btn-xs" [routerLink]="['Material',Curso.id]">
+                <img src="assets/images2/ir.png" width="10px" height="10px">
+                    </a>
+                </td>
+                
+                </tr>
+        </tbody>
+
+        <tbody *ngIf="!Inicio">    <!--CONTENIDO-->
+            <tr *ngFor="let Curso of ListadoClases_Filtrada"> 
+               
+                <td>{{Curso.nombre}}</td>
+                <td>{{Curso.seccion}}</td>
+                <td>{{Curso.grado}}</td>
+                
+                <td class="text-center">
+                    <a
+                class="btn btn-info btn-xs" [routerLink]="['Material',Curso.id]">
+                <img src="assets/images2/ir.png" width="10px" height="10px">
+                    </a>
+                </td>
+               </tr> 
+            </tbody>
+    </table>
+
+    </div>
+</div>

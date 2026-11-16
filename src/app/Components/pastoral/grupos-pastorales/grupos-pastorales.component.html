@@ -1,0 +1,283 @@
+<div class="portlet-title">
+  <div class="caption">
+    <h1 class="text-center">
+      <strong>GRUPOS PASTORALES</strong>
+      <div class="text-right">
+        <img
+          src="assets/images2/portal.png"
+          width="100 px"
+          height="100px"
+          class="text-right"
+        />
+      </div>
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="tools">
+    <a class="btn btn-info btn-xs pull-right" (click)="showDialog()">
+      <img src="assets/images2/ir.png" width="25px" height="25px" /> INSCRIBIR
+    </a>
+  </div>
+  <h2><a class="btn btn-info btn-xs pull-right" (click)="showInfo()">
+    <img src="assets/images2/info2.png" width="25px" height="25px" /> Información
+  </a></h2>
+</div>
+<div class="portlet-body">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="5">Alumno</th>
+        </tr>
+        <tr>
+          <th style="width: 100px" class="text-center">C&oacute;digo</th>
+          <th scope="col" class="text-center">Nombre Completo</th>
+          <th scope="col" class="text-center">Grado</th>
+          <th scope="col" class="text-center">Grupo</th>
+          <th scope="col" class="text-center">Circular</th>
+          <th colspan="1" class="text-center">Descargar Codito</th>
+          <th colspan="1" class="text-center">Subir Codito</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let Alumno of ListadoEstudiantes1">
+          <td>{{ Alumno.codigo }}</td>
+
+          <td>
+            {{
+              Alumno.nombre_completo
+            }}
+          </td>
+          <td>{{ Alumno.grad_nombre }} - {{Alumno.seccion}}</td>
+          <td>{{ Alumno.grupo }}</td>
+          <td>
+            <a
+              class="btn btn-info btn-xs"
+              (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Infantil%20Huellas%20Lasallistas%202025.pdf');"
+              *ngIf="Alumno.grupo == 'Huellas Lasallistas'"
+            >
+              <img src="assets/images2/descarga.png" width="10px" height="10px" />
+            </a>
+
+            <a
+            class="btn btn-info btn-xs"
+            (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Infantil%20Semillas%20Lasallistas.pdf');"
+            *ngIf="Alumno.grupo == 'Semillas Lasallistas'"
+          >
+            <img src="assets/images2/descarga.png" width="10px" height="10px" />
+          </a>
+
+          <a
+          class="btn btn-info btn-xs"
+          (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Infantil%20Sembradores%20Lasallistas.pdf');"
+          *ngIf="Alumno.grupo == 'Sembradores Lasallistas'"
+        >
+          <img src="assets/images2/descarga.png" width="10px" height="10px" />
+        </a>
+
+        <a
+        class="btn btn-info btn-xs"
+        (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Ap%C3%B3stoles%20Lasallistas.pdf');"
+        *ngIf="Alumno.grupo == 'Apóstoles Lasallistas'"
+      >
+        <img src="assets/images2/descarga.png" width="10px" height="10px" />
+      </a>
+
+      <a
+      class="btn btn-info btn-xs"
+      (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Misioneros%20Lasallistas.pdf');"
+      *ngIf="Alumno.grupo == 'Misioneros Lasallistas'"
+    >
+      <img src="assets/images2/descarga.png" width="10px" height="10px" />
+    </a>
+
+    <a
+    class="btn btn-info btn-xs"
+    (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Apertura%20de%20Formaci%C3%B3n%20de%20Monaguillos.pdf');"
+    *ngIf="Alumno.grupo == 'Monaguillos'"
+  >
+    <img src="assets/images2/descarga.png" width="10px" height="10px" />
+  </a>
+
+  <a
+  class="btn btn-info btn-xs"
+  (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Apertura%20de%20Pastoral%20Vocacional%202025.pdf');"
+  *ngIf="Alumno.grupo == 'Pastoral Vocacional'"
+>
+  <img src="assets/images2/descarga.png" width="10px" height="10px" />
+</a>
+
+          </td>
+          <td class="text-center">
+            <a
+              class="btn btn-info btn-xs"
+              (click)="descargar(Alumno.ruta);"
+              *ngIf="Alumno.ruta!='' && Alumno.ruta!=null"
+            >
+              <img src="assets/images2/descarga.png" width="10px" height="10px" />
+            </a>
+          </td>
+          <td class="text-center">
+            <label for="inputTag">
+              <input id="inputTag" type="file" (change)="fileChange1($event,Alumno.codigo,Alumno.grupo,Alumno.grad_nombre,Alumno.id)"/>
+              <img src="assets/images2/subir.png" width="20px" height="20px" />
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-container #vc></ng-container>
+<ng-template #modal_1>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times; </button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><strong>Inscripción Grupo Pastoral</strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="CuerpoModal02" #myform2="ngForm" [formGroup]="form_registro"
+                        (ngSubmit)="PresentarRegistro(); form_registro.reset(); closeDialog(); ">
+                        <fieldset id="ItemModal">
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Estudiante</label>
+                                <select id="codigo" name="codigo" class="form-control" (change)="change($event.target.value);" formControlName="codigo" [ngClass]="{'Incorrecto': form_registro.get('codigo').hasError('required') }">
+                                  <option value="0">Sin Asignar</option>
+                                  <option  *ngFor="let excusa of ListadoEstudiantes; let i = index" [value]="ListadoEstudiantes[i].estu_codigo">            {{
+                                    ListadoEstudiantes[i].estu_primernombre +
+                                      " " +
+                                      ListadoEstudiantes[i].estu_segundonombre +
+                                      " " +
+                                      (ListadoEstudiantes[i].estu_tercernombre ? ListadoEstudiantes[i].estu_tercernombre : " ") +
+                                      " " +
+                                      ListadoEstudiantes[i].estu_primerapellido +
+                                      " " +
+                                      ListadoEstudiantes[i].estu_segundoapellido
+                                  }} - {{ListadoEstudiantes[i].grad_nombre}} </option>
+                              </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="">Grupo Pastoral</label>
+
+                                <select id="grupo" name="grupo" class="form-control" (change)="change($event.target.value);" formControlName="grupo" [ngClass]="{'Incorrecto': form_registro.get('grupo').hasError('required') }">
+                                    <option value="0">Sin Asignar</option>
+                                    <option  *ngFor="let excusa of ListadoGrupos; let i = index" [value]="ListadoGrupos[i].id">{{ListadoGrupos[i].nombre}} </option>
+                                </select>
+                            </div>
+
+                            <div class="text-center" *ngIf="grupo_pastoral==1">                             
+                              <button type="button" class="btn btn-success pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Infantil%20Huellas%20Lasallistas%202025.pdf');">
+                                  Descargar Circular
+                              </button>
+                            </div>
+                            <div class="text-center" *ngIf="grupo_pastoral==2">                             
+                              <button type="button" class="btn btn-success pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Infantil%20Semillas%20Lasallistas.pdf');">
+                                  Descargar Circular
+                              </button>
+                            </div>
+                            <div class="text-center" *ngIf="grupo_pastoral==3">                             
+                              <button type="button" class="btn btn-success pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Infantil%20Sembradores%20Lasallistas.pdf');">
+                                  Descargar Circular
+                              </button>
+                            </div>
+                            <div class="text-center" *ngIf="grupo_pastoral==4">                             
+                              <button type="button" class="btn btn-success pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Apo%CC%81stoles%20Lasallistas.pdf');">
+                                  Descargar Circular
+                              </button>
+                            </div>
+                            <div class="text-center" *ngIf="grupo_pastoral==5">                             
+                              <button type="button" class="btn btn-success pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Grupo%20Misioneros%20Lasallistas.pdf');">
+                                  Descargar Circular
+                              </button>
+                            </div>
+                            <div class="text-center" *ngIf="grupo_pastoral==6">                             
+                              <button type="button" class="btn btn-success pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Apertura%20de%20Formaci%C3%B3n%20de%20Monaguillos.pdf');">
+                                  Descargar Circular
+                              </button>
+                            </div>
+                            <div class="text-center" *ngIf="grupo_pastoral==7">                             
+                              <button type="button" class="btn btn-success pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Apertura%20de%20Pastoral%20Vocacional%202025.pdf');">
+                                  Descargar Circular
+                              </button>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-block btn-primary" *ngIf="
+                                !form_registro.get('codigo').hasError('required') &&
+                                !form_registro.get('grupo').hasError('required')">
+                                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                                    Inscribir
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Cancelar
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</ng-template>
+
+<ng-template #modal_requisitos>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                      &times; </button>
+                  <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><strong>Requisitos</strong>
+                  </h4>
+              </div>
+              <div class="modal-body">
+                  <textarea rows="15" name="texto_aprobacion" class="form-control" #text_aprobar style="border: none;" readonly>
+Grupos pastorales.
+Requisitos:
+Los estudiantes tiene que ser inscritos en el grupo que corresponde al grado y si hay alguna duda favor comunicarse al departamento de Pastoral. 
+
+Grupo de Raíces
+Grados: Preparatoria, Primero Primara y Segundo Primara 
+Inicio de grupos pastorales, Viernes 16 de febrero, favor traer almuerzo. 
+
+Grupo de Semillas 
+Grados: Tercero Primaria y Cuarto Primaria 
+Inicio de grupos pastorales, Viernes 16 de febrero, favor traer almuerzo.
+
+Grupo de Sembradores 
+Grados: Quinto Primaria y Sexto Primaria 
+Inicio de grupos pastorales, Viernes 16 de febrero, favor traer almuerzo.
+
+Grupo de Apóstoles 
+Grados: Primero Básico y Segundo Básico 
+Inicio de grupos pastorales, Viernes 16 de febrero, favor traer almuerzo. 
+
+Grupos del Movimiento Misionero 
+Tercero Básico y Diversificado. 
+Inicio de grupos pastorales, Viernes 16 de febrero, favor traer almuerzo.
+
+          </textarea>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Cancelar
+                  </button>
+              </div>
+          </div>
+          <!-- /.modal-content -->
+      </div>
+      <!-- /.modal -->
+  </div>
+</ng-template>

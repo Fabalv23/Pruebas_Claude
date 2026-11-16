@@ -1,0 +1,76 @@
+        <div class="page-header navbar navbar-static-top">
+            <!-- BEGIN HEADER INNER -->
+            <div class="page-header-inner ">
+
+                <!-- BEGIN LOGO -->
+                <div class="page-logo">
+                    <a routerLink="../Usuario/Home">
+                        <img src="assets/images/LaSalle01.png" width="160" height="50" alt="logo" class="logo-default" />
+                    </a>
+                    <div class="menu-toggler sidebar-toggler" style="margin-top: 35px;">
+                        <span></span>
+                    </div>
+
+
+                </div>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span></span>
+                </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+
+                <div class="top-menu">
+
+                    <ul class="nav navbar-nav pull-right">
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                       
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="margin-top: 10px;">
+                                <img src="assets/images2/user_icon.png" width="30" height="50" alt="logo" class="logo-default" />                                <span class="username username-hide-on-mobile" style="color: white;"> Usuario: {{NombreCompleto}} </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <!--<ul class="dropdown-menu dropdown-menu-default"> -->
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a id="menuvula"   (click)="CerrarSesion();"><img src="assets/images2/apagar.png" width="10px" height="10px"> Finalizar Sesión </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="menuvula"  routerLink="../Usuario/CambioPassword" > <img src="assets/images2/editar.png" width="10px" height="10px"> Cambiar Contraseña</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+                    </ul>
+
+                </div>
+
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+            <!-- END HEADER INNER -->
+        </div>
+
+
+        <app-side-bar></app-side-bar>
+
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content page-container">
+                    <!-- BEGIN PAGE HEADER-->
+                    
+                    <router-outlet></router-outlet>
+                </div>
+                <div class="text-center">
+
+                    <img src="assets/images2/logosalle_abajo.png" width="180" height="60" alt="logo" class="logo-default" />
+
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+
+        
+        <div class="clearfix"></div>
+
+
+

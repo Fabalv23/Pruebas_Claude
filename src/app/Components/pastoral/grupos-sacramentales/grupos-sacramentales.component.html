@@ -1,0 +1,292 @@
+<div class="portlet-title">
+  <div class="caption">
+    <h1 class="text-center">
+      <strong>GRUPOS SACRAMENTALES</strong>
+      <div class="text-right">
+      </div>
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="tools">
+
+  </div>
+</div>
+<div class="portlet-body">
+  <div class="row">
+  <h2>PRIMERA COMUNIÓN     <a class="btn btn-info btn-xs pull-right" (click)="showDialog()">
+    <img src="assets/images2/ir.png" width="25px" height="25px" /> INSCRIBIR
+  </a> <a class="btn btn-info btn-xs pull-right" (click)="showRequisitos(1)">
+    <img src="assets/images2/info2.png" width="25px" height="25px" /> REQUISITOS
+  </a>
+  <a class="btn btn-info btn-xs pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Catequesis%20de%20Primera%20Comunio%CC%81n.pdf');">
+    <img src="assets/images2/info2.png" width="25px" height="25px" /> CIRCULAR
+  </a>
+</h2>
+  <div class="table-responsive" style="margin-top: 5%;">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="5">Alumno</th>
+        </tr>
+        <tr>
+          <th style="width: 100px" class="text-center">C&oacute;digo</th>
+          <th scope="col" class="text-center">Nombre Completo</th>
+          <th scope="col" class="text-center">Grado</th>
+          <th scope="col" class="text-center">Estado</th>
+          <th colspan="1" class="text-center">Constancia</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let Alumno of ListadoEstudiantes_comunion">
+          <td>{{ Alumno.codigo }}</td>
+
+          <td>
+            {{
+              Alumno.nombre_completo
+            }}
+          </td>
+          <td>{{ Alumno.grad_nombre }} - {{Alumno.seccion}}</td>
+          <td>{{estado(Alumno.estado)}}</td>
+
+          <td class="text-center">
+            <a
+              class="btn btn-info btn-xs"
+              (click)="descargar_comunion(Alumno.codigo)"
+              *ngIf="Alumno.estado == 2"
+            >
+              <img src="assets/images2/descarga.png" width="10px" height="10px" />
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row" style="margin-top:5%;">
+  <h2>CONFIRMACIÓN     <a class="btn btn-info btn-xs pull-right" (click)="showDialogConfirmacion()">
+    <img src="assets/images2/ir.png" width="25px" height="25px" /> INSCRIBIR
+  </a><a class="btn btn-info btn-xs pull-right" (click)="showRequisitos(2)">
+    <img src="assets/images2/info2.png" width="25px" height="25px" /> REQUISITOS
+  </a>
+  <a class="btn btn-info btn-xs pull-right" (click)="descargar('https://storage.googleapis.com/lasalle-archivos/Catequesis%20de%20Confirmacio%CC%81n.pdf');">
+    <img src="assets/images2/info2.png" width="25px" height="25px" /> CIRCULAR
+  </a></h2>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="5">Alumno</th>
+        </tr>
+        <tr>
+          <th style="width: 100px" class="text-center">C&oacute;digo</th>
+          <th scope="col" class="text-center">Nombre Completo</th>
+          <th scope="col" class="text-center">Grado</th>
+          <th scope="col" class="text-center">Grupo</th>
+          <th scope="col" class="text-center">Estado</th>
+          <th colspan="1" class="text-center">Constancia</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let Alumno of ListadoEstudiantes_confirmacion">
+          <td>{{ Alumno.codigo }}</td>
+
+          <td>
+            {{
+              Alumno.nombre_completo
+            }}
+          </td>
+          <td>{{ Alumno.grad_nombre }} - {{Alumno.seccion}}</td>
+          <td>{{ Alumno.grupo }}</td>
+          <td>{{estado(Alumno.estado)}}</td>
+
+          <td class="text-center">
+            <a
+              class="btn btn-info btn-xs"
+              (click)="descargar_confirmacion(Alumno.codigo)"
+              *ngIf="Alumno.estado == 2"
+            >
+              <img src="assets/images2/descarga.png" width="10px" height="10px" />
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<ng-container #vc></ng-container>
+<ng-template #modal_1>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times; </button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><strong>Inscripción Sacramento Primera Comunión</strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="CuerpoModal02" #myform2="ngForm" [formGroup]="form_registro"
+                        (ngSubmit)="PresentarRegistro(2); form_registro.reset(); closeDialog(); ">
+                        <fieldset id="ItemModal">
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Estudiante</label>
+                                <select id="codigo" name="codigo" class="form-control" (change)="change($event.target.value);" formControlName="codigo" [ngClass]="{'Incorrecto': form_registro.get('codigo').hasError('required') }">
+                                  <option value="0">Sin Asignar</option>
+                                  <option  *ngFor="let excusa of ListadoEstudiantes; let i = index" [value]="ListadoEstudiantes[i].estu_codigo">            {{
+                                    ListadoEstudiantes[i].estu_primernombre +
+                                      " " +
+                                      ListadoEstudiantes[i].estu_segundonombre +
+                                      " " +
+                                      (ListadoEstudiantes[i].estu_tercernombre ? ListadoEstudiantes[i].estu_tercernombre : " ") +
+                                      " " +
+                                      ListadoEstudiantes[i].estu_primerapellido +
+                                      " " +
+                                      ListadoEstudiantes[i].estu_segundoapellido
+                                  }} - {{ListadoEstudiantes[i].grad_nombre}} </option>
+                              </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-block btn-primary" *ngIf="
+                                !form_registro.get('codigo').hasError('required')">
+                                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                                    Inscribir
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Cancelar
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</ng-template>
+<ng-template #modal_2>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                      &times; </button>
+                  <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><strong>Inscripción Sacramento Confirmación</strong>
+                  </h4>
+              </div>
+              <div class="modal-body">
+                  <form id="CuerpoModal02" #myform2="ngForm" [formGroup]="form_registro"
+                      (ngSubmit)="PresentarRegistro(3); form_registro.reset(); closeDialog(); ">
+                      <fieldset id="ItemModal">
+                          <div class="form-group">
+                          </div>
+                          <div class="form-group col-md-12">
+                              <label>Estudiante</label>
+                              <select id="codigo" name="codigo" class="form-control" (change)="change($event.target.value);" formControlName="codigo" [ngClass]="{'Incorrecto': form_registro.get('codigo').hasError('required') }">
+                                <option value="0">Sin Asignar</option>
+                                <option  *ngFor="let excusa of ListadoEstudiantes; let i = index" [value]="ListadoEstudiantes[i].estu_codigo">            {{
+                                  ListadoEstudiantes[i].estu_primernombre +
+                                    " " +
+                                    ListadoEstudiantes[i].estu_segundonombre +
+                                    " " +
+                                    (ListadoEstudiantes[i].estu_tercernombre ? ListadoEstudiantes[i].estu_tercernombre : " ") +
+                                    " " +
+                                    ListadoEstudiantes[i].estu_primerapellido +
+                                    " " +
+                                    ListadoEstudiantes[i].estu_segundoapellido
+                                }} - {{ListadoEstudiantes[i].grad_nombre}} </option>
+                            </select>
+                          </div>
+                          <div class="form-group col-md-12">
+                              <button class="btn btn-block btn-primary" *ngIf="
+                              !form_registro.get('codigo').hasError('required')">
+                                  <span class="spinner-border spinner-border-sm mr-1"></span>
+                                  Inscribir
+                              </button>
+                          </div>
+                      </fieldset>
+                  </form>
+
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Cancelar
+                  </button>
+              </div>
+          </div>
+          <!-- /.modal-content -->
+      </div>
+      <!-- /.modal -->
+  </div>
+</ng-template>
+
+<ng-template #modal_requisitos>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                      &times; </button>
+                  <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><strong>Requisitos</strong>
+                  </h4>
+              </div>
+              <div class="modal-body">
+                  <textarea rows="15" name="texto_aprobacion" class="form-control" #text_aprobar style="border: none;" readonly *ngIf="comunion">
+Inscripciones del 22 de enero al 15 de febrero en las oficinas de la parroquiales de Iglesia La Merced, La Antigua Guatemala. 
+
+Primera comunión: 
+Requisitos
+- A partir de 8 años cumplidos
+- Certificado de Nacimiento (Original y Reciente)
+- Constancia de Bautizo (Original y Reciente) 
+- Entrega papelería y cancelar el monto de Q150.00 en Oficina de Parroquia Iglesia La Merced, Antigua Guatemala. 
+
+Al finalizar la inscripción en la parroquia, usted recibirá una constancia de inscripción la cual debe presentar en oficina de Pastoral.
+
+Ingresar a la plataforma LA SALLE ANTIGUA Go, en el espacio de pastoral inscribir a su hijo o hija al sacramento que corresponde. 
+
+Viernes 16 de febrero inicio de grupos sacramentales, traer almuerzo. 
+
+Viva Jesús en nuestros corazones... por siempre.
+          </textarea>
+          <textarea rows="15" name="texto_aprobacion" class="form-control" #text_aprobar style="border: none;" readonly *ngIf="confirmacion">
+Inscripciones del 22 de enero al 15 de febrero en las oficinas de la parroquiales de Iglesia La Merced, La Antigua Guatemala. 
+
+Confirmación
+Requisitos
+- De 14 años a 17 años
+- Certificado de Nacimiento (Original y Reciente)
+- Constancia de Bautizo (Original y Reciente)
+- Los padrinos presentar constancia de matrimonio o constancia de soltería RENAP
+
+Entrega papelería y cancelar el monto de Q150.00 en Oficina de Parroquia Iglesia La Merced, Antigua Guatemala.
+
+Al finalizar la inscripción en la parroquia, usted recibirá una constancia de inscripción la cual debe presentar en oficina de Pastoral.
+
+Ingresar a la plataforma LA SALLE ANTIGUA Go, en el espacio de pastoral inscribir a su hijo o hija al sacramento que corresponde.
+
+Viernes 16 de febrero inicio de grupos sacramentales, traer almuerzo.
+
+Viva Jesús en nuestros corazones... por siempre.
+       </textarea>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Cancelar
+                  </button>
+              </div>
+          </div>
+          <!-- /.modal-content -->
+      </div>
+      <!-- /.modal -->
+  </div>
+</ng-template>

@@ -1,0 +1,196 @@
+<div class="portlet-title">
+    <div class="caption">
+        <h1 class="text-center"><strong> Estado de Cuenta Detalle                 <img src="assets/images2/detallecuenta.png" width="100 px" height="100px" class="text-right">        </strong>
+            <div class="text-right ">
+                </div>
+        </h1>
+    
+    </div>
+</div>
+<div class="tools">
+    
+</div>
+
+<div  class="portlet-body">
+    <div>
+        <h3>Nombre: {{nombre}}</h3>
+        <h3>Grado: {{grado}}</h3>
+    </div>
+    <div style="border-bottom: solid black 5px; margin-bottom: 10px; margin-top: 5%;">
+        <h1>Mis Saldos</h1>
+    </div>
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+         
+            <tr>
+                
+                <th style="width:100px;" class="text-center">No. Referencia</th>
+                <th style="width:100px;" class="text-center">Tipo</th>
+                <th scope="col" class="text-center">Mes</th>
+                <th scope="col" class="text-center">Cargo</th>
+                <th scope="col" class="text-center">Abono</th>                
+                <th scope="col" class="text-center">Saldo</th>                
+                <th scope="col" class="text-center">Estado</th> 
+                
+            </tr>   
+       
+
+        </thead>
+        
+       <tbody>
+
+            <tr *ngFor="let saldo of Detalle_General"> 
+                    
+    
+                
+          
+                <td class="text-center">{{saldo.no}}</td> 
+                <td class="text-center">{{saldo.concepto==1?'Factura':'Anticipo'}} </td>
+                <td class="text-center">{{saldo.mes}} </td> 
+                <td class="text-right">Q.{{saldo.cargo}} </td> 
+                <td class="text-right">Q.{{saldo.abono}} </td> 
+                <td class="text-right">Q.{{saldo.saldo}} </td> 
+                <td class="text-center"><img src="assets/images/check1.png" width="30px" height="30px" *ngIf="validardia(saldo.saldo);"><img src="assets/images/nocheck1.png" width="30px" height="30px" *ngIf="!validardia(saldo.saldo);"></td>        
+
+              
+                
+                </tr>
+        </tbody>
+    </table>
+
+    </div>
+
+    <div style="border-bottom: solid black 5px; margin-bottom: 10px;">
+    <h1>Resumen de Cargos</h1>
+</div>
+    <div class="table-responsive">
+        <table  class="table table-bordered ">
+            <thead>
+             
+                <tr>
+                    
+                    <th style="width:100px;" class="text-center">No. Referencia</th>
+                    <th style="width:100px;" class="text-center">Tipo</th>
+                    <th scope="col" class="text-center">Mes</th>
+                    <th scope="col" class="text-center">Cargo</th>
+                    <th scope="col" class="text-center">Fecha Aplicación</th>
+                    
+                </tr>   
+           
+    
+            </thead>
+            
+           <tbody>
+    
+                <tr *ngFor="let saldo of Detalle_Cargos"> 
+                        
+        
+                    
+              
+                    <td class="text-center">{{saldo.no}}</td> 
+                    <td class="text-center">{{saldo.concepto==1?'Factura':'Anticipo'}} </td>
+                    <td class="text-center">{{saldo.mes}} </td> 
+                    <td class="text-center">Q.{{saldo.cargo}} </td> 
+                    <td class="text-center">{{conv_fecha(saldo.fecha)}} </td> 
+                    
+                    </tr>
+            </tbody>
+        </table>
+    
+        </div>
+
+        <div style="border-bottom: solid black 5px; margin-bottom: 10px;">
+            <h1>Resumen de Abonos</h1>
+        </div>
+            <div class="table-responsive">
+                <table  class="table table-bordered ">
+                    <thead>
+                     
+                        <tr>
+                            
+                            <th style="width:100px;" class="text-center">No. Referencia</th>
+                            <th style="width:100px;" class="text-center">Tipo</th>
+                            <th scope="col" class="text-center">Mes</th>
+                            <th scope="col" class="text-center">No. Documento</th>
+                            <th scope="col" class="text-center">Abono</th>
+                            <th scope="col" class="text-center">Fecha Aplicación</th>
+
+                            
+                        </tr>   
+                   
+            
+                    </thead>
+                    
+                   <tbody>
+            
+                        <tr *ngFor="let saldo of Detalle_Abonos"> 
+                                
+                
+                            
+                      
+                            <td class="text-center">{{saldo.no}}</td> 
+                            <td class="text-center">{{saldo.concepto==1?'Factura':'Anticipo'}} </td>
+                            <td class="text-center">{{saldo.mes}} </td> 
+
+                            <td class="text-center">{{saldo.documento}} </td> 
+                            <td class="text-center">Q.{{saldo.abono}} </td> 
+                            <td class="text-center">{{conv_fecha(saldo.fecha)}} </td> 
+
+                            
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+
+                    <div style="border-bottom: solid black 5px; margin-bottom: 10px; margin-top: 5%;">
+        <h1>Resumen Anticipos</h1>
+    </div>
+   
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+         
+            <tr>
+                
+                <th style="width:100px;" class="text-center">No. Referencia</th>
+                <th style="width:100px;" class="text-center">Tipo</th>
+                <th scope="col" class="text-center">Mes</th>
+                <th scope="col" class="text-center">Cargo</th>
+                <th scope="col" class="text-center">Abono</th>                
+                <th scope="col" class="text-center">Saldo</th>                
+                <th scope="col" class="text-center">Estado</th> 
+                
+            </tr>   
+       
+
+        </thead>
+        
+       <tbody>
+
+            <tr *ngFor="let saldo of Detalle_Anticipos"> 
+                    
+    
+                
+          
+                <td class="text-center">{{saldo.no}}</td> 
+                <td class="text-center">{{saldo.concepto==1?'Factura':'Anticipo'}} </td>
+                <td class="text-center">{{saldo.mes}} </td> 
+                <td class="text-right">Q.{{saldo.cargo}} </td> 
+                <td class="text-right">Q.{{saldo.abono}} </td> 
+                <td class="text-right">Q.{{saldo.saldo}} </td> 
+                <td class="text-center"><img src="assets/images/check1.png" width="30px" height="30px" *ngIf="validar_anticipo_aplicado(saldo.saldo);"><img src="assets/images/nocheck1.png" width="30px" height="30px" *ngIf="!validar_anticipo_aplicado(saldo.saldo);"></td>        
+
+              
+                
+                </tr>
+        </tbody>
+    </table>
+                <div class="col-md-3" *ngIf="!spinner">
+                    <button class="btn btn-block btn-primary pull-right" (click)="DescargarReporte();">
+                        <span class="spinner-border spinner-border-sm mr-1"></span>
+                        Descargar PDF
+                    </button>
+                </div>
+                </div>
+</div>

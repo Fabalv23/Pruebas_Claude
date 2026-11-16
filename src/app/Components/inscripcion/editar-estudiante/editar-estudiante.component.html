@@ -1,0 +1,1293 @@
+<form [formGroup]="form_inscripcion" novalidate id="inscripcion">
+    <h1 class="text-center">FICHA DE INSCRIPCIÓN</h1>
+    <div id="lleno"></div>
+    <div class="alert alert-info ">
+        <strong> <img src="assets/images2/info2.png" width="40 px" height="40px" class="text-right"
+                style="margin-right: 5%;"> Atención! </strong>Revisa bien que no quede ningún campo del formulario
+        resaltado con rojo para poder guardar tu información, importante colocar NIT del responsable del estudiante.
+        <button type="button" class="close" data-dismiss="alert" style="color: black;">&times;</button>
+    </div>
+  <!--  <div>
+        <img src="http://localhost:4200/assets/images2/carpeta1.png" title="Foto de Perfil" width="200" height="250" style="float: right;" />
+    </div>-->
+<div>
+    <div class="form-group col-md-12">
+    <h1>
+        &nbsp;
+        <img src="assets/images2/personal.png" width="60 px" height="50px" class="text-right" style="margin-right: 5%;">
+        <strong> DATOS DEL ESTUDIANTE </strong>
+    </h1>
+    </div>
+    <div class="form-group col-md-12">
+        <label>Código Alumno</label>
+        <input type="text" name="Estu_Codigo" formControlName="Estu_Codigo" class="form-control"
+            value="@ViewBag.Estu_Codigo" readonly>
+
+    </div>
+    <div class="form-group col-md-6">
+        <label>Primer Apellido</label>
+
+        <input type="text" name="Estu_PrimerApellido" formControlName="Estu_PrimerApellido" class="form-control"
+            value="@ViewBag.Estu_PrimerApellido" readonly>
+
+    </div>
+    <div class="form-group col-md-6">
+        <label>Segundo Apellido</label>
+
+        <input type="text" name="Estu_SegundoApellido" formControlName="Estu_SegundoApellido" class="form-control"
+            value="@ViewBag.Estu_SegundoApellido" readonly>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>Primer Nombre</label>
+
+        <input type="text" name="Estu_PrimerNombre" formControlName="Estu_PrimerNombre" class="form-control"
+            value="@ViewBag.Estu_PrimerNombre" readonly>
+    </div>
+    <div class="form-group col-md-4">
+        <label>Segundo Nombre</label>
+
+        <input type="text" name="Estu_SegundoNombre" formControlName="Estu_SegundoNombre" class="form-control"
+            value="@ViewBag.Estu_SegundoNombre" readonly>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>Tercer Nombre</label>
+
+        <input type="text" name="Estu_TecerNombre" formControlName="Estu_TercerNombre" class="form-control"
+            value="@ViewBag.Estu_TercerNombre" readonly>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label for="sexo_estudiante">Género</label>
+        <select formControlName="sexo_estudiante" disabled="disabled_selects" id="sexo_estudiante" class="form-control">
+            <option *ngFor="let sexo of sexos; let i = index" [value]="sexos[i].id_sexo">
+                {{sexos[i].sexo}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Fecha Nacimiento</label>
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            <input type="text" [textMask]="{mask: mask_fechanacimiento}" class="form-control" placeholder="dd/mm/yyyy"
+                id="fecha_nacimiento" formControlName="fecha_nacimiento" readonly>
+        </div>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="nacionalidad_estudiante">Nacionalidad</label>
+        <select formControlName="nacionalidad_estudiante" disabled="disabled_selects" id="nacionalidad_estudiante"
+            class="form-control">
+            <option *ngFor="let nac of nacionalidades; let i = index" [value]="nacionalidades[i].nac_id">
+                {{nacionalidades[i].nacionalidad}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label>CUI</label>
+        <input type="text" name="Estu_Cui"
+            [ngClass]="{'Incorrecto':form_inscripcion.get('Estu_Cui').hasError('required') || form_inscripcion.get('Estu_Cui').hasError('pattern') }"
+            formControlName="Estu_Cui" [textMask]="{mask: cui_mask}" class="form-control" value="">
+    </div>
+    <div class="form-group col-md-4">
+        <label for="departamentos">Departamento</label>
+        <select (change)="SelecccionarMunisEstudiante($event.target.value)" formControlName="departamento_estudiante"
+            id="departamentos" class="form-control">
+            <option *ngFor="let dep of departamentos; let i = index" [value]="departamentos[i].dep_id">
+                {{departamentos[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipios">Municipio</label>
+        <select formControlName="municipio_estudiante" id="municipios" class="form-control">
+            <option *ngFor="let dep of municipios; let i = index" [value]="municipios[i].muni_id">
+                {{municipios[i].municipio}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="departamentos1">Departamento Vive</label>
+        <select (change)="SelecccionarMunisEstudianteVive($event.target.value)" formControlName="departamento_vive"
+            id="departamentos" class="form-control">
+            <option *ngFor="let dep of departamentos1; let i = index" [value]="departamentos1[i].dep_id">
+                {{departamentos1[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipios1">Municipio Vive</label>
+        <select formControlName="municipio_vive" (change)="ObtenerDireccion();" id="municipios" class="form-control">
+            <option *ngFor="let dep of municipios1; let i = index" [value]="municipios1[i].muni_id">
+                {{municipios1[i].municipio}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label>Ubicacion Vive</label>
+        <input type="text" name="ubicacionvive" value="{{vive_direccion}}" class="form-control" id="ubicacionvive"
+            readonly />
+    </div>
+    <div class="form-group col-md-12">
+        <label>Dirección del Estudiante Min 10 caracteres</label>
+        <input type="text" maxlength="300" minlength="10" (change)="CompletarDirec();"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('estu_direc').hasError('minlength')  || form_inscripcion.get('estu_direc').hasError('required') }"
+            class="form-control" id="estu_direc" formControlName="estu_direc" />
+    </div>
+
+
+    <div class="form-group col-md-12">
+        <label for="vive">Con Quien Vive el Alumno</label>
+        <select formControlName="vive" id="vive" name="vive" class="form-control">
+            <option value="0">Sin Asignar</option>
+            <option *ngFor="let dep of vive; let i = index" [value]="vive[i].vive_id">
+                {{vive[i].vive_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="etnicos">Grupo Etnico</label>
+        <select formControlName="etnicos" id="etnicos" name="etnicos" class="form-control">
+            <option value="0">Sin Asignar</option>
+            <option *ngFor="let dep of etnicos; let i = index" [value]="etnicos[i].etnico_id">
+                {{etnicos[i].etnico_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="religiones">Religión</label>
+        <select disabled="disabled_selects" formControlName="religiones" id="religiones" name="religiones"
+            class="form-control">
+            <option *ngFor="let dep of religiones; let i = index" [value]="religiones[i].rel_id">
+                {{religiones[i].religion}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Bautizo</label>
+
+        <input type="checkbox" name="Estu_Bautizo" [checked]="Estu_Bautizo" (change)="checkEstu_Bautizo();"
+            formControlName="Estu_Bautizo"><br />
+        <label>Comunión</label>
+
+        <input type="checkbox" name="Estu_Comunion" [checked]="Estu_Comunion" (change)="checkEstu_Comunion();"
+            formControlName="Estu_Comunion"> <br />
+        <label>Confirmación</label>
+        <input type="checkbox" name="Estu_Confirmacion" [checked]="Estu_Confirmacion"
+            (change)="checkEstu_Confirmacion();" formControlName="Estu_Confirmacion"> <br />
+
+
+
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="grados">Grado que cursará</label>
+        <select disabled="disabled_selects" formControlName="grados" id="grados" class="form-control">
+            <option *ngFor="let nac of grados; let i = index" [value]="grados[i].grad_id">
+                {{grados[i].grad_nombre}}
+            </option>
+        </select>
+    </div>
+
+
+    <div class="form-group col-md-6">
+        <label for="jornadas">Jornada </label>
+        <select formControlName="jornadas" id="jornadas" class="form-control">
+            <option *ngFor="let nac of jornadas; let i = index" [value]="jornadas[i].id_jornada">
+                {{jornadas[i].nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Tiene Hermanos Estudiando aqui </label>
+        <select name="Estu_TieneHermanos" formControlName="Estu_TieneHermanos" class="form-control">
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Cuántos?</label>
+        <input type="number" formControlName="Estu_CuantosHermanos" class="form-control" max="99" min="0">
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Grados</label>
+        <input type="text" formControlName="Estu_Grados" maxlength="500" class="form-control">
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Centro Educativo Anterior (Solo para Primer Ingreso)</label>
+        <input type="text" formControlName="Estu_CentroEducativo" maxlength="300" class="form-control" readonly>
+    </div>
+    <div class="form-group col-md-4">
+        <label>Teléfono Domiciliar del Estudiante</label>
+        <input type="text" [textMask]="{mask: mask_tel}"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_EstuDomiciliarTelefono').hasError('pattern')}"
+            class="form-control" placeholder="" id="Estu_EstuDomiciliarTelefono"
+            formControlName="Estu_EstuDomiciliarTelefono">
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>Teléfono Celular del Estudiante</label>
+        <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder="" id="Estu_TelefonoCelular"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoCelular').hasError('pattern')}"
+            formControlName="Estu_TelefonoCelular">
+    </div>
+    <div class="form-group col-md-4">
+        <label>Correo Electrónico del Estudiante</label>
+        <input type="text" maxlength="50" class="form-control" placeholder="" id="Estu_Email"
+            formControlName="Estu_Email" readonly>
+    </div>
+
+    <div class="form-group col-md-12">
+        <h1>
+            &nbsp;
+            <img src="assets/images2/familia.png" width="60 px" height="50px" class="text-right"
+                style="margin-right: 5%;"> <strong> DATOS FAMILIARES </strong>
+        </h1>
+    </div>
+
+    <div class="form-group col-md-12">
+        <h3>
+            &nbsp;
+            DATOS DEL PADRE
+        </h3>
+    </div>
+
+
+    <div class="form-group col-md-6">
+        <label>Nombres del Padre</label>
+        <input type="text" name="Estu_NombrePadre" formControlName="Estu_NombrePadre"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_NombrePadre').hasError('pattern')}"
+            class="form-control">
+
+    </div>
+    <div class="form-group col-md-6">
+        <label>Apellidos del padre</label>
+        <input type="text" name="Estu_ApellidoPadre" formControlName="Estu_ApellidoPadre" class="form-control"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_ApellidoPadre').hasError('pattern')}" value="">
+    </div>
+
+    <div class="form-group col-md-7">
+        <label for="nacionalidades">Nacionalidad</label>
+        <select formControlName="nacionalidad_padre" id="nacionalidad_padre" class="form-control">
+            <option value="0">Sin Asignar</option>
+            <option *ngFor="let nac of nacionalidades let i = index" [value]="nacionalidades[i].nac_id">
+                {{nacionalidades[i].nacionalidad}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-5">
+        <label>Edad</label>
+        <input type="number" maxlength="2" min="0" max="99" class="form-control" placeholder="" id="Estu_EdadPadre"
+            formControlName="Estu_EdadPadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>DPI</label>
+        <input type="text"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_DpiPasaportePadre').hasError('pattern')}"
+            name="Estu_DpiPasaportePadre" formControlName="Estu_DpiPasaportePadre" [textMask]="{mask: cui_mask}"
+            class="form-control" value="">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="departamento_padre">Departamento</label>
+        <select (change)="SelecccionarMunisPadre($event.target.value)" formControlName="departamento_padre"
+            id="departamentos" class="form-control">
+            <option value="0">Sin Asignar</option>
+            <option *ngFor="let dep of departamentos2; let i = index" [value]="departamentos2[i].dep_id">
+                {{departamentos2[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipio_padre">Municipio</label>
+        <select (change)="ObtenerDireccion1();" formControlName="municipio_padre" id="municipios" class="form-control">
+            <option value="0">Sin Asignar</option>
+            <option *ngFor="let dep of municipios2; let i = index" [value]="municipios2[i].muni_id">
+                {{municipios2[i].municipio}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Extendida en</label>
+        <input type="text" id="Estu_ExtendidoPadre" formControlName="Estu_ExtendidoPadre" class="form-control"
+            value="{{extendida_padre}}" readonly>
+
+    </div>
+    <div class="form-group col-md-5">
+        <label>Número de Identificación Tributaria (NIT)</label>
+        <input type="text" id="Estu_NitPadre" formControlName="Estu_NitPadre" class="form-control" maxlength="15"
+        [ngClass]="{'Incorrecto': !validarNitResponsable() && this.form_inscripcion.controls.Estu_NitPadre.value.length==0 && this.form_inscripcion.controls.Responsable.value==2}">
+    </div>
+
+    <div class="form-group col-md-3">
+        <label for="estadocivil_padre">Estado Civil</label>
+        <select formControlName="estadocivil_padre" id="estadocivil" class="form-control">
+            <option value="0">Sin Asignar</option>
+            <option *ngFor="let dep of estadocivil; let i = index" [value]="estadocivil[i].estado_id">
+                {{estadocivil[i].estado_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="departamento_padre_vive">Departamento donde vive</label>
+        <select (change)="SelecccionarMunisPadreVive($event.target.value)" formControlName="departamento_padre_vive"
+            id="departamentos" class="form-control">
+
+            <option *ngFor="let dep of departamentos3; let i = index" [value]="departamentos3[i].dep_id">
+                {{departamentos3[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipio_padre_vive">Municipio donde vive</label>
+        <select (change)="ObtenerDireccion2();" formControlName="municipio_padre_vive" id="municipios"
+            class="form-control">
+
+            <option *ngFor="let dep of municipios3; let i = index" [value]="municipios3[i].muni_id">
+                {{municipios3[i].municipio}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Ubicacion Vive</label>
+        <input type="text" name="ubicacionvive" value="{{vive_direccion_padre}}" class="form-control" id="ubicacionvive"
+            readonly />
+    </div>
+
+    <div class="form-group col-md-12">
+        <label>Dirección Particular del Padre</label>
+        <input type="text" (change)="CompletarDirec1();" class="form-control" maxlength="300"
+            formControlName="Estu_DirecPadre" id="Estu_DirecPadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Teléfono Domiciliar del Padre</label>
+        <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder="" id="Estu_TelefonoPadre"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoPadre').hasError('pattern')}"
+            formControlName="Estu_TelefonoPadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Celular del Padre</label>
+        <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder="" id="Estu_CelularPadre"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_CelularPadre').hasError('pattern')}"
+            formControlName="Estu_CelularPadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Correo Electrónico del Padre</label>
+        <input type="text" class="form-control" placeholder="" id="Estu_EmailPadre" formControlName="Estu_EmailPadre">
+    </div>
+
+
+    <div class="form-group col-md-4">
+        <label>Profesión del Padre</label>
+        <input type="text" class="form-control" placeholder="" id="Estu_ProfesionPadre"
+            formControlName="Estu_ProfesionPadre">
+    </div>
+
+    <div class="form-group col-md-8">
+        <label>Lugar de Trabajo del Padre</label>
+        <input type="text" class="form-control" placeholder="" id="Estu_LugarTrabajoPadre"
+            formControlName="Estu_LugarTrabajoPadre">
+    </div>
+
+
+    <div class="form-group col-md-4">
+        <label for="departamento_padre_trabajo">Departamento Trabajo</label>
+        <select (change)="SelecccionarMunisPadreTrabajo($event.target.value)"
+            formControlName="departamento_padre_trabajo" id="departamentos" class="form-control">
+            <option *ngFor="let dep of departamentos4; let i = index" [value]="departamentos4[i].dep_id">
+                {{departamentos4[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipio_padre_trabajo">Municipio Trabajo</label>
+        <select (change)="ObtenerDireccion3();" formControlName="municipio_padre_trabajo" id="municipios"
+            class="form-control">
+            <option *ngFor="let dep of municipios4; let i = index" [value]="municipios4[i].muni_id">
+                {{municipios4[i].municipio}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Ubicación en</label>
+        <input type="text" id="ubicaciontrabajo" class="form-control" value="{{direc_trabajo_padre}}" readonly>
+
+    </div>
+    <div class="form-group col-md-12">
+        <label>Dirección de Trabajo del Padre</label>
+        <input (change)="CompletarDirec2();" type="text" maxlength="300" class="form-control" placeholder=""
+            id="Estu_DirecTrabajoPadre" formControlName="Estu_DirecTrabajoPadre">
+    </div>
+
+    <div class="form-group col-md-12">
+        <label>Teléfono Trabajo del Padre</label>
+        <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder=""
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoTrabajoPadre').hasError('pattern')}"
+            id="Estu_TelefonoTrabajoPadre" formControlName="Estu_TelefonoTrabajoPadre">
+    </div>
+
+
+    <div class="form-group col-md-12">
+        <h3>
+            &nbsp;
+            DATOS DE LA MADRE
+        </h3>
+    </div>
+
+
+    <div class="form-group col-md-6">
+        <label>Nombres de la Madre</label>
+        <input type="text" name="Estu_NombreMadre" formControlName="Estu_NombreMadre"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_NombreMadre').hasError('pattern')}"
+            class="form-control">
+
+    </div>
+    <div class="form-group col-md-6">
+        <label>Apellidos de la Madre</label>
+        <input type="text" name="Estu_ApellidoMadre" formControlName="Estu_ApellidoMadre" class="form-control"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_ApellidoMadre').hasError('pattern')}" value="">
+    </div>
+
+    <div class="form-group col-md-7">
+        <label for="nacionalidades">Nacionalidad</label>
+        <select formControlName="nacionalidad_madre" id="nacionalidad_madre" class="form-control">
+            <option *ngFor="let nac of nacionalidades let i = index" [value]="nacionalidades[i].nac_id">
+                {{nacionalidades[i].nacionalidad}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-5">
+        <label>Edad</label>
+        <input type="number" maxlength="2" min="0" max="99" class="form-control" placeholder="" id="Estu_EdadMadre"
+            formControlName="Estu_EdadMadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>DPI</label>
+        <input type="text" name="Estu_DpiPasaporteMadre" formControlName="Estu_DpiPasaporteMadre"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_DpiPasaporteMadre').hasError('pattern')}"
+            [textMask]="{mask: cui_mask}" class="form-control" value="">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="departamento_madre">Departamento</label>
+        <select (change)="SelecccionarMunisMadre($event.target.value)" formControlName="departamento_madre"
+            id="departamentos" class="form-control">
+            <option *ngFor="let dep of departamentos5; let i = index" [value]="departamentos5[i].dep_id">
+                {{departamentos5[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipio_madre">Municipio</label>
+        <select (change)="ObtenerDireccion4();" formControlName="municipio_madre" id="municipios" class="form-control">
+            <option *ngFor="let dep of municipios5; let i = index" [value]="municipios5[i].muni_id">
+                {{municipios5[i].municipio}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Extendida en</label>
+        <input type="text" id="Estu_ExtendidoMadre" formControlName="Estu_ExtendidoMadre" class="form-control"
+            value="{{extendida_madre}}" readonly>
+
+    </div>
+    <div class="form-group col-md-5">
+        <label>Número de Identificación Tributaria (NIT)</label>
+        <input type="text" id="Estu_NitMadre" formControlName="Estu_NitMadre" class="form-control" maxlength="15"
+        [ngClass]="{'Incorrecto': !validarNitResponsable() && this.form_inscripcion.controls.Estu_NitMadre.value.length==0 && this.form_inscripcion.controls.Responsable.value==1}"> 
+    </div>
+
+    <div class="form-group col-md-3">
+        <label for="estadocivil_madre">Estado Civil</label>
+        <select formControlName="estadocivil_madre" id="estadocivil" class="form-control">
+            <option *ngFor="let dep of estadocivil; let i = index" [value]="estadocivil[i].estado_id">
+                {{estadocivil[i].estado_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="departamento_madre_vive">Departamento donde vive</label>
+        <select (change)="SelecccionarMunisMadreVive($event.target.value)" formControlName="departamento_madre_vive"
+            id="departamentos" class="form-control">
+            <option *ngFor="let dep of departamentos6; let i = index" [value]="departamentos6[i].dep_id">
+                {{departamentos6[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipio_madre_vive">Municipio donde vive</label>
+        <select (change)="ObtenerDireccion5();" formControlName="municipio_madre_vive" id="municipios"
+            class="form-control">
+            <option *ngFor="let dep of municipios6; let i = index" [value]="municipios6[i].muni_id">
+                {{municipios6[i].municipio}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Ubicacion Vive</label>
+        <input type="text" name="ubicacionvive" value="{{vive_direccion_nadre}}" class="form-control" id="ubicacionvive"
+            readonly />
+    </div>
+
+    <div class="form-group col-md-12">
+        <label>Dirección Particular de la Madre</label>
+        <input (change)="CompletarDirec3();" type="text" class="form-control" maxlength="300"
+            formControlName="Estu_DirecMadre" id="Estu_DirecMadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Teléfono Domiciliar de la Madre</label>
+        <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder="" id="Estu_TelefonoMadre"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoMadre').hasError('pattern')}"
+            formControlName="Estu_TelefonoMadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Celular de la Madre</label>
+        <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder="" id="Estu_CelularMadre"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_CelularMadre').hasError('pattern')}"
+            formControlName="Estu_CelularMadre">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Correo Electrónico de la Madre</label>
+        <input type="text" class="form-control" placeholder="" id="Estu_EmailMadre" formControlName="Estu_EmailMadre">
+    </div>
+
+
+    <div class="form-group col-md-4">
+        <label>Profesión de la Madre</label>
+        <input type="text" class="form-control" placeholder="" id="Estu_ProfesionMadre"
+            formControlName="Estu_ProfesionMadre">
+    </div>
+
+    <div class="form-group col-md-8">
+        <label>Lugar de Trabajo de la Madre</label>
+        <input type="text" class="form-control" placeholder="" maxlength="300" id="Estu_LugarTrabajoMadre"
+            formControlName="Estu_LugarTrabajoMadre">
+    </div>
+
+
+    <div class="form-group col-md-4">
+        <label for="departamento_madre_trabajo">Departamento Trabajo</label>
+        <select (change)="SelecccionarMunisMadreTrabajo($event.target.value)"
+            formControlName="departamento_madre_trabajo" id="departamentos" class="form-control">
+            <option *ngFor="let dep of departamentos7; let i = index" [value]="departamentos7[i].dep_id">
+                {{departamentos7[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="municipio_madre_trabajo">Municipio Trabajo</label>
+        <select (change)="ObtenerDireccion6();" formControlName="municipio_madre_trabajo" id="municipios"
+            class="form-control">
+            <option *ngFor="let dep of municipios7; let i = index" [value]="municipios7[i].muni_id">
+                {{municipios7[i].municipio}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>Ubicación en</label>
+        <input type="text" id="ubicaciontrabajo" class="form-control" value="{{direc_trabajo_madre}}" readonly>
+
+    </div>
+    <div class="form-group col-md-12">
+        <label>Dirección de Trabajo de la Madre</label>
+        <input type="text" maxlength="300" class="form-control" placeholder="" id="Estu_DirecTrabajoMadre"
+            (change)="CompletarDirec4();" formControlName="Estu_DirecTrabajoMadre">
+    </div>
+
+    <div class="form-group col-md-12">
+        <label>Teléfono Trabajo de la Madre</label>
+        <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder=""
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoTrabajoMadre').hasError('pattern')}"
+            id="Estu_TelefonoTrabajoMadre" formControlName="Estu_TelefonoTrabajoMadre">
+    </div>
+
+
+
+    <div class="form-group col-md-12">
+        <label>Quién es el responsable del estudiante?</label>
+        <select [ngClass]="{'Incorrecto': form_inscripcion.get('Responsable').hasError('required')}"
+            (change)="SeleccionarResponsable($event.target.value)" name="Responsable" formControlName="Responsable"
+            class="form-control" id="Responsable">
+            <option value=0>SIN ASIGNAR</option>
+            <option value=1>MAMA</option>
+            <option value=2>PAPA</option>
+            <option value=3>RESPONSABLE</option>
+        </select>
+    </div>
+
+    <div id="Responsable" *ngIf="seccion_responsable">
+        <div class="form-group col-md-12">
+            <h3>
+                &nbsp;
+                DATOS DEL RESPONSABLE
+            </h3>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label>Nombres del Responsable</label>
+            <input type="text" name="Estu_NombreResponsable" formControlName="Estu_NombreResponsable"
+                [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_NombreResponsable').hasError('pattern')}"
+                class="form-control">
+
+        </div>
+        <div class="form-group col-md-6">
+            <label>Apellidos del Responsable</label>
+            <input type="text" name="Estu_ApellidoResponsable" formControlName="Estu_ApellidoResponsable"
+                class="form-control"
+                [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_ApellidoResponsable').hasError('pattern')}"
+                value="">
+        </div>
+
+        <div class="form-group col-md-7">
+            <label for="nacionalidades">Nacionalidad</label>
+            <select formControlName="nacionalidad_Responsable" id="nacionalidad_Responsable" class="form-control">
+                <option *ngFor="let nac of nacionalidades let i = index" [value]="nacionalidades[i].nac_id">
+                    {{nacionalidades[i].nacionalidad}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-5">
+            <label>Edad</label>
+            <input type="number" maxlength="2" min="0" max="99" class="form-control" placeholder=""
+                id="Estu_EdadResponsable" formControlName="Estu_EdadResponsable">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>DPI</label>
+            <input type="text" name="Estu_DpiPasaporteResponsable" formControlName="Estu_DpiPasaporteResponsable"
+                [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_DpiPasaporteResponsable').hasError('pattern')}"
+                [textMask]="{mask: cui_mask}" class="form-control" value="">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="departamento_responsable">Departamento</label>
+            <select (change)="SelecccionarMunisResp($event.target.value)" formControlName="departamento_responsable"
+                id="departamentos" class="form-control">
+                <option *ngFor="let dep of departamentos8; let i = index" [value]="departamentos8[i].dep_id">
+                    {{departamentos8[i].departamento}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="municipio_responsable">Municipio</label>
+            <select (change)="ObtenerDireccion7();" formControlName="municipio_responsable" id="municipios"
+                class="form-control">
+                <option *ngFor="let dep of municipios8; let i = index" [value]="municipios8[i].muni_id">
+                    {{municipios8[i].municipio}}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>Extendida en</label>
+            <input type="text" id="Estu_ExtendidoResponsable" formControlName="Estu_ExtendidoResponsable"
+                class="form-control" value="{{extendida_responsable}}" readonly>
+
+        </div>
+        <div class="form-group col-md-5">
+            <label>Número de Identificación Tributaria (NIT)</label>
+            <input type="text" id="Estu_NitResponsable" formControlName="Estu_NitResponsable" class="form-control"
+                maxlength="15" [ngClass]="{'Incorrecto': !validarNitResponsable() && this.form_inscripcion.controls.Estu_NitResponsable.value.length==0 && this.form_inscripcion.controls.Responsable.value==3 }">
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="estadocivil_responsable">Estado Civil</label>
+            <select formControlName="estadocivil_responsable" id="estadocivil" class="form-control">
+                <option *ngFor="let dep of estadocivil; let i = index" [value]="estadocivil[i].estado_id">
+                    {{estadocivil[i].estado_nombre}}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="departamento_responsable_vive">Departamento donde vive</label>
+            <select (change)="SelecccionarMunisRespVive($event.target.value)"
+                formControlName="departamento_responsable_vive" id="departamentos" class="form-control">
+                <option *ngFor="let dep of departamentos9; let i = index" [value]="departamentos9[i].dep_id">
+                    {{departamentos9[i].departamento}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="municipio_responsable_vive">Municipio donde vive</label>
+            <select (change)="ObtenerDireccion8();" formControlName="municipio_responsable_vive" id="municipios"
+                class="form-control">
+                <option *ngFor="let dep of municipios9; let i = index" [value]="municipios9[i].muni_id">
+                    {{municipios9[i].municipio}}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>Ubicacion Vive</label>
+            <input type="text" name="ubicacionvive" value="{{vive_direccion_responsable}}" class="form-control"
+                id="ubicacionvive" readonly />
+        </div>
+        <div class="form-group col-md-12">
+            <label>Dirección Particular del Responsable</label>
+            <input (change)="CompletarDirec5();" type="text" class="form-control" maxlength="300"
+                formControlName="Estu_DirecResponsable" id="Estu_DirecResponsable">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>Teléfono Domiciliar del Responsable</label>
+            <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder=""
+                [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoResponsable').hasError('pattern')}"
+                id="Estu_TelefonoResponsable" formControlName="Estu_TelefonoResponsable">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>Celular del Responsable</label>
+            <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder=""
+                [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_CelularResponsable').hasError('pattern')}"
+                id="Estu_CelularResponsable" formControlName="Estu_CelularResponsable">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>Correo Electrónico del Responsable</label>
+            <input type="text" class="form-control" placeholder="" id="Estu_EmailResponsable"
+                formControlName="Estu_EmailResponsable">
+        </div>
+
+
+        <div class="form-group col-md-4">
+            <label>Profesión del Responsable</label>
+            <input type="text" class="form-control" placeholder="" id="Estu_ProfesionResponsable"
+                formControlName="Estu_ProfesionResponsable">
+        </div>
+
+        <div class="form-group col-md-8">
+            <label>Lugar de Trabajo del Responsable</label>
+            <input type="text" class="form-control" placeholder="" maxlength="300" id="Estu_LugarTrabajoResponsable"
+                formControlName="Estu_LugarTrabajoResponsable">
+        </div>
+
+
+        <div class="form-group col-md-4">
+            <label for="departamento_responsable_trabajo">Departamento Trabajo</label>
+            <select (change)="SelecccionarMunisRespTrabajo($event.target.value)"
+                formControlName="departamento_responsable_trabajo" id="departamentos" class="form-control">
+                <option *ngFor="let dep of departamentos10; let i = index" [value]="departamentos10[i].dep_id">
+                    {{departamentos10[i].departamento}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="municipio_responsable_trabajo">Municipio Trabajo</label>
+            <select (change)="ObtenerDireccion9();" formControlName="municipio_responsable_trabajo" id="municipios"
+                class="form-control">
+                <option *ngFor="let dep of municipios10; let i = index" [value]="municipios10[i].muni_id">
+                    {{municipios10[i].municipio}}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>Ubicación en</label>
+            <input type="text" id="ubicaciontrabajo" class="form-control" value="{{direc_trabajo_responsable}}"
+                readonly>
+
+        </div>
+        <div class="form-group col-md-12">
+            <label>Dirección de Trabajo del Responsable</label>
+            <input (change)="CompletarDirec6();" type="text" maxlength="300" class="form-control" placeholder=""
+                id="Estu_DirecTrabajoResponsable" formControlName="Estu_DirecTrabajoResponsable">
+        </div>
+
+        <div class="form-group col-md-12">
+            <label>Teléfono Trabajo del Responsable</label>
+            <input type="text" [textMask]="{mask: mask_tel}" class="form-control" placeholder=""
+                [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoTrabajoResponsable').hasError('pattern')}"
+                id="Estu_TelefonoTrabajoResponsable" formControlName="Estu_TelefonoTrabajoResponsable">
+        </div>
+    </div>
+
+    <div class="form-group col-md-12">
+
+    <h1>
+
+        &nbsp;
+        <img src="assets/images2/bus.png" width="60 px" height="50px" class="text-right" style="margin-right: 5%;">
+        <strong> OTROS DATOS </strong>
+    </h1>
+    </div>  
+
+    <div class="form-group col-md-12">
+        <label for="transporte1">Cómo se Transporte su Hijo(a) Al Colegio?</label>
+        <select formControlName="transporte1" id="transporte1" class="form-control">
+            <option value=0>Sin Asignar</option>
+            <option *ngFor="let dep of transportes; let i = index" [value]="transportes[i].trans_id">
+                {{transportes[i].trans_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-12">
+        <label for="transporte2">Cómo se Transporte su Hijo(a) de Regreso a Casa?</label>
+        <select formControlName="transporte2" id="transporte2" class="form-control">
+            <option value=0>Sin Asignar</option>
+            <option *ngFor="let dep of transportes; let i = index" [value]="transportes[i].trans_id">
+                {{transportes[i].trans_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-12">
+        <label>Utiliza Servicio de Bus</label>
+        <select name="Estu_UtilizaBus" formControlName="Estu_UtilizaBus" class="form-control">
+            <option value=0>Sin Asignar</option>
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+    </div>
+    <div class="form-group col-md-12">
+
+        <h1>
+    
+            &nbsp;
+            <img src="assets/images2/orientacion.png" width="60 px" height="50px" class="text-right" style="margin-right: 5%;">  <strong> ORIENTACIÓN</strong>    </h1>
+    </div>
+    <div class="form-group col-md-12">
+        <label>Autoriza que su hijo reciba atención de Orientación</label>
+        <select name="Estu_Orienta" class="form-control" formControlName="Estu_Orienta" value="">
+            <option value=0>Sin Asignar</option>
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-12">
+
+    <h1 style="margin-top: 2%;">
+
+        &nbsp;
+        <img src="assets/images2/clinica.png" width="60 px" height="50px" class="text-right" style="margin-right: 5%;">
+        <strong> DATOS CLINICA</strong>
+    </h1>
+    </div>  
+    <div class="form-group col-md-8">
+        <label> En caso de no localizar a los Padres llamar a : </label>
+        <input type="text"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_NombreEmergencia').hasError('required') || form_inscripcion.get('Estu_NombreEmergencia').hasError('pattern') }"
+            class="form-control" id="Estu_NombreEmergencia" formControlName="Estu_NombreEmergencia">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label> Telefono Emergencia Casa </label>
+        <input type="text"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoCasaEmergencia').hasError('pattern') || form_inscripcion.get('Estu_TelefonoCasaEmergencia').hasError('required') }"
+            [textMask]="{mask: mask_tel}" class="form-control" id="Estu_TelefonoCasaEmergencia"
+            formControlName="Estu_TelefonoCasaEmergencia">
+    </div>
+
+
+    <div class="form-group col-md-3">
+        <label> Celular de Emergencia </label>
+        <input type="text"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_CelularEmergencia').hasError('pattern') || form_inscripcion.get('Estu_CelularEmergencia').hasError('required') }"
+            [textMask]="{mask: mask_tel}" class="form-control" id="Estu_CelularEmergencia"
+            formControlName="Estu_CelularEmergencia">
+    </div>
+
+    <div class="form-group col-md-3">
+        <label> Telefono de Emergencia Trabajo </label>
+        <input type="text"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelfonoTrabajoEmergencia').hasError('pattern')  }"
+            [textMask]="{mask: mask_tel}" class="form-control" id="Estu_TelfonoTrabajoEmergencia"
+            formControlName="Estu_TelfonoTrabajoEmergencia">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label> Cual es su parentesco?</label>
+        <input type="text" class="form-control" id="Estu_Parentesco" formControlName="Estu_Parentesco">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label> Nombre del Medico o Pediatra</label>
+        <input type="text" class="form-control" id="Estu_MedicoEstudiante" formControlName="Estu_MedicoEstudiante">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="departamento_clinica">Departamento clinica</label>
+        <select (change)="SelecccionarMunisClinica($event.target.value)" formControlName="departamento_clinica"
+            id="departamento_clinica" class="form-control">
+            <option *ngFor="let dep of departamentos11; let i = index" [value]="departamentos11[i].dep_id">
+                {{departamentos11[i].departamento}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="municipio_clinica">Municipio clinica</label>
+        <select (change)="ObtenerDireccionCli();" formControlName="municipio_clinica" id="municipio_clinica"
+            class="form-control">
+            <option *ngFor="let dep of municipios11; let i = index" [value]="municipios11[i].muni_id">
+                {{municipios11[i].municipio}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Ubicación</label>
+        <input type="text" name="ubicacion4" value="" class="form-control" id="ubicaciontrabajo4"
+            value="{{ubicacion_clinica}}" readonly />
+    </div>
+    <div class="form-group col-md-6">
+        <label> Dirección Clinica</label>
+        <input (change)="CompletarDirecCli();" type="text" class="form-control" id="Estu_DirecClinica"
+            formControlName="Estu_DirecClinica">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label> Teléfono Clinica</label>
+        <input type="text"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_TelefonoClinica').hasError('pattern')  }"
+            [textMask]="{mask: mask_tel}" class="form-control" id="Estu_TelefonoClinica"
+            formControlName="Estu_TelefonoClinica">
+
+    </div>
+
+    <div class="form-group col-md-6">
+        <label> Teléfono Celular</label>
+        <input type="text" [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_CelularClinica').hasError('pattern')  }"
+            [textMask]="{mask: mask_tel}" class="form-control" id="Estu_CelularClinica"
+            formControlName="Estu_CelularClinica">
+
+    </div>
+    <div class="form-group col-md-6">
+        <label> Nombre Hospital</label>
+        <input type="text" class="form-control" id="Estu_Hospital" formControlName="Estu_Hospital">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Tipo de sangre</label>
+        <select (change)="ObtenerSangre($event.target.value);" name="sangre" class="form-control" id="sangre">
+            <option value=0>Sin asignar</option>
+            <option value=1>O+</option>
+            <option value=2>O-</option>
+            <option value=3>A+</option>
+            <option value=4>A-</option>
+            <option value=5>B+</option>
+            <option value=6>B-</option>
+            <option value=7>AB+</option>
+            <option value=8>AB-</option>
+
+        </select>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Tipo de sangre guardado</label>
+        <input type="text" class="form-control" formControlName="Estu_TipoSangre" readonly>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Padece de alguna enfermedad?</label>
+        <select name="Estu_PadeceEnfermedad1" formControlName="Estu_PadeceEnfermedad1" class="form-control" (change)="VerEnfermedad($event.target.value)">
+            <option value=0>Sin Asignar</option>
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Indique</label>
+        <input type="text" class="form-control" maxlength="300" [readonly]="enfermedad"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_PadeceEnfermedad').hasError('required')  }"
+            formControlName="Estu_PadeceEnfermedad">
+
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Es alergico a algún tipo de Medicamento?</label>
+        <select name="Estu_AlergicoMedicamente1" formControlName="Estu_AlergicoMedicamente1" class="form-control" (change)="VerMedicamento1($event.target.value)">
+            <option value=0>Sin Asignar</option>
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label>Indique</label>
+        <input type="text" maxlength="300" [readonly]="medicamento1"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_AlergicoMedicamente').hasError('required')  }"
+            class="form-control" formControlName="Estu_AlergicoMedicamente">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Ha sido Operado?</label>
+        <select name="Estu_Operado1" formControlName="Estu_Operado1" class="form-control" (change)="VerOperacion($event.target.value)">
+            <option value=0>Sin Asignar</option>
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+        
+    </div>    
+
+    <div class="form-group col-md-6">
+        <label>Indique</label>
+        <input type="text" class="form-control" maxlength="300" formControlName="Estu_Operado" [readonly]="operacion">
+
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Toma algún Medicamento</label>
+        <select (change)="VerMedicamento($event.target.value)" name="Estu_MedicamentoSiempre" class="form-control"
+            id="Estu_MedicamentoSiempre" formControlName="Estu_MedicamentoSiempre">
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Indique el Medicamento</label>
+        <input type="text" [readonly]="Medicamento" class="form-control" formControlName="Estu_NombredelMedicamento"
+            id="nombremedicina">
+
+
+    </div>
+
+    <div class="form-group col-md-12">
+        <label>Enfermedades padecidas por el estudiante</label>
+    </div>
+    <div class="form-group col-md-4">
+        <label>Sarampeon</label>
+        <input type="checkbox" name="Estu_Sarampeon" [checked]="Estu_Sarampeon" (change)="checkEstu_Sarampeon();"
+            formControlName="Estu_Sarampeon"><br />
+        <label>Rubeola</label>
+
+        <input type="checkbox" name="Estu_Rubeola" [checked]="Estu_Rubeola" (change)="checkEstu_Rubeola();"
+            formControlName="Estu_Rubeola"> <br />
+        <label>Epilepsia</label>
+
+        <input type="checkbox" name="Estu_Epilepsia" [checked]="Estu_Epilepsia" (change)="checkEstu_Epilepsia();"
+            formControlName="Estu_Epilepsia"> <br />
+    </div>
+
+    <div class="form-group col-md-4">
+
+        <label>Varicela</label>
+
+        <input type="checkbox" name="Estu_Varicela" [checked]="Estu_Varicela" (change)="checkEstu_Varicela();"
+            formControlName="Estu_Varicela"><br />
+
+        <label>Paperas</label>
+        <input type="checkbox" name="Estu_Paperas" [checked]="Estu_Paperas" (change)="checkEstu_Paperas();"
+            formControlName="Estu_Paperas"> <br />
+        <label>Reflujo Gastrico</label>
+
+        <input type="checkbox" name="Estu_ReflujoGastrico" [checked]="Estu_ReflujoGastrico"
+            (change)="checkEstu_ReflujoGastrico();" formControlName="Estu_ReflujoGastrico"><br />
+
+    </div>
+
+    <div class="form-group col-md-4">
+
+        <label>Hepatitis</label>
+        <input type="checkbox" name="Estu_Heptatitis" [checked]="Estu_Heptatitis" (change)="checkEstu_Heptatitis();"
+            formControlName="Estu_Heptatitis"><br />
+
+        <label>Gastritis</label>
+        <input type="checkbox" name="Estu_Gastritis" [checked]="Estu_Gastritis" (change)="checkEstu_Gastritis();"
+            formControlName="Estu_Gastritis"><br />
+
+
+        <label>Sinusitis</label>
+        <input type="checkbox" name="Estu_Sinusitis" [checked]="Estu_Sinusitis" (change)="checkEstu_Sinusitis();"
+            formControlName="Estu_Sinusitis"><br />
+
+    </div>
+    <div class="form-group col-md-12">
+        <label>Marque los Medicamentos que autoriza se le administre a su hijo(a) en caso de necesidad:</label>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Panadol Niño</label>
+
+        <input type="checkbox" name="Estu_PanadolNino" [checked]="Estu_PanadolNino" (change)="checkEstu_PanadolNino();"
+            formControlName="Estu_PanadolNino"><br />
+
+        <label>Tabcin Niño</label>
+
+        <input type="checkbox" name="Estu_TabcinNino" [checked]="Estu_TabcinNino" (change)="checkEstu_TabcinNino();"
+            formControlName="Estu_TabcinNino"><br />
+
+
+        <label>Histaprin Niño</label>
+
+        <input type="checkbox" name="Estu_HistaprinNino" [checked]="Estu_HistaprinNino"
+            (change)="checkEstu_HistaprinNino();" formControlName="Estu_HistaprinNino"><br />
+
+
+        <label>Nauseol Niño</label>
+
+
+        <input type="checkbox" name="Estu_NauseolNino" [checked]="Estu_NauseolNino" (change)="checkEstu_NauseolNino();"
+            formControlName="Estu_NauseolNino"><br />
+    </div>
+    <div class="form-group col-md-3">
+        <label>Panadol Adulto</label>
+
+        <input type="checkbox" name="Estu_PananolAdulto" [checked]="Estu_PananolAdulto"
+            (change)="checkEstu_PananolAdulto();" formControlName="Estu_PananolAdulto"><br />
+
+        <label>Tabcin Adulto</label>
+        <input type="checkbox" name="Estu_TabcinAdulto" [checked]="Estu_TabcinAdulto"
+            (change)="checkEstu_TabcinAdulto();" formControlName="Estu_TabcinAdulto"><br />
+
+
+        <label>Histaprin Adulto</label>
+        <input type="checkbox" name="Estu_HistrapinAdulto" [checked]="Estu_HistrapinAdulto"
+            (change)="checkEstu_HistrapinAdulto();" formControlName="Estu_HistrapinAdulto"><br />
+
+
+
+        <label>Nauseol Adulto</label>
+        <input type="checkbox" name="Estu_NauseolAdulto" [checked]="Estu_NauseolAdulto"
+            (change)="checkEstu_NauseolAdulto();" formControlName="Estu_NauseolAdulto"><br />
+    </div>
+
+    <div class="form-group col-md-3">
+
+        <label>Alka-Seltzer</label>
+        <input type="checkbox" name="Estu_Alkaseltzer" [checked]="Estu_Alkaseltzer" (change)="checkEstu_Alkaseltzer();"
+            formControlName="Estu_Alkaseltzer"><br />
+
+
+        <label>Peptobismol</label>
+        <input type="checkbox" name="Estu_Peptobismol" [checked]="Estu_Peptobismol" (change)="checkEstu_Peptobismol();"
+            formControlName="Estu_Peptobismol"><br />
+
+
+        <label>Winasorb</label>
+        <input type="checkbox" name="Estu_Winasorb" [checked]="Estu_Winasorb" (change)="checkEstu_Winasorb();"
+            formControlName="Estu_Winasorb"><br />
+
+
+        <label>Neomelubrina</label>
+        <input type="checkbox" name="Estu_Neomelubrina" [checked]="Estu_Neomelubrina"
+            (change)="checkEstu_Neomelubrina();" formControlName="Estu_Neomelubrina"><br />
+    </div>
+    <div class="form-group col-md-3">
+
+
+        <label>Dorival</label>
+        <input type="checkbox" name="Estu_Dorival" [checked]="Estu_Dorival" (change)="checkEstu_Dorival();"
+            formControlName="Estu_Dorival"><br />
+
+        <label>Sertal</label>
+        <input type="checkbox" name="Estu_Sertal" [checked]="Estu_Sertal" (change)="checkEstu_Sertal();"
+            formControlName="Estu_Sertal"><br />
+
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Cuenta con Seguro Medico y/o Estudiantil </label>
+
+        <select (change)="VerSeguro($event.target.value)" name="Estu_SeguroMedico" formControlName="Estu_SeguroMedico"
+            class="form-control" id="Estu_SeguroMedico">
+            <option value=1>SI</option>
+            <option value=2>NO</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Nombre de la Empresa que brinda el Seguro </label>
+        <input [readonly]="Seguro" type="text" class="form-control" formControlName="Estu_NombreSeguro"
+            id="Estu_NombreSeguro">
+
+
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>No de Afiliación </label>
+        <input type="text" [readonly]="Seguro" class="form-control" formControlName="Estu_Afiliacion"
+            id="Estu_Afiliacion">
+
+
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>No de Teléfono </label>
+        <input type="text" [readonly]="Seguro"
+            [ngClass]="{'Incorrecto': form_inscripcion.get('Estu_AfiliaccionTelefono').hasError('pattern')  }"
+            [textMask]="{mask: mask_tel}" class="form-control" formControlName="Estu_AfiliaccionTelefono"
+            id="Estu_AfiliaccionTelefono">
+
+
+    </div>
+
+
+    <button (click)="Enviar();" class="btn btn-success pull-right" *ngIf="    
+    !form_inscripcion.get('Estu_Cui').hasError('required')&&
+!form_inscripcion.get('Estu_Cui').hasError('pattern') &&
+
+!form_inscripcion.get('estu_direc').hasError('minlength') &&
+!form_inscripcion.get('estu_direc').hasError('required') &&
+!form_inscripcion.get('Estu_TelefonoCelular').hasError('pattern') &&
+!form_inscripcion.get('Estu_EstuDomiciliarTelefono').hasError('pattern') &&
+!form_inscripcion.get('Estu_DpiPasaportePadre').hasError('pattern') &&
+!form_inscripcion.get('Estu_CelularPadre').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoPadre').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoTrabajoPadre').hasError('pattern') &&
+
+!form_inscripcion.get('Estu_DpiPasaporteMadre').hasError('pattern') &&
+!form_inscripcion.get('Estu_CelularMadre').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoMadre').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoTrabajoMadre').hasError('pattern')&&
+
+!form_inscripcion.get('Estu_DpiPasaporteResponsable').hasError('pattern') &&
+!form_inscripcion.get('Estu_CelularResponsable').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoResponsable').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoTrabajoResponsable').hasError('pattern') &&
+
+!form_inscripcion.get('Estu_PadeceEnfermedad').hasError('required') &&
+!form_inscripcion.get('Estu_AlergicoMedicamente').hasError('required') &&
+
+!form_inscripcion.get('Estu_CelularClinica').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoClinica').hasError('pattern') &&
+!form_inscripcion.get('Estu_CelularClinica').hasError('pattern') &&
+
+!form_inscripcion.get('Estu_CelularEmergencia').hasError('pattern') &&
+!form_inscripcion.get('Estu_CelularEmergencia').hasError('required') &&
+!form_inscripcion.get('Estu_TelfonoTrabajoEmergencia').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelfonoTrabajoEmergencia').hasError('required') &&
+!form_inscripcion.get('Estu_TelefonoCasaEmergencia').hasError('pattern') &&
+!form_inscripcion.get('Estu_TelefonoCasaEmergencia').hasError('required') &&
+!form_inscripcion.get('Estu_NombreEmergencia').hasError('required') &&
+!form_inscripcion.get('Estu_NombreEmergencia').hasError('pattern') &&
+!form_inscripcion.get('Estu_AfiliaccionTelefono').hasError('pattern') &&
+!form_inscripcion.get('Responsable').hasError('required') &&
+validarNitResponsable()
+    ">
+        <img src="assets/images2/guardar.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">
+        Guardar
+    </button>
+    <a routerLink="/inscripcion/Index" class="btn btn-danger text-center pull-right"> <img src="assets/images2/x.png"
+            width="40 px" height="40px" class="text-right" style="margin-right: 5%;"> Cancelar</a>
+</div>
+        </form>

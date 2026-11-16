@@ -1,0 +1,87 @@
+<form [formGroup]="form_inscripcion" novalidate id="inscripcion">
+    <h1 class="text-center">SOLICITUD DE PRE-INSCRIPCIÓN</h1>
+    <div id="lleno"></div>
+
+    <h1>
+        &nbsp;
+    </h1>
+
+    <div class="form-group col-md-12">
+        <label>Código Alumno</label>
+        <input type="text" name="Estu_Codigo" formControlName="Estu_Codigo" class="form-control"
+            value="@ViewBag.Estu_Codigo" readonly>
+
+    </div>
+    <div class="form-group col-md-6">
+        <label>Primer Apellido</label>
+
+        <input type="text" name="Estu_PrimerApellido" formControlName="Estu_PrimerApellido" class="form-control"
+            value="@ViewBag.Estu_PrimerApellido" readonly>
+
+    </div>
+    <div class="form-group col-md-6">
+        <label>Segundo Apellido</label>
+
+        <input type="text" name="Estu_SegundoApellido" formControlName="Estu_SegundoApellido" class="form-control"
+            value="@ViewBag.Estu_SegundoApellido" readonly>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>Primer Nombre</label>
+
+        <input type="text" name="Estu_PrimerNombre" formControlName="Estu_PrimerNombre" class="form-control"
+            value="@ViewBag.Estu_PrimerNombre" readonly>
+    </div>
+    <div class="form-group col-md-4">
+        <label>Segundo Nombre</label>
+
+        <input type="text" name="Estu_SegundoNombre" formControlName="Estu_SegundoNombre" class="form-control"
+            value="@ViewBag.Estu_SegundoNombre" readonly>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>Tercer Nombre</label>
+
+        <input type="text" name="Estu_TecerNombre" formControlName="Estu_TercerNombre" class="form-control"
+            value="@ViewBag.Estu_TercerNombre" readonly>
+
+    </div>
+
+    <div class="form-group col-md-6">
+        <label  for="grados">Grado actual</label>
+        <select disabled="disabled_selects" formControlName="grados" id="grados" class="form-control">
+            <option *ngFor="let nac of grados; let i = index" [value]="grados[i].grad_id">
+                {{grados[i].grad_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label  for="grados">Grado que cursará</label>
+        <select formControlName="grados_futuro" id="grados" class="form-control"  [ngClass]="{'Incorrecto': form_inscripcion.get('grados_futuro').hasError('required')  }">
+            <option *ngFor="let nac of grados; let i = index" [value]="grados[i].grad_id">
+                {{grados[i].grad_nombre}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-12" style="display: none;">
+      <label  for="grados">Modalidad</label>
+      <select formControlName="modalidad" id="modalidad" class="form-control">
+          <option value="1">
+            PRESENCIAL
+          </option>
+          <option value="2">
+            VIRTUAL
+          </option>
+      </select>
+  </div>
+    <br>
+    <button class="btn btn-primary pull-right" (click)="enviar();"
+    *ngIf="
+        !form_inscripcion.get('grados_futuro').hasError('required')"
+    >
+        <img src="assets/images2/guardar.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">      Guardar
+    </button>
+
+</form>

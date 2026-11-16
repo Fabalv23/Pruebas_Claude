@@ -1,0 +1,38 @@
+<div>
+
+    <h1 class="page-header">Validando C&oacute;digo de Alumno Para Inscripci&oacute;n <img src="assets/images2/bienmal.png" width="150 px" height="100px" class="text-right" style="margin-left: 10%;"> </h1>
+
+    <form [formGroup]="form_val"  novalidate id="Validar" >    
+        <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Ingrese Información solicitada</a></li>
+            </ul>
+            <div class="alert alert-danger" *ngIf="error">
+                <strong>ATENCIÓN! </strong> Alumno inexistente o con información ya registrada o sin resultados de admisión, por favor comunicarse al colegio para mas información
+              </div>
+            <div class="panel panel-defautl ">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="info">
+                        <div class="form-group col-md-12">
+                         <label>Ingrese Código del Alumno</label>
+                         <input type="text" class="form-control"  [textMask]="{mask: mask_cod}"
+                         [ngClass]="{'Incorrecto':form_val.get('Alumno_Codigo').hasError('required') || form_val.get('Alumno_Codigo').hasError('pattern')}"            
+                         formControlName="Alumno_Codigo" placeholder="21-A-0000" value=""/>
+                        </div>                        
+                    </div>
+                    <div class="text-right">
+                        <button (click)="Validar();" 
+                        *ngIf="!form_val.get('Alumno_Codigo').hasError('required') &&
+                        !form_val.get('Alumno_Codigo').hasError('pattern')"
+                        type="submit" class="btn btn-success pull-right">
+                        <img src="assets/images2/check2.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">   Validar
+                        </button>
+                        <span> </span>
+                        <a  (click)="Cancelar();" class="btn btn-danger text-center pull-center"> <img src="assets/images2/x.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">  Cancelar</a>
+                    </div>
+                </div>
+            </div>                
+        </div>
+    </form>
+</div>
+

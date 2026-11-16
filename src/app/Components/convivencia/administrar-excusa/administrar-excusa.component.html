@@ -1,0 +1,412 @@
+<h2 class="page-header">
+    LISTADO DE EXCUSAS
+    <a (click)="showDialog();" class="btn  btn-primary text-center pull-right">Excusa por periodo</a>
+    <a (click)="showDialog1();" class="btn  btn-primary text-center pull-right" style="margin-right:  5px;">Excusa por día</a>
+</h2>
+<div class="loader" *ngIf="spinner">Loading...</div>
+<div class="portlet-body " style="width: 100%; height: 100%;">
+    <div class="table-responsive">
+    <div id="list" class="table table-bordered table-striped table-condensed flip-content">
+
+
+        <tbody>
+            <!--Encabezados de la tabla-->
+            <tr>
+
+                <th style="width: 5%;">Clase Excusa</th>
+                <th style="width: 10%;">Fecha Excusa Inicio</th>
+                <th style="width: 10%;">Fecha Excusa Fin</th>
+                <th style="width: 20%;">Fecha Ingreso</th>
+                <th style="width: 50%;">Descripción</th>
+                <th style="width: 40%; text-align: center;">Periodo</th>
+                <th style="width: 5%;">Estado</th>
+                <th style="width: 3%;">Adjunto 1</th>
+                <th style="width: 3%;">Adjunto 2</th>
+                <th style="width: 3%;">Adjunto 3</th>
+                <th style="width: 3%;" class="text-center">Anular</th>
+
+
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+        <!--CONTENIDO-->
+        <tbody *ngIf="Inicio">
+            <tr *ngFor="let grupo of excusas">
+
+                <td style="text-align: center;">{{grupo.letra}}</td>
+                <td>{{convFecha_recortar(grupo.fecha_ausencia)}}</td>
+                <td>{{convFecha_recortar(grupo.fecha_ausencia_fin)}}</td>
+
+                <td>{{convFecha(grupo.fecha_ingreso)}}</td>
+                <td>{{grupo.descripcion}}</td>
+        
+                <td style="text-align: center;">{{grupo.periodo}}</td>
+                <td>{{grupo.estado}}</td>
+                <td style="text-align: center;">
+                    <a (click)="download(grupo.adjunto);" *ngIf="validarURL(grupo.adjunto);"
+                        class="btn  btn-primary text-center btn-xs">
+                        <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+
+                <td style="text-align: center;">
+                    <a (click)="download(grupo.adjunto1);" *ngIf="validarURL(grupo.adjunto1);"
+                        class="btn  btn-primary text-center btn-xs">
+                        <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+
+                <td style="text-align: center;">
+                    <a (click)="download(grupo.adjunto2);" *ngIf="validarURL(grupo.adjunto2);"
+                        class="btn  btn-primary text-center btn-xs">
+                        <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+
+                <td style="text-align: center;">
+                    <a class="btn btn-danger btn-xs" (click)="Eliminar(grupo.id,grupo.tipo);">
+                        <img src="assets/images2/x.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+
+            </tr>
+        </tbody>
+        <tbody *ngIf="Filtrado_Id">
+            <tr *ngFor="let grupo of excusas_Filtrada">
+
+                <td style="text-align: center;">{{grupo.letra}}</td>
+                <td>{{convFecha(grupo.fecha_ausencia)}}</td>
+                <td>{{convFecha(grupo.fecha_ausencia_fin)}}</td>
+
+                <td>{{convFecha(grupo.fecha_ingreso)}}</td>
+                <td>{{grupo.descripcion}}</td>
+                <td>{{grupo.periodo}}</td>
+                <td>{{grupo.estado}}</td>
+
+                <td style="text-align: center;">
+                    <a (click)="download(grupo.adjunto);" *ngIf="validarURL(grupo.adjunto);"
+                        class="btn  btn-primary text-center btn-xs">
+                        <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+
+                <td style="text-align: center;">
+                    <a (click)="download(grupo.adjunto1);" *ngIf="validarURL(grupo.adjunto1);"
+                        class="btn  btn-primary text-center btn-xs">
+                        <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+
+                <td style="text-align: center;">
+                    <a (click)="download(grupo.adjunto2);" *ngIf="validarURL(grupo.adjunto2);"
+                        class="btn  btn-primary text-center btn-xs">
+                        <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+
+                <td style="text-align: center;">
+                    <a class="btn btn-danger btn-xs" (click)="Eliminar(grupo.id,grupo.tipo);">
+                        <img src="assets/images2/x.png" width="10 px" height="10px" class="text-right">
+                    </a>
+                </td>
+            </tr>
+
+        </tbody>
+    </div>
+    </div>
+</div>
+
+<ng-container #vc></ng-container>
+<ng-template #modal_1>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times; </button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><strong> Presentar Excusa 1 día</strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="CuerpoModal02" #myform2="ngForm" [formGroup]="form_excusa"
+                        (ngSubmit)="PresentarExcusa(1); form_excusa.reset(); closeDialog(); ">
+                        <fieldset id="ItemModal">
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Código</label>
+                                <input class="form-control " placeholder="##-A-0000" type="text" id="codigo"
+                                    formControlName="codigo" name="codigo" readonly />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Fecha Ausencia</label>
+                                <input class="form-control " type="date" id="fecha_ausencia"
+                                [ngClass]="{'Incorrecto': form_excusa.get('fecha_ausencia').hasError('required') }"
+                                    formControlName="fecha_ausencia" name="fecha_ausencia"  min="{{fecha_minima}}" max="{{fecha_maxima}}"/>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label>Fecha Actual</label>
+                                <input class="form-control " type="datetime" id="fecha_actual"
+                                    formControlName="fecha_actual" name="fecha_actual" value="{{fecha_actual}}"
+                                    readonly />
+                            </div>
+
+                            <div class="form-group col-md-4" style="border-width:1px;border-style:Solid;overflow-y:scroll;height: 150px;width: 260px; margin-left: 2%;margin-right: 1%;" [ngClass]="{'Incorrecto': Periodos_Ausente.length==0 }">
+                                <label>Elegir Periodo(s) de Ausencia:</label>
+
+                                <!--<tr *ngFor="let periodo of Listado_Periodos; let i = index">
+                                    <input type="checkbox" value="{{Listado_Periodos[i].id}}" id="validado" name="validado"
+                                        (change)="juntar($event.target.value,$event.target.checked)">
+                                    <label>{{Listado_Periodos[i].nombre}} {{Listado_Periodos[i].hora_inicio}} -
+                                        {{Listado_Periodos[i].hora_fin}}</label>
+                                </tr>-->
+                                <tr><input type="checkbox" value="1" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 1 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="2" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 2 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="3" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 3 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="4" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 4 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="5" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 5 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="6" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 6 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="7" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 7 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="8" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 8 - Matutina</label></tr>
+                                <tr><input type="checkbox" value="11" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 1 - Vespertina</label></tr>
+                                <tr><input type="checkbox" value="12" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 2 - Vespertina</label></tr>
+                                <tr><input type="checkbox" value="21" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 1 - Nocturna</label></tr>
+                                <tr><input type="checkbox" value="22" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 2 - Nocturna</label></tr>
+                                <tr><input type="checkbox" value="23" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 3 - Nocturna</label></tr>
+                                <tr><input type="checkbox" value="24" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 4 - Nocturna</label></tr>
+                                <tr><input type="checkbox" value="25" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 5 - Nocturna</label></tr>
+                                <tr><input type="checkbox" value="26" id="validado" name="validado"
+                                    (change)="juntar($event.target.value,$event.target.checked)">
+                                <label>Periodo 6 - Nocturna</label></tr>
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="">Clase Excusa</label>
+                            
+                                <select id="clase" name="clase" class="form-control" (change)="TipoExcusa($event.target.value);" formControlName="clase_excusa" [ngClass]="{'Incorrecto': form_excusa.get('clase_excusa').hasError('required') }">
+                                    <option value="0">Sin Asignar</option>
+                                    <option  *ngFor="let excusa of Listado_Clase_Excusas; let i = index" [value]="Listado_Clase_Excusas[i].id">{{Listado_Clase_Excusas[i].letra}} - {{Listado_Clase_Excusas[i].nombre}} </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="">Tipo Excusa</label>
+                            
+                                <select id="clase" name="clase" class="form-control" formControlName="tipo_excusa" [ngClass]="{'Incorrecto': form_excusa.get('tipo_excusa').hasError('required') }">
+                                    <option value="0">Sin Asignar</option>
+                                    <option  *ngFor="let tipo of Listado_TipoExusa_Filtrado; let i = index" [value]="Listado_TipoExusa_Filtrado[i].id">{{Listado_TipoExusa_Filtrado[i].codigo}} - {{Listado_TipoExusa_Filtrado[i].nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12"> 
+                                <label>Descripción</label>
+                                <textarea rows="2" cols="25" maxlength="500" name="descripcion" (input)="validar_len($event.target.value);"
+                                    formControlName="descripcion" class="form-control" [ngClass]="{'Incorrecto': form_excusa.get('descripcion').hasError('required') }">
+                                </textarea>
+                                <small id="passwordHelp" class="text-danger" *ngIf="!descripcion_longitud">
+                                    Descripción debe de contener 8 palabras como mínimo.
+                                </small>     
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label>Archivo Adjunto *Archivo no mayor a 5MB</label>
+                                <input type="file" id="adjunto" name="adjunto"
+                                formControlName="adjunto" (change)="fileChange1($event)" accept="image/*" #archivo_adjunto>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label>Archivo Adjunto *Archivo no mayor a 5MB</label>
+                                <input type="file" id="adjunto1" name="adjunto1"
+                                formControlName="adjunto1" (change)="fileChange2($event)" accept="image/*" #archivo_adjunto1>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label>Archivo Adjunto *Archivo no mayor a 5MB</label>
+                                <input type="file" id="adjunto2" name="adjunto2"
+                                formControlName="adjunto2" (change)="fileChange3($event)" accept="image/*" #archivo_adjunto2>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-block btn-primary" *ngIf="    
+                                !form_excusa.get('descripcion').hasError('required') &&
+                                !form_excusa.get('fecha_ausencia').hasError('required') &&
+                                !form_excusa.get('clase_excusa').hasError('required') &&
+                                !form_excusa.get('tipo_excusa').hasError('required') &&
+                                Periodos_Ausente.length>0 && descripcion_longitud">
+                                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                                    Crear
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Cancelar
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</ng-template>
+
+<ng-template #modal_2>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times; </button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;"> <strong> Presentar Excusa más de 1 día </strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="CuerpoModal02" #myform2="ngForm" [formGroup]="form_excusa"
+                        (ngSubmit)="PresentarExcusa(2); form_excusa.reset(); closeDialog1();">
+                        <fieldset id="ItemModal">
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Código</label>
+                                <input class="form-control " placeholder="##-A-0000" type="text" id="codigo"
+                                    formControlName="codigo" name="codigo" readonly />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Fecha Ausencia Inicio</label>
+                                <input class="form-control " type="date" id="fecha_ausencia_inicio"
+                                    formControlName="fecha_ausencia_inicio" name="fecha_ausencia_inicio"  min="{{fecha_minima}}" max="{{fecha_maxima}}" [ngClass]="{'Incorrecto': form_excusa.get('fecha_ausencia_inicio').hasError('required') }"/>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label>Fecha Ausencia Fin</label>
+                                <input class="form-control " type="date" id="fecha_ausencia_fin"
+                                    formControlName="fecha_ausencia_fin" name="fecha_ausencia_fin"  min="{{fecha_minima}}" max="{{fecha_maxima}}" [ngClass]="{'Incorrecto': form_excusa.get('fecha_ausencia_fin').hasError('required') }" />
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label>Fecha Actual</label>
+                                <input class="form-control " type="datetime" id="fecha_actual"
+                                    formControlName="fecha_actual" name="fecha_actual" value="{{fecha_actual}}"
+                                    readonly />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="">Clase Excusa</label>
+                            
+                                <select id="clase" name="clase" class="form-control" (change)="TipoExcusa($event.target.value);" formControlName="clase_excusa" [ngClass]="{'Incorrecto': form_excusa.get('clase_excusa').hasError('required') }">
+                                    <option value="0">Sin Asignar</option>
+                                    <option  *ngFor="let excusa of Listado_Clase_Excusas; let i = index" [value]="Listado_Clase_Excusas[i].id">{{Listado_Clase_Excusas[i].letra}} - {{Listado_Clase_Excusas[i].nombre}} </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="">Tipo Excusa</label>
+                            
+                                <select id="clase" name="clase" class="form-control" formControlName="tipo_excusa" [ngClass]="{'Incorrecto': form_excusa.get('tipo_excusa').hasError('required') }">
+                                    <option value="0">Sin Asignar</option>
+                                    <option  *ngFor="let tipo of Listado_TipoExusa_Filtrado; let i = index" [value]="Listado_TipoExusa_Filtrado[i].id">{{Listado_TipoExusa_Filtrado[i].codigo}} - {{Listado_TipoExusa_Filtrado[i].nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Descripción</label>
+                                <textarea rows="2" cols="25" maxlength="500" name="descripcion" (input)="validar_len($event.target.value);"
+                                    formControlName="descripcion" class="form-control" [ngClass]="{'Incorrecto': form_excusa.get('descripcion').hasError('required') }">
+                                </textarea>
+                                <small id="passwordHelp" class="text-danger" *ngIf="!descripcion_longitud">
+                                    Descripción debe de contener 8 palabras como mínimo.
+                                </small>     
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <label>Archivo Adjunto *Archivo no mayor a 5MB</label>
+                                <input type="file" id="adjunto" name="adjunto"
+                                formControlName="adjunto" (change)="fileChange1($event)" accept="image/*" #archivo_adjunto>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label>Archivo Adjunto *Archivo no mayor a 5MB</label>
+                                <input type="file" id="adjunto1" name="adjunto1"
+                                formControlName="adjunto1" (change)="fileChange2($event)" accept="image/*" #archivo_adjunto1>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label>Archivo Adjunto *Archivo no mayor a 5MB</label>
+                                <input type="file" id="adjunto2" name="adjunto2"
+                                formControlName="adjunto2" (change)="fileChange3($event)" accept="image/*" #archivo_adjunto2>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-block btn-primary" *ngIf="    
+                                !form_excusa.get('descripcion').hasError('required') &&
+                                !form_excusa.get('fecha_ausencia_inicio').hasError('required') &&
+                                !form_excusa.get('fecha_ausencia_fin').hasError('required') &&
+                                !form_excusa.get('clase_excusa').hasError('required') &&
+                                !form_excusa.get('tipo_excusa').hasError('required') && descripcion_longitud">
+                                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                                    Crear
+                                </button>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog1()">Cancelar
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</ng-template>

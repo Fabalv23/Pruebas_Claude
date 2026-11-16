@@ -1,0 +1,924 @@
+<form [formGroup]="form_editar" novalidate id="Editar" *ngIf="editar();">
+  <div class="form-control-static">
+    <ol class="breadcrumb">
+      <li> <a href="~/">Alumno </a></li>
+      <li class="active">{{alumno.alumno_primernombre + ' ' + alumno.alumno_primerapellido}}</li>
+    </ol>
+
+    <div class="alert alert-info ">
+      <strong> <img src="assets/images2/info2.png" width="40 px" height="40px" class="text-right"
+          style="margin-right: 5%;"> Atención! </strong>Revisa bien que no quede ningún campo del formulario resaltado
+      con rojo para poder guardar tu información.
+      <button type="button" class="close" data-dismiss="alert" style="color: black;">&times;</button>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label>Primer Nombre</label>
+      <input type="text" formControlName="Alumno_PrimerNombre" name="Alumno_PrimerNombre" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_PrimerNombre').hasError('required') || form_editar.get('Alumno_PrimerNombre').hasError('pattern')}"
+        value="{{alumno.alumno_primernombre}}" maxlength="40">
+    </div>
+    <div class="form-group col-md-4">
+      <label>Segundo Nombre</label>
+      <input type="text" formControlName="Alumno_SegundoNombre" name="Alumno_SegundoNombre" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_SegundoNombre').hasError('pattern')}"
+        value="{{alumno.alumno_segundonombre}}" maxlength="40">
+
+    </div>
+    <div class="form-group col-md-4">
+      <label>Tercer Nombre</label>
+      <input type="text" formControlName="Alumno_TecerNombre" name="Alumno_TecerNombre" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_TecerNombre').hasError('pattern')}"
+        value="{{alumno.alumno_tecernombre}}" maxlength="40">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Primer Apellido</label><br />
+      <input type="text" formControlName="Alumno_PrimerApellido" name="Alumno_PrimerApellido" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_PrimerApellido').hasError('required') || form_editar.get('Alumno_PrimerApellido').hasError('pattern')}"
+        value="{{alumno.alumno_primerapellido}}" maxlength="40">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Segundo Apellido</label>
+      <input type="text" formControlName="Alumno_SegundoApellido" name="Alumno_SegundoApellido" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('Alumno_SegundoApellido').hasError('required') || form_editar.get('Alumno_SegundoApellido').hasError('pattern')}"
+        value="{{alumno.alumno_segundoapellido}}" maxlength="40">
+
+    </div>
+
+    <div class="form-group col-md-6">
+
+      <label for="sexos">Género</label>
+      <select formControlName="sexos" id="sexos" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('sexos').hasError('required')}">
+        <option *ngFor="let sexo of sexos; let i = index" [value]="sexos[i].id_sexo">
+          {{sexos[i].sexo}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Fecha de Nacimiento</label>
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </span>
+
+        <input type="text" [textMask]="{mask: mask_fechanacimiento}" class="form-control" placeholder="dd/mm/yyyy"
+          id="fecha_nacimiento" formControlName="fecha_nacimiento"
+          [ngClass]="{'Incorrecto': form_editar.get('fecha_nacimiento').hasError('required') || form_editar.get('fecha_nacimiento').hasError('pattern')  }"
+          (blur)="calc_edad1 = calcularedad($event.target.value);" value="{{alumno.fecha_nacimiento}}">
+
+
+      </div>
+
+    </div>
+
+
+
+    <div class="form-group col-md-3">
+      <label>Edad</label>
+      <input type="number" id="edad1" formControlName="edad1" name="edad1" class="form-control" value="{{calc_edad1}}"
+        readonly>
+    </div>
+
+    <div class="form-group col-md-5">
+      <label for="nacionalidades">Nacionalidad</label>
+      <select formControlName="nacionalidades" id="nacionalidades" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('nacionalidades').hasError('required')}">
+        <option *ngFor="let nac of nacionalidades; let i = index" [value]="nacionalidades[i].nac_id">
+          {{nacionalidades[i].nacionalidad}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label for="religiones">Religión</label>
+      <select formControlName="religiones" id="religiones" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('religiones').hasError('required')}">
+        <option *ngFor="let nac of religiones; let i = index" [value]="religiones[i].rel_id">
+          {{religiones[i].religion}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-12">
+      <label>Parroquia o Iglesia que asiste?</label>
+      <input type="text" maxlength="200" name="iglesia_asist" id="iglesia_asist" formControlName="iglesia_asist"
+        class="form-control" value="">
+
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Centro Educativo Anterior</label>
+      <input type="text" maxlength="200" name="Centro_proviene" id="Centro_proviene" formControlName="Centro_proviene"
+        class="form-control" value="">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Ubicación del Centro Educativo</label>
+      <input type="text" maxlength="200" name="Centro_ubicacion" id="Centro_ubicacion"
+        formControlName="Centro_ubicacion" class="form-control" value="">
+    </div>
+
+
+
+    <div class="form-group col-md-6">
+      <label for="grados">Grado que cursará</label>
+      <select disabled="grado_disabled" formControlName="grados" id="grados" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('grados').hasError('required')}">
+        <option *ngFor="let nac of grados; let i = index" [value]="grados[i].grad_id">
+          {{grados[i].grad_nombre}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-3">
+      <label>Ha estudiado en el colegio?</label>
+      <select id="Est_antes" name="Est_antes" formControlName="Est_antes" class="form-control"
+        (change)="validarantes($event.target.value)">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label>Año</label>
+      <input id="anio" type="number" name="Anio" [readonly]="AnioReadOnly" formControlName="anio" class="form-control"
+        value="@ViewBag.anio" readonly>
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label>Motivo del retiro</label>
+      <input id="mot" type="text" maxlength="200" name="Mot_retiro" class="form-control" formControlName="mot"
+        [readonly]="AnioReadOnly" value="" readonly>
+
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Tiene Hermanos Estudiando aquí?</label>
+      <select id="Alumno_TieneHermanos" name="Alumno_TieneHermanos" formControlName="Alumno_TieneHermanos"
+        (change)="validarHermanos($event.target.value)" class="form-control">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Alguno de los padres es exalumno del colegio?</label>
+      <select id="Alumno_PFExalumno" name="Alumno_PFExalumno" formControlName="Alumno_PFExalumno"
+        (change)="Alumno_PFExalumno($event.target.value)" class="form-control">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-12" id="grados_elegir" *ngIf="GradosHermanos">
+      <label>Grados</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <div class="col-md-2">
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value=" Pre Kinder" />
+            <label>Pre Kinder</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Kinder" />
+            <label>Kinder</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Preparatoria" />
+            <label>Preparatoria</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Primero Primaria" />
+            <label>1º. Primaria</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Segundo Primaria" />
+            <label>2º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Tercero Primaria" />
+            <label>3º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Primaria" />
+            <label>4º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Primaria" />
+            <label>5º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Sexto Primaria" />
+            <label>6º. Primaria</label>
+
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Primero Básico" />
+            <label>1º. Básico</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Segundo Básico" />
+            <label>2º. Básico</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Tercero Básico" />
+            <label>3º. Básico</label>
+            <br /><br /><br />
+
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Primero Básico Jornada Nocturna" />
+            <label>1º. Básico Jornada Nocturna</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Segundo Básico Jornada Nocturna" />
+            <label>2º. Básico Jornada Nocturna</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Tercero Básico Jornada Nocturna" />
+            <label>3º. Básico Jornada Nocturna</label>
+
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Perito Contador" />
+            <label>4º.Perito Contador</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Perito Contador" />
+            <label>5º.Perito Contador</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Sexto Perito Contador" />
+            <label>6º.Perito Contador</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Bachillerato en Computación" />
+            <label>4º. Bach. en Computación</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Bachillerato en Computación" />
+            <label>5º. Bach. en Computación</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Bachillerato en Ciencias y Letras" />
+            <label>4º. Bach. en Ciencias y Letras</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Bachillerato en Ciencias y Letras" />
+            <label>5º. Bach. en Ciencias y Letras</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Bachillerato en Dibujo Técnico y de Construcción" />
+            <label>4º. Bach. en Dibujo Técnico</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Bachillerato en Dibujo Técnico y de Construcción" />
+            <label>5º. Bach. en Dibujo Técnico</label>
+            <br />
+
+          </div>
+          <div class="col-md-2">
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Magisterio en Eduación Primaria" />
+            <label>4º. Magisterio</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Magisterio en Eduación Primaria" />
+            <label>5º. Magisterio</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Sexto Magisterio en Eduación Primaria" />
+            <label>6º. Magisterio</label>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="form-group col-md-12" *ngIf="GradosHermanos">
+      <label>Grado</label>
+      <input id="Alumno_Grados" maxlength="500" formControlName="Alumno_Grados" type="text" name="Alumno_Grados"
+        class="form-control" value="{{GradosString}}" maxlength="500" readonly>
+    </div>
+
+    <div class="form-group col-md-12">
+      <h2>Datos de los padres</h2>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Nombres del padre</label>
+      <input type="text" name="Alumno_NombrePadre" formControlName="Alumno_NombrePadre" class="form-control"
+        maxlength="80" [ngClass]="{'Incorrecto': form_editar.get('Alumno_NombrePadre').hasError('pattern')}" value="">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Apellidos del padre</label>
+      <input type="text" name="Alumno_ApellidoPadre" formControlName="Alumno_ApellidoPadre" class="form-control"
+        maxlength="80" [ngClass]="{'Incorrecto': form_editar.get('Alumno_ApellidoPadre').hasError('pattern')}" value="">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Profesión</label>
+      <input type="text" name="Alumno_ProfesionPadre" formControlName="Alumno_ProfesionPadre" class="form-control"
+        value="" maxlength="200">
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label>Teléfono Padre</label>
+      <input type="text" name="Alumno_TelefonoPadre" formControlName="Alumno_TelefonoPadre"
+        [textMask]="{mask: mask_tel}"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_TelefonoPadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label>Nombres de la madre</label>
+      <input type="text" name="Alumno_NombreMadre" formControlName="Alumno_NombreMadre"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_NombreMadre').hasError('pattern')}" maxlength="80"
+        class="form-control" value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Apellidos de la madre</label>
+      <input type="text" name="Alumno_ApellidoMadre" formControlName="Alumno_ApellidoMadre"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_ApellidoMadre').hasError('pattern')}" maxlength="80"
+        class="form-control" value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Profesión</label>
+      <input type="text" name="Alumno_ProfesionMadre" formControlName="Alumno_ProfesionMadre" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre" maxlength="200">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Teléfono de la madre</label>
+      <input type="text" name="Alumno_TelefonoMadre" formControlName="Alumno_TelefonoMadre"
+        [textMask]="{mask: mask_tel}"
+        [ngClass]="{'Incorrecto': form_editar.get('Alumno_TelefonoMadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Dirección Particular</label>
+      <input type="text" name="Alumno_Direc" formControlName="Alumno_Direc" class="form-control"
+        value="@ViewBag.Alumno_Direc" maxlength="300">
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="departamentos">Departamento</label>
+      <select (change)="SelecccionarMunis($event.target.value)" formControlName="departamentos" id="departamentos"
+        class="form-control" [ngClass]="{'Incorrecto':form_editar.get('departamentos').hasError('required')}">
+        <option *ngFor="let dep of departamentos; let i = index" [value]="departamentos[i].dep_id">
+          {{departamentos[i].departamento}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-3">
+      <label for="municipios">Municipio</label>
+      <select formControlName="municipios" id="municipios" class="form-control"
+        [ngClass]="{'Incorrecto':form_editar.get('municipios').hasError('required')}">
+        <option *ngFor="let dep of municipios; let i = index" [value]="municipios[i].muni_id">
+          {{municipios[i].municipio}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label>Teléfono Domiciliar</label>
+      <input type="text" id="Alumno_Telefono" name="Alumno_Telefono" formControlName="Alumno_Telefono"
+        [textMask]="{mask: mask_tel}" [ngClass]="{'Incorrecto': form_editar.get('Alumno_Telefono').hasError('pattern')}"
+        class="form-control" value="@ViewBag.Alumno_Telefono">
+    </div>
+
+    <div class="form-group col-md-8">
+      <label>Foto</label>
+      <input type="file" id="Alumno_foto" name="imageupload"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_foto').hasError('required')}" formControlName="Alumno_foto"
+        (change)="fileChange($event)">
+    </div>
+
+
+    <button (click)="ActualizarAlumno();" class="btn btn-success pull-right" *ngIf="
+    !form_editar.get('Alumno_PrimerNombre').hasError('required') &&
+    !form_editar.get('Alumno_PrimerNombre').hasError('pattern') &&
+    !form_editar.get('Alumno_SegundoNombre').hasError('pattern') &&
+    !form_editar.get('Alumno_TecerNombre').hasError('pattern') &&
+    !form_editar.get('Alumno_PrimerApellido').hasError('pattern') &&
+    !form_editar.get('Alumno_PrimerApellido').hasError('required') &&
+    !form_editar.get('Alumno_SegundoApellido').hasError('required') &&
+    !form_editar.get('Alumno_SegundoApellido').hasError('pattern') &&
+    !form_editar.get('fecha_nacimiento').hasError('required') &&
+    !form_editar.get('fecha_nacimiento').hasError('pattern') &&
+    !form_editar.get('Alumno_TelefonoPadre').hasError('pattern') &&
+    !form_editar.get('Alumno_TelefonoMadre').hasError('pattern') &&
+    !form_editar.get('Alumno_Telefono').hasError('pattern') &&
+    !form_editar.get('Alumno_NombrePadre').hasError('pattern') &&
+    !form_editar.get('Alumno_NombreMadre').hasError('pattern') &&
+    !form_editar.get('Alumno_ApellidoPadre').hasError('pattern') &&
+    !form_editar.get('Alumno_ApellidoMadre').hasError('pattern')   &&
+    !form_editar.get('sexos').hasError('required') &&
+    !form_editar.get('nacionalidades').hasError('required') &&
+    !form_editar.get('religiones').hasError('required') &&
+    !form_editar.get('departamentos').hasError('required') &&
+    !form_editar.get('sexos').hasError('required') &&
+    !form_editar.get('municipios').hasError('required')
+    ">
+      <img src="assets/images2/guardar.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">
+      Guardar
+    </button>
+
+    <a routerLink="/admision/Index" class="btn btn-danger text-center pull-right"> <img src="assets/images2/x.png"
+        width="40 px" height="40px" class="text-right" style="margin-right: 5%;">Cancelar</a>
+
+  </div>
+
+
+
+
+  <br><br>
+
+</form>
+
+
+<!--FORMULARIO PARA CREAR UNO NUEVO-->
+
+<form [formGroup]="form_nuevo" id="Nuevo" name="myForm" *ngIf="!editar();" enctype="multipart/form-data">
+  <div class="form-control-static">
+    <ol class="breadcrumb">
+      <li> <a href="~/">Alumno </a></li>
+      <li class="active">Nuevo Registro</li>
+    </ol>
+
+    <div class="alert alert-info ">
+      <strong> <img src="assets/images2/info2.png" width="40 px" height="40px" class="text-right"
+          style="margin-right: 5%;"> Atención! </strong>Revisa bien que no quede ningún campo del formulario resaltado
+      con rojo para poder guardar tu información.
+      <button type="button" class="close" data-dismiss="alert" style="color: black;">&times;</button>
+    </div>
+    <div class="form-group col-md-12">
+      <label class="">Ingreso Clave de Acceso <p *ngIf="codval"
+          style="color: white;background-color: red; margin-bottom: 0px;">Codigo inválido o ya utilizado, por favor
+          verificar su ingreso o comunicarse al colegio</p></label>
+      <input type="text" id="Codigo_Val" name="Codigo_Val" formControlName="Codigo_Val"
+        (blur)="ValidarCodigo($event.target.value);"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Codigo_Val').hasError('required')}" class="form-control"
+        placeholder="21abc123" autofocus />
+    </div>
+
+
+
+    <div class="form-group col-md-4">
+      <label>Primer Nombre</label>
+      <input type="text" maxlength="40" formControlName="Alumno_PrimerNombre" name="Alumno_PrimerNombre"
+        class="form-control"
+        [ngClass]="{'Incorrecto': form_nuevo.get('Alumno_PrimerNombre').hasError('required') || form_nuevo.get('Alumno_PrimerNombre').hasError('pattern')  }"
+        value="">
+    </div>
+    <div class="form-group col-md-4">
+      <label>Segundo Nombre</label>
+      <input type="text" maxlength="40" formControlName="Alumno_SegundoNombre"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_SegundoNombre').hasError('pattern')  }"
+        name="Alumno_SegundoNombre" class="form-control" value="">
+
+    </div>
+    <div class="form-group col-md-4">
+      <label>Tercer Nombre</label>
+      <input type="text" maxlength="40" formControlName="Alumno_TecerNombre" name="Alumno_TecerNombre"
+        class="form-control" [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_TecerNombre').hasError('pattern')  }"
+        value="">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Primer Apellido</label><br />
+      <input type="text" maxlength="40" formControlName="Alumno_PrimerApellido" name="Alumno_PrimerApellido"
+        class="form-control"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_PrimerApellido').hasError('required')|| form_nuevo.get('Alumno_PrimerApellido').hasError('pattern')  }"
+        value="">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Segundo Apellido</label>
+      <input type="text" maxlength="40" formControlName="Alumno_SegundoApellido" name="Alumno_SegundoApellido"
+        class="form-control"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_SegundoApellido').hasError('required')|| form_nuevo.get('Alumno_SegundoApellido').hasError('pattern')  }"
+        value="">
+
+    </div>
+
+    <div class="form-group col-md-6">
+
+      <label for="sexos">Género</label>
+      <select formControlName="sexos" id="sexos" class="form-control"
+        [ngClass]="{'Incorrecto':form_nuevo.get('sexos').hasError('required')}">
+        <option value="">Seleccione</option>
+        <option *ngFor="let sexo of sexos; let i = index" [value]="sexos[i].id_sexo">
+          {{sexos[i].sexo}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Fecha de Nacimiento</label>
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </span>
+
+        <input type="text" [textMask]="{mask: mask_fechanacimiento}" class="form-control" placeholder="dd/mm/yyyy"
+          id="fecha_nacimiento" formControlName="fecha_nacimiento"
+          [ngClass]="{'Incorrecto': form_nuevo.get('fecha_nacimiento').hasError('required') || form_nuevo.get('fecha_nacimiento').hasError('pattern')  }"
+          (blur)="calc_edad = calcularedad($event.target.value);" value="">
+
+
+      </div>
+
+    </div>
+
+
+
+    <div class="form-group col-md-3">
+      <label>Edad</label>
+      <input type="number" id="edad" formControlName="edad" name="edad" class="form-control" value="{{calc_edad}}"
+        readonly>
+    </div>
+
+    <div class="form-group col-md-5">
+      <label for="nacionalidades">Nacionalidad</label>
+      <select formControlName="nacionalidades" id="nacionalidades" class="form-control"
+        [ngClass]="{'Incorrecto':form_nuevo.get('nacionalidades').hasError('required')}">
+        <option value="">Seleccione</option>
+
+        <option *ngFor="let nac of nacionalidades; let i = index" [value]="nacionalidades[i].nac_id">
+          {{nacionalidades[i].nacionalidad}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label for="religiones">Religión</label>
+
+      <select formControlName="religiones" id="religiones" class="form-control"
+        [ngClass]="{'Incorrecto':form_nuevo.get('religiones').hasError('required')}">
+        <option value="">Seleccione</option>
+
+        <option *ngFor="let nac of religiones; let i = index" [value]="religiones[i].rel_id">
+          {{religiones[i].religion}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-12">
+      <label>Parroquia o Iglesia que asiste?</label>
+      <input type="text" maxlength="200" name="iglesia_asist" id="iglesia_asist" formControlName="iglesia_asist"
+        class="form-control" value="">
+
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Centro Educativo Anterior</label>
+      <input type="text" maxlength="200" name="Centro_proviene" id="Centro_proviene" formControlName="Centro_proviene"
+        class="form-control" value="">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Ubicación del Centro Educativo</label>
+      <input type="text" maxlength="200" name="Centro_ubicacion" id="Centro_ubicacion"
+        formControlName="Centro_ubicacion" class="form-control" value="">
+    </div>
+
+
+
+    <div class="form-group col-md-6">
+      <label for="grados">Grado que cursará</label>
+
+      <select formControlName="grados" id="grados" class="form-control"
+        [ngClass]="{'Incorrecto':form_nuevo.get('grados').hasError('required')}">
+
+        <option *ngFor="let nac of grados; let i = index" [value]="grados[i].grad_id">
+          {{grados[i].grad_nombre}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-3">
+      <label>Ha estudiado en el colegio?</label>
+      <select id="Est_antes" name="Est_antes" formControlName="Est_antes" class="form-control"
+        (change)="validarantes($event.target.value)">
+
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label>Año</label>
+      <input id="anio" type="number" name="Anio" [readonly]="AnioReadOnly" formControlName="anio" class="form-control"
+        value="" readonly>
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label>Motivo del retiro</label>
+      <input id="mot" type="text" maxlength="200" name="Mot_retiro" class="form-control" formControlName="mot"
+        [readonly]="AnioReadOnly" value="@ViewBag.Mot_retiro" readonly>
+
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Tiene Hermanos Estudiando aquí?</label>
+      <select id="Alumno_TieneHermanos" name="Alumno_TieneHermanos" formControlName="Alumno_TieneHermanos"
+        (change)="validarHermanos($event.target.value)" class="form-control">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Alguno de los padres es exalumno del colegio?</label>
+      <select id="Alumno_PFExalumno" name="Alumno_PFExalumno" formControlName="Alumno_PFExalumno"
+        (change)="Alumno_PFExalumno($event.target.value)" class="form-control">
+        <option value=1>SI</option>
+        <option value=2>NO</option>
+      </select>
+    </div>
+
+
+
+    <div class="form-group col-md-12" id="grados_elegir" *ngIf="GradosHermanos">
+      <label>Grados</label>
+      <div class="form-inline">
+        <div class="form-group">
+          <div class="col-md-2">
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value=" Pre Kinder" />
+            <label>Pre Kinder</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Kinder" />
+            <label>Kinder</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Preparatoria" />
+            <label>Preparatoria</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Primero Primaria" />
+            <label>1º. Primaria</label><br />
+            <input id="primero" type="checkbox" name="primero"
+              (change)="juntar($event.target.value,$event.target.checked)" value="Segundo Primaria" />
+            <label>2º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Tercero Primaria" />
+            <label>3º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Primaria" />
+            <label>4º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Primaria" />
+            <label>5º. Primaria</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Sexto Primaria" />
+            <label>6º. Primaria</label>
+
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Primero Básico" />
+            <label>1º. Básico</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Segundo Básico" />
+            <label>2º. Básico</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Tercero Básico" />
+            <label>3º. Básico</label>
+            <br /><br /><br />
+
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Primero Básico Jornada Nocturna" />
+            <label>1º. Básico Jornada Nocturna</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Segundo Básico Jornada Nocturna" />
+            <label>2º. Básico Jornada Nocturna</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Tercero Básico Jornada Nocturna" />
+            <label>3º. Básico Jornada Nocturna</label>
+
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Perito Contador" />
+            <label>4º.Perito Contador</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Perito Contador" />
+            <label>5º.Perito Contador</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Sexto Perito Contador" />
+            <label>6º.Perito Contador</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Bachillerato en Computación" />
+            <label>4º. Bach. en Computación</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Bachillerato en Computación" />
+            <label>5º. Bach. en Computación</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Bachillerato en Ciencias y Letras" />
+            <label>4º. Bach. en Ciencias y Letras</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Bachillerato en Ciencias y Letras" />
+            <label>5º. Bach. en Ciencias y Letras</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Bachillerato en Dibujo Técnico y de Construcción" />
+            <label>4º. Bach. en Dibujo Técnico</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Bachillerato en Dibujo Técnico y de Construcción" />
+            <label>5º. Bach. en Dibujo Técnico</label>
+            <br />
+
+          </div>
+          <div class="col-md-2">
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Cuarto Magisterio en Eduación Primaria" />
+            <label>4º. Magisterio</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Quinto Magisterio en Eduación Primaria" />
+            <label>5º. Magisterio</label>
+            <br />
+            <input type="checkbox" name="primero" (change)="juntar($event.target.value,$event.target.checked)"
+              value="Sexto Magisterio en Eduación Primaria" />
+            <label>6º. Magisterio</label>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="form-group col-md-12" *ngIf="GradosHermanos">
+      <label>Grado</label>
+      <input id="Alumno_Grados" maxlength="500" formControlName="Alumno_Grados" type="text" name="Alumno_Grados"
+        class="form-control" value="{{GradosString}}" readonly>
+    </div>
+
+    <div class="form-group col-md-12">
+      <h2>Datos de los padres</h2>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Nombres del padre</label>
+      <input type="text" name="Alumno_NombrePadre" formControlName="Alumno_NombrePadre"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_NombrePadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre" maxlength="70">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Apellidos del padre</label>
+      <input type="text" name="Alumno_ApellidoPadre" formControlName="Alumno_ApellidoPadre"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_ApellidoPadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre" maxlength="70">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Profesión</label>
+      <input type="text" name="Alumno_ProfesionPadre" formControlName="Alumno_ProfesionPadre" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre" maxlength="70">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Teléfono Padre</label>
+      <input type="text" name="Alumno_TelefonoPadre" formControlName="Alumno_TelefonoPadre"
+        [textMask]="{mask: mask_tel}"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_TelefonoPadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Nombres de la madre</label>
+      <input type="text" name="Alumno_NombreMadre" formControlName="Alumno_NombreMadre"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_NombreMadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre" maxlength="70">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Apellidos de la madre</label>
+      <input type="text" name="Alumno_ApellidoMadre" formControlName="Alumno_ApellidoMadre"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_ApellidoMadre').hasError('pattern')}" class="form-control"
+        value="@ViewBag.Alumno_NombrePadre" maxlength="70">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Profesión</label>
+      <input type="text" name="Alumno_ProfesionMadre" maxlength="70" formControlName="Alumno_ProfesionMadre"
+        class="form-control" value="@ViewBag.Alumno_NombrePadre">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Teléfono de la madre</label>
+      <input type="text" name="Alumno_TelefonoMadre" formControlName="Alumno_TelefonoMadre"
+        [textMask]="{mask: mask_tel}"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_TelefonoMadre').hasError('pattern')}" class="form-control"
+        value="">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Dirección Particular</label>
+      <input type="text" name="Alumno_Direc" formControlName="Alumno_Direc" class="form-control"
+        value="@ViewBag.Alumno_Direc" maxlength="300">
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="departamentos">Departamento</label>
+      <select (change)="SelecccionarMunis($event.target.value)" formControlName="departamentos" id="departamentos"
+        class="form-control" [ngClass]="{'Incorrecto':form_nuevo.get('departamentos').hasError('required')}">
+        <option value="">Seleccione</option>
+        <option *ngFor="let dep of departamentos; let i = index" [value]="departamentos[i].dep_id">
+          {{departamentos[i].departamento}}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-3">
+      <label for="municipios">Municipio</label>
+      <select formControlName="municipios" id="municipios" class="form-control"
+        [ngClass]="{'Incorrecto':form_nuevo.get('municipios').hasError('required')}">
+        <option value="">Seleccione</option>
+        <option *ngFor="let dep of municipios; let i = index" [value]="municipios[i].muni_id">
+          {{municipios[i].municipio}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label>Teléfono Domiciliar</label>
+      <input type="text" id="Alumno_Telefono" name="Alumno_Telefono" formControlName="Alumno_Telefono"
+        [textMask]="{mask: mask_tel}" [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_Telefono').hasError('pattern')}"
+        class="form-control" value="">
+    </div>
+
+    <div class="form-group col-md-8">
+      <label>Foto</label>
+      <input type="file" id="Alumno_foto" name="imageupload"
+        [ngClass]="{'Incorrecto':form_nuevo.get('Alumno_foto').hasError('required')}" formControlName="Alumno_foto"
+        (change)="fileChange($event)">
+    </div>
+
+    <button (click)="InsertarNuevo();" class="btn btn-success pull-right" *ngIf="
+          !form_nuevo.get('Codigo_Val').hasError('required') &&
+          !form_nuevo.get('Alumno_PrimerNombre').hasError('required') &&
+          !form_nuevo.get('Alumno_PrimerNombre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_SegundoNombre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_TecerNombre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_PrimerApellido').hasError('pattern') &&
+          !form_nuevo.get('Alumno_PrimerApellido').hasError('required') &&
+          !form_nuevo.get('Alumno_SegundoApellido').hasError('required') &&
+          !form_nuevo.get('Alumno_SegundoApellido').hasError('pattern') &&
+          !form_nuevo.get('fecha_nacimiento').hasError('required') &&
+          !form_nuevo.get('fecha_nacimiento').hasError('pattern') &&
+          !form_nuevo.get('Alumno_TelefonoPadre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_TelefonoMadre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_Telefono').hasError('pattern') &&
+          !form_nuevo.get('Alumno_NombrePadre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_NombreMadre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_ApellidoPadre').hasError('pattern') &&
+          !form_nuevo.get('Alumno_ApellidoMadre').hasError('pattern')   &&
+          !form_nuevo.get('Alumno_foto').hasError('required') &&
+          !form_nuevo.get('sexos').hasError('required') &&
+          !form_nuevo.get('nacionalidades').hasError('required') &&
+          !form_nuevo.get('religiones').hasError('required') &&
+          !form_nuevo.get('departamentos').hasError('required') &&
+          !form_nuevo.get('sexos').hasError('required') &&
+          !form_nuevo.get('municipios').hasError('required')
+          ">
+      <img src="assets/images2/guardar.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">
+      Guardar
+    </button>
+
+    <a routerLink="/admision/Index" class="btn btn-danger text-center pull-right"><img src="assets/images2/x.png"
+        width="40 px" height="40px" class="text-right" style="margin-right: 5%;"> Cancelar</a>
+
+  </div>
+  <br><br>
+
+</form>

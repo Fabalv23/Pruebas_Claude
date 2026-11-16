@@ -1,0 +1,269 @@
+<div class="row">
+    <input type="number" id="validado" name="validado"  max="100" >
+</div>
+
+
+<div class="loader" *ngIf="spinner">Loading...</div>
+<div id="list" *ngIf="habilitado && !recuperacion_habilitado">
+<div *ngFor="let val of data; let i = index">
+<div class="canva-boletin" style="margin-right: 10%;" id="rayado{{i}}" >
+<div id="encabezado_datos">
+
+
+        <h5 style="font-size: 11pt !important;">Alumno: <strong style="font-size: 12pt !important;">{{val.nombre}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Código: <strong style="font-size: 12pt !important;">{{val.codigo}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clave: <strong style="font-size: 12pt !important;">{{val.clave}} </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ciclo: <strong style="font-size: 12pt !important;">{{val.ciclo}} </strong> </h5>
+        <h5 style="font-size: 11pt !important;">Grado: <strong style="font-size: 12pt !important;"> {{val.grado}} - {{val.seccion}} </strong> </h5>
+
+
+
+</div>
+
+
+<table class="table table-bordered" *ngIf="unidades4">
+    <colgroup>
+        <col style="width: 50%" />
+        
+    </colgroup>
+    <thead style="border: 0px !important;">
+        <tr style="border: 0px !important;">
+            <th rowspan="2"></th>
+            <th colspan="4" class="text-center">UNIDAD</th>
+            <th colspan="4" class="text-center">ACUMULATIVO</th>
+            <th rowspan="2" class="text-center">FINAL</th>
+            <th style="width: 50%;" rowspan="2" ></th>
+
+
+        </tr>
+        <tr style="border: 0px !important;">
+            <th class="text-center">I</th>
+            <th class="text-center">II</th>
+            <th class="text-center">III</th>
+            <th class="text-center">IV</th>
+            
+            <th class="text-center">I</th>
+            <th class="text-center">II</th>
+            <th class="text-center">III</th>
+            <th class="text-center">IV</th>
+
+
+            
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let nota of val.notas">
+            <td [ngClass]="{'nombre_materia_oficial': nota.porcentaje == '1', 'nombre_materia_secundaria': nota.porcentaje != '1'}"><span *ngIf="nota.porcentaje!='1'" style="visibility: hidden;">.......</span> {{nota.materia}}</td>
+            <td *ngIf="nota.ultima_unidad=='0'" [ngClass]="{'dm': nota.unidad1 < 60 && nota.porcentaje == '1', 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79 && nota.porcentaje == '1', 's': nota.unidad1 >= 80 && nota.unidad1 <=90 && nota.porcentaje == '1', 'ss': nota.unidad1 >= 91 && nota.unidad1<=100 && nota.porcentaje == '1','dm2': nota.unidad1 < 60 && nota.porcentaje != '1', 'pm2': nota.unidad1 >= 60 && nota.unidad1 <=79 && nota.porcentaje != '1', 's2': nota.unidad1 >= 80 && nota.unidad1 <=90 && nota.porcentaje != '1' , 'ss2': nota.unidad1 >= 91 && nota.unidad1<=100 && nota.porcentaje != '1'}">{{nota.unidad1}}</td>
+            <td *ngIf="nota.ultima_unidad=='1'" [ngClass]="{'dm': nota.unidad1 < 60, 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79, 's': nota.unidad1 >= 80 && nota.unidad1 <=90 , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0'" [ngClass]="{'dm': nota.unidad2 < 60 && nota.porcentaje == '1', 'pm': nota.unidad2 >= 60 && nota.unidad2 <=79 && nota.porcentaje == '1', 's': nota.unidad2 >= 80 && nota.unidad2 <=90 && nota.porcentaje == '1' , 'ss': nota.unidad2 >= 91 && nota.unidad2<=100 && nota.porcentaje == '1','dm2': nota.unidad2 < 60 && nota.porcentaje != '1', 'pm2': nota.unidad2 >= 60 && nota.unidad2 <=79 && nota.porcentaje != '1', 's2': nota.unidad2 >= 80 && nota.unidad2 <=90 && nota.porcentaje != '1' , 'ss2': nota.unidad2 >= 91 && nota.unidad2<=100 && nota.porcentaje != '1'}">{{nota.unidad2}}</td>
+            <td *ngIf="nota.ultima_unidad=='1'" [ngClass]="{'dm': nota.unidad2 < 60, 'pm': nota.unidad2 >= 60 && nota.unidad2 <=79, 's': nota.unidad2 >= 80 && nota.unidad2 <=90 , 'ss': nota.unidad2 >= 91 && nota.unidad2<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0'" [ngClass]="{'dm': nota.unidad3 < 60 && nota.porcentaje == '1', 'pm': nota.unidad3 >= 60 && nota.unidad3 <=79 && nota.porcentaje == '1', 's': nota.unidad3 >= 80 && nota.unidad3 <=90 && nota.porcentaje == '1', 'ss': nota.unidad3 >= 91 && nota.unidad3<=100 && nota.porcentaje == '1','dm2': nota.unidad3 < 60 && nota.porcentaje != '1', 'pm2': nota.unidad3 >= 60 && nota.unidad3 <=79 && nota.porcentaje != '1', 's2': nota.unidad3 >= 80 && nota.unidad3 <=90 && nota.porcentaje != '1' , 'ss2': nota.unidad3 >= 91 && nota.unidad3<=100 && nota.porcentaje != '1'}">{{nota.unidad3}}</td>
+            <td *ngIf="nota.ultima_unidad=='1'" [ngClass]="{'dm': nota.unidad3 < 60, 'pm': nota.unidad3 >= 60 && nota.unidad3 <=79, 's': nota.unidad3 >= 80 && nota.unidad3 <=90 , 'ss': nota.unidad3 >= 91 && nota.unidad3<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0'" [ngClass]="{'dm': nota.unidad4 < 60 && nota.porcentaje == '1', 'pm': nota.unidad4 >= 60 && nota.unidad4 <=79 && nota.porcentaje == '1', 's': nota.unidad4 >= 80 && nota.unidad4 <=90 && nota.porcentaje == '1', 'ss': nota.unidad4 >= 91 && nota.unidad4<=100 && nota.porcentaje == '1','dm2': nota.unidad4 < 60 && nota.porcentaje != '1', 'pm2': nota.unidad4 >= 60 && nota.unidad4 <=79 && nota.porcentaje != '1', 's2': nota.unidad4 >= 80 && nota.unidad4 <=90 && nota.porcentaje != '1' , 'ss2': nota.unidad4 >= 91 && nota.unidad4<=100 && nota.porcentaje != '1'}">{{nota.unidad4}}</td>
+            <td *ngIf="nota.ultima_unidad=='1'" [ngClass]="{'dm': nota.unidad4 < 60, 'pm': nota.unidad4 >= 60 && nota.unidad4 <=79, 's': nota.unidad4 >= 80 && nota.unidad4 <=90 , 'ss': nota.unidad4 >= 91 && nota.unidad4<=100}"></td>
+
+            <!--<td [ngClass]="{'dm': nota.unidad1_acumulativo < 60, 'pm': nota.unidad1_acumulativo >= 60 && nota.unidad1_acumulativo <=79, 's': nota.unidad1_acumulativo >= 80 && nota.unidad1_acumulativo <=90 , 'ss': nota.unidad1_acumulativo >= 91 && nota.unidad1_acumulativo<=100}">{{nota.unidad1_acumulativo}}</td>
+            <td [ngClass]="{'dm': nota.unidad2_acumulativo < 60, 'pm': nota.unidad2_acumulativo >= 60 && nota.unidad2_acumulativo <=79, 's': nota.unidad2_acumulativo >= 80 && nota.unidad2_acumulativo <=90 , 'ss': nota.unidad2_acumulativo >= 91 && nota.unidad2_acumulativo<=100}">{{nota.unidad2_acumulativo}}</td>
+            <td [ngClass]="{'dm': nota.unidad3_acumulativo < 60, 'pm': nota.unidad3_acumulativo >= 60 && nota.unidad3_acumulativo <=79, 's': nota.unidad3_acumulativo >= 80 && nota.unidad3_acumulativo <=90 , 'ss': nota.unidad3_acumulativo >= 91 && nota.unidad3_acumulativo<=100}">{{nota.unidad3_acumulativo}}</td>
+            <td [ngClass]="{'dm': nota.unidad4_acumulativo < 60, 'pm': nota.unidad4_acumulativo >= 60 && nota.unidad4_acumulativo <=79, 's': nota.unidad4_acumulativo >= 80 && nota.unidad4_acumulativo <=90 , 'ss': nota.unidad4_acumulativo >= 91 && nota.unidad4_acumulativo<=100}">{{nota.unidad4_acumulativo}}</td>-->
+            <td *ngIf="nota.ultima_unidad=='0' && nota.porcentaje == '1'">{{nota.unidad1_acumulativo| number:'1.2-2'}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' || nota.porcentaje != '1'"></td>
+            <td *ngIf="nota.ultima_unidad=='0' && nota.porcentaje == '1'">{{nota.unidad2_acumulativo| number:'1.2-2'}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' || nota.porcentaje != '1'"></td>
+            <td *ngIf="nota.ultima_unidad=='0' && nota.porcentaje == '1'">{{nota.unidad3_acumulativo| number:'1.2-2'}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' || nota.porcentaje != '1'"></td>
+            <td *ngIf="nota.ultima_unidad=='0' && nota.porcentaje == '1'">{{nota.unidad4_acumulativo| number:'1.2-2'}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' || nota.porcentaje != '1'"></td>
+            <td *ngIf="nota.ultima_unidad=='0' && ultima_unidad_habilitada" [ngClass]="{'reprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,nota.unidad4_acumulativo) < 60, 'aprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,nota.unidad4_acumulativo) >= 60}"  style="font-weight: bold;">{{suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,nota.unidad4_acumulativo)}}</td>
+            <td *ngIf="nota.ultima_unidad=='0' && ultima_unidad_habilitada==false"></td>
+
+            <td *ngIf="nota.ultima_unidad=='1'" [ngClass]="{'reprobado': nota.unidad4 < 60, 'aprobado': nota.unidad4>= 60 }"  style="font-weight: bold;">{{nota.unidad4}}</td>
+
+            <td *ngIf="nota.ultima_unidad=='0' && unidad_select=='UNIDAD 1'" [ngClass]="{'dm': nota.unidad1 < 60, 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79, 's': nota.unidad1 >= 80 && nota.unidad1 <=90 , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100}" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td>
+            <td *ngIf="nota.ultima_unidad=='0' && unidad_select=='UNIDAD 2'" [ngClass]="{'dm': nota.unidad2 < 60, 'pm': nota.unidad2 >= 60 && nota.unidad2 <=79, 's': nota.unidad2 >= 80 && nota.unidad2 <=90 , 'ss': nota.unidad2 >= 91 && nota.unidad2<=100}" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td>
+            <td *ngIf="nota.ultima_unidad=='0' && unidad_select=='UNIDAD 3'" [ngClass]="{'dm': nota.unidad3 < 60, 'pm': nota.unidad3 >= 60 && nota.unidad3 <=79, 's': nota.unidad3 >= 80 && nota.unidad3 <=90 , 'ss': nota.unidad3 >= 91 && nota.unidad3<=100}" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td>
+            <td *ngIf="nota.ultima_unidad=='0' && unidad_select=='UNIDAD 4' && nota.porcentaje == '1'" [ngClass]="{'reprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,nota.unidad4_acumulativo) < 60, 'aprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,nota.unidad4_acumulativo) >= 60}" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td>
+            
+            <td *ngIf="nota.ultima_unidad=='1' && ultima_unidad_habilitada" [ngClass]="{'reprobado': suma_nota_final(0,0,0,nota.unidad4) < 60, 'aprobado': suma_nota_final(0,0,0,nota.unidad4) >= 60 }" style="font-size: 12pt !important; font-weight: bold;"> {{reprobado_aprobado(nota)}}</td> 
+        </tr>
+        <tr>
+            <td style="float: right; font-weight: bold;">Promedio</td>
+            <td style="font-weight: bold;">{{val.promediounidad1}}</td>
+            <td style="font-weight: bold;">{{val.promediounidad2}}</td>
+            <td style="font-weight: bold;">{{val.promediounidad3}}</td>
+            <td style="font-weight: bold;">{{val.promediounidad4}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td *ngIf="ultima_unidad_habilitada" style="font-weight: bold;">{{calc_promedio_final(val.notas)}}</td>
+
+
+        </tr>
+    <tr *ngIf="ultima_unidad_habilitada" style="background-color: blue; color: white; text-align: left;">
+       <td colspan="10" style="text-align: left;"> {{funcion_mensaje_ultima_unidad(val.notas)}} </td> <!-- aplicar formula de cambio de texto -->
+    </tr>
+    </tbody>
+</table>
+
+<table class="table table-bordered" *ngIf="unidades3">
+    <colgroup>
+        <col style="width: 50%" />
+    </colgroup>
+    <thead style="border: 0px !important;">
+        <tr style="border: 0px !important;">
+            <th rowspan="2"></th>
+            <th colspan="3" class="text-center">UNIDAD</th>
+            <th colspan="3" class="text-center">ACUMULATIVO</th>
+            <th rowspan="2" class="text-center">FINAL</th>
+            <th style="width: 50%;" rowspan="2" ></th>
+
+
+        </tr>
+        <tr style="border: 0px !important;">
+            <th class="text-center">I</th>
+            <th class="text-center">II</th>
+            <th class="text-center">III</th>
+            
+            <th class="text-center">I</th>
+            <th class="text-center">II</th>
+            <th class="text-center">III</th>
+
+
+            
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let nota of val.notas">
+            <td [ngClass]="{'nombre_materia_oficial': nota.porcentaje == '1', 'nombre_materia_secundaria': nota.porcentaje != '1'}"><span *ngIf="nota.porcentaje!='1'" style="visibility: hidden;">.......</span>{{nota.materia}}</td>
+            <td *ngIf="nota.ultima_unidad=='0'" [ngClass]="{'dm': nota.unidad1 < 60 && nota.porcentaje == '1', 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79 && nota.porcentaje == '1', 's': nota.unidad1 >= 80 && nota.unidad1 <=90 && nota.porcentaje == '1' , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100 && nota.porcentaje == '1' , 'dm2': nota.unidad1 < 60 && nota.porcentaje != '1', 'pm2': nota.unidad1 >= 60 && nota.unidad1 <=79 && nota.porcentaje != '1', 's2': nota.unidad1 >= 80 && nota.unidad1 <=90 && nota.porcentaje != '1' , 'ss2': nota.unidad1 >= 91 && nota.unidad1<=100 && nota.porcentaje != '1'}">{{nota.unidad1}}</td>
+            <td *ngIf="nota.ultima_unidad=='1'" [ngClass]="{'dm': nota.unidad1 < 60, 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79, 's': nota.unidad1 >= 80 && nota.unidad1 <=90 , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0'" [ngClass]="{'dm': nota.unidad2 < 60 && nota.porcentaje == '1', 'pm': nota.unidad2 >= 60 && nota.unidad2 <=79 && nota.porcentaje == '1', 's': nota.unidad2 >= 80 && nota.unidad2 <=90  && nota.porcentaje == '1', 'ss': nota.unidad2 >= 91 && nota.unidad2<=100 && nota.porcentaje == '1', 'dm2': nota.unidad2 < 60 && nota.porcentaje != '1', 'pm2': nota.unidad2 >= 60 && nota.unidad2 <=79 && nota.porcentaje != '1', 's2': nota.unidad2 >= 80 && nota.unidad2 <=90 && nota.porcentaje != '1' , 'ss2': nota.unidad2 >= 91 && nota.unidad2<=100 && nota.porcentaje != '1'}">{{nota.unidad2}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' " [ngClass]="{'dm': nota.unidad2 < 60, 'pm': nota.unidad2 >= 60 && nota.unidad2 <=79, 's': nota.unidad2 >= 80 && nota.unidad2 <=90 , 'ss': nota.unidad2 >= 91 && nota.unidad2<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0'" [ngClass]="{'dm': nota.unidad3 < 60 && nota.porcentaje == '1', 'pm': nota.unidad3 >= 60 && nota.unidad3 <=79 && nota.porcentaje == '1', 's': nota.unidad3 >= 80 && nota.unidad3 <=90 &&  nota.porcentaje == '1', 'ss': nota.unidad3 >= 91 && nota.unidad3<=100 && nota.porcentaje == '1', 'dm2': nota.unidad3 < 60 && nota.porcentaje != '1', 'pm2': nota.unidad3 >= 60 && nota.unidad3 <=79 && nota.porcentaje != '1', 's2': nota.unidad3 >= 80 && nota.unidad3 <=90 && nota.porcentaje != '1' , 'ss2': nota.unidad3 >= 91 && nota.unidad3<=100 && nota.porcentaje != '1'}">{{nota.unidad3}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' " [ngClass]="{'dm': nota.unidad3 < 60, 'pm': nota.unidad3 >= 60 && nota.unidad3 <=79, 's': nota.unidad3 >= 80 && nota.unidad3 <=90 , 'ss': nota.unidad3 >= 91 && nota.unidad3<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0' && nota.porcentaje == '1' ">{{nota.unidad1_acumulativo| number:'1.2-2'}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' || nota.porcentaje != '1'" [ngClass]="{'dm': nota.unidad1 < 60, 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79, 's': nota.unidad1 >= 80 && nota.unidad1 <=90 , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0' && nota.porcentaje == '1' ">{{nota.unidad2_acumulativo| number:'1.2-2'}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' || nota.porcentaje != '1'" [ngClass]="{'dm': nota.unidad1 < 60, 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79, 's': nota.unidad1 >= 80 && nota.unidad1 <=90 , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0' && nota.porcentaje == '1' ">{{nota.unidad3_acumulativo| number:'1.2-2'}}</td>
+            <td *ngIf="nota.ultima_unidad=='1' || nota.porcentaje != '1'" [ngClass]="{'dm': nota.unidad1 < 60, 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79, 's': nota.unidad1 >= 80 && nota.unidad1 <=90 , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100}"></td>
+
+            <td *ngIf="nota.ultima_unidad=='0' && ultima_unidad_habilitada" [ngClass]="{'reprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,0) < 60, 'aprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,0) >= 60 }" style="font-weight: bold;">{{suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,0)}}</td>
+            <td *ngIf="nota.ultima_unidad=='0' && ultima_unidad_habilitada==false"></td>
+
+            <td *ngIf="nota.ultima_unidad=='1'" [ngClass]="{'reprobado': nota.unidad3 < 60, 'aprobado': nota.unidad3>= 60 }" style="font-weight: bold;">{{validar_nota(nota.unidad3,nota.materia)}}</td>
+
+            <td *ngIf="nota.ultima_unidad=='0' && unidad_select=='UNIDAD 1'" [ngClass]="{'dm': nota.unidad1 < 60, 'pm': nota.unidad1 >= 60 && nota.unidad1 <=79, 's': nota.unidad1 >= 80 && nota.unidad1 <=90 , 'ss': nota.unidad1 >= 91 && nota.unidad1<=100}" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td>
+            <td *ngIf="nota.ultima_unidad=='0' && unidad_select=='UNIDAD 2'" [ngClass]="{'dm': nota.unidad2 < 60, 'pm': nota.unidad2 >= 60 && nota.unidad2 <=79, 's': nota.unidad2 >= 80 && nota.unidad2 <=90 , 'ss': nota.unidad2 >= 91 && nota.unidad2<=100}" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td>
+          <!--  <td *ngIf="nota.ultima_unidad=='0' && unidad_select=='UNIDAD 3'" [ngClass]="{'dm': nota.unidad3 < 60, 'pm': nota.unidad3 >= 60 && nota.unidad3 <=79, 's': nota.unidad3 >= 80 && nota.unidad3 <=90 , 'ss': nota.unidad3 >= 91 && nota.unidad3<=100}" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td> aplicar formula de cambio de texto -->
+          <td *ngIf="(nota.ultima_unidad=='0' && unidad_select=='UNIDAD 3' && nota.porcentaje == '1') || (nota.ultima_unidad=='0' && unidad_select=='UNIDAD 4' && unidades3 && nota.porcentaje == '1') " [ngClass]="{'reprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,0) < 60, 'aprobado': suma_nota_final(nota.unidad1_acumulativo,nota.unidad2_acumulativo,nota.unidad3_acumulativo,0) >= 60 }" style="font-size: 12pt !important; font-weight: bold;">{{reprobado_aprobado(nota)}} </td>
+          <!--   <td *ngIf="nota.ultima_unidad=='1' && ultima_unidad_habilitada" [ngClass]="{'dm': nota.unidad3 < 60, 'pm': nota.unidad3 >= 60 && nota.unidad3 <=79, 's': nota.unidad3 >= 80 && nota.unidad3 <=90 , 'ss': nota.unidad3 >= 91 && nota.unidad3<=100}" style="font-size: 12pt !important; font-weight: bold;"> {{reprobado_aprobado(nota)}}</td>  aplicar formula de cambio de texto -->
+          <td *ngIf="nota.ultima_unidad=='1' && ultima_unidad_habilitada" [ngClass]="{'reprobado': suma_nota_final(0,0,0,nota.unidad3) < 60, 'aprobado': suma_nota_final(0,0,0,nota.unidad3) >= 60 }" style="font-size: 12pt !important; font-weight: bold;"> {{reprobado_aprobado(nota)}}</td> 
+        </tr>
+        <tr>
+            <td style="float: right; font-weight: bold;">Promedio</td>
+            <td style="font-weight: bold;">{{val.promediounidad1}}</td>
+            <td style="font-weight: bold;">{{val.promediounidad2}}</td>
+            <td style="font-weight: bold;">{{val.promediounidad3}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td *ngIf="ultima_unidad_habilitada" style="font-weight: bold;">{{calc_promedio_final(val.notas)}}</td>
+        
+        </tr>
+        <tr *ngIf="ultima_unidad_habilitada" style="background-color: blue; color: white; text-align: left;">
+            <td colspan="8" style="text-align: left;"> {{funcion_mensaje_ultima_unidad(val.notas)}} </td> <!-- aplicar formula de cambio de texto -->
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+<button (click)="descargar_boletin_varios_alturaFija();" class="pull-right btn btn-primary" *ngIf="habilitado">Descargar Boletín</button>
+</div>
+
+<div id="list" *ngIf="habilitado && recuperacion_habilitado">
+    <div *ngFor="let val of data; let i = index">
+    <div class="canva-boletin-recuperacion" style="margin-right: 10%;" id="rayado{{i}}" >
+    <div id="encabezado_datos">
+    
+    
+            <h5 style="font-size: 11pt !important;">Alumno: <strong style="font-size: 12pt !important;">{{val.nombre}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Código: <strong style="font-size: 12pt !important;">{{val.codigo}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clave: <strong style="font-size: 12pt !important;">{{val.clave}} </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ciclo: <strong style="font-size: 12pt !important;">{{val.ciclo}} </strong> </h5>
+            <h5 style="font-size: 11pt !important;">Grado: <strong style="font-size: 12pt !important;"> {{val.grado}} - {{val.seccion}} </strong> </h5>
+    
+    
+    
+    </div>
+    <table class="table table-bordered" *ngIf="recuperacion_habilitado">
+        <colgroup>
+            <col style="width: 50%" />
+        </colgroup>
+        <thead style="border: 0px !important;">
+            <tr style="border: 0px !important;">
+                <th rowspan="2"></th>
+                <th rowspan="2" class="text-center">FINAL</th>
+                <th style="width: 50%;" rowspan="2" ></th>
+                <th></th>
+    
+            </tr>
+        </thead>
+    
+        <tbody>
+            <tr *ngFor="let nota of val.notas">
+                <td [ngClass]="{'nombre_materia_oficial': nota.porcentaje == '1', 'nombre_materia_secundaria': nota.porcentaje != '1'}"><span *ngIf="nota.porcentaje!='1'" style="visibility: hidden;">.......</span>{{nota.materia}}</td>                
+                <td [ngClass]="{'reprobado': nota.nota_recuperacion < 60, 'aprobado': nota.nota_recuperacion>= 60 }" style="font-weight: bold;">{{nota.nota_recuperacion}}</td>
+                <td *ngIf="nota.porcentaje == '1'" [ngClass]="{'reprobado': nota.nota_recuperacion< 60, 'aprobado': nota.nota_recuperacion >= 60 }" style="font-size: 12pt !important; font-weight: bold;"> {{reprobado_aprobado_recuperacion(nota.nota_recuperacion)}}</td> 
+    
+               </tr>
+    
+            <tr style="background-color: blue; color: white; text-align: left;">
+                <td colspan="5" style="text-align: left;"> {{funcion_mensaje_ultima_unidad_recuperacion(val.notas)}} </td> <!-- aplicar formula de cambio de texto -->
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+    <button (click)="descargar_boletin_varios_alturaFija_recuperacion();" class="pull-right btn btn-primary" *ngIf="habilitado">Descargar Boletín</button>
+
+</div>
+<div *ngIf="!habilitado && !spinner">
+    <h1>
+        Boletín no disponible
+    </h1>
+    <table  class="table table-bordered ">
+        <thead>
+
+            <tr>
+               
+
+
+                <th class="text-center">Convivencia</th>
+                <th class="text-center">Solvencia</th>
+                <th class="text-center">Pedagogía</th>
+
+            </tr>
+
+
+        </thead>
+        
+       <tbody>
+
+            <tr > 
+
+                <td colspan=1 class="text-center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="!convivencia" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="convivencia" /></td>
+                <td colspan=1 class="text-center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="!solvencia" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="solvencia" /></td>
+                <td colspan=1 class="text-center"><img src="assets/images/check2.png" width="50" height="23" *ngIf="!pedagogia" /><img src="assets/images/nocheck1.png" width="50" height="23" *ngIf="pedagogia" /></td>
+
+               </tr> 
+
+        </tbody>
+    </table>
+</div>

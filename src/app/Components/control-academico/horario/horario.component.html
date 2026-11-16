@@ -1,0 +1,35 @@
+<h2 class="text-center">
+    Horario de Clases
+</h2>
+
+<h3 *ngIf="ruta_matutina != ''">Jornada Matutina</h3>
+<div class="text-center" *ngIf="ruta_matutina != ''">
+<img src="{{ruta_matutina}}" width="75%" height="75%">
+<button type="submit" class="btn btn-success pull-right" (click)="descargar(ruta_matutina);">
+    Descargar Horario
+</button>
+</div>
+
+<h3 *ngIf="ruta_vespertina != ''">Jornada Vespertina</h3>
+<div class="text-center" *ngIf="ruta_vespertina != ''">
+<img src="{{ruta_vespertina}}" width="75%" height="75%">
+<button type="submit" class="btn btn-success pull-right" (click)="descargar(ruta_vespertina);">
+    Descargar Horario
+</button>
+</div>
+
+<h3 *ngIf="ruta_nocturna != ''">Jornada Nocturna</h3>
+<div class="text-center" *ngIf="ruta_nocturna != ''">
+<img src="{{ruta_nocturna}}" width="75%" height="75%">
+<button type="submit" class="btn btn-success pull-right" (click)="descargar(ruta_nocturna);">
+    Descargar Horario
+</button>
+</div>
+
+<h3 *ngIf="ruta_examen != ''">Exámenes</h3>
+<div class="text-center" *ngIf="ruta_examen != ''">
+<img src="{{ruta_examen}}" width="75%" height="75%">
+<button type="submit" class="btn btn-success pull-right" (click)="descargar(ruta_examen);">
+    Descargar Horario
+</button>
+</div>

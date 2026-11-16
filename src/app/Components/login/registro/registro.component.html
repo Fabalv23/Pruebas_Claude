@@ -1,0 +1,94 @@
+<form [formGroup]="form_crear"  novalidate id="Editar"  >
+<div id="login">
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div>
+                        <p> <a routerLink="../" class="btn btn-link">Registrarse</a></p>
+                    </div>
+                    <div>
+                        <p>Registro de Cuenta </p>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="alert alert-success" *ngIf="cuenta">
+                        <strong>ATENCIÓN!   </strong>SU CUENTA ES {{NoCuenta}}
+                      </div>
+
+                        <div class="form-group">
+                            <label>Cuenta </label>
+                            
+                            <input type="text" disabled name="Usu_Cuenta" class="form-control" placeholder="cuenta" value='{{NoCuenta}}' />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Nombre </label>
+                            
+                            <input type="text" 
+                            [ngClass]="{'Incorrecto':form_crear.get('Nombre_Usuario').hasError('required')}"                     
+                            formControlName="Nombre_Usuario" name="Usu_Nombre" class="form-control" placeholder="Ingrese su nombre" />
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Apellido </label>
+                            <input type="text" 
+                            [ngClass]="{'Incorrecto':form_crear.get('Apellido_Usuario').hasError('required')}"                     
+                            formControlName="Apellido_Usuario" name="Usu_Apellido" class="form-control" placeholder="Ingrese su apellido" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Correo Electr&oacute;nico <p  *ngIf="!valcorreo" style="color: white;background-color: red; margin-bottom: 0px;">Ya existe una cuenta con ese correo</p></label>
+                            <input type="email" 
+                            (change)="ValidarCorreo($event.target.value);"
+                            [ngClass]="{'Incorrecto':form_crear.get('Correo').hasError('required')}"            
+                            formControlName="Correo" id="correo" name="Usu_Email" class="form-control" placeholder="Ingrese su correo electrónico" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Contraseña</label>
+                            <input type="password" 
+                            [ngClass]="{'Incorrecto':form_crear.get('Password').hasError('minlength') || form_crear.get('Password').hasError('required')}"            
+                            formControlName="Password" name="Usu_Password" class="form-control" placeholder="Ingrese su contraseña 6 o mas digitos  " />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Confirme-Contraseña</label>
+                            <input type="password" (change)="ValPassword($event.target.value)" id="valpass" name="Usu_PasswordCo" class="form-control" placeholder="Confirme su contraseña" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=""> Ingreso Clave de Acceso  <p  *ngIf="codval" style="color: white;background-color: red; margin-bottom: 0px;">Codigo inválido o ya utilizado, por favor verificar su ingreso o comunicarse al colegio</p></label>
+                            <input type="text" 
+                            (blur)="ValidarCodigo($event.target.value);"
+                            [ngClass]="{'Incorrecto':form_crear.get('Cod').hasError('required')}"                     
+                            name="cod" formControlName="Cod"  class="form-control" placeholder="20abc123" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Jornada</label>
+                            <select name="Jor_Id" 
+                            [ngClass]="{'Incorrecto':form_crear.get('jornadas').hasError('required')}"                     
+                            formControlName="jornadas" class="form-control">
+                                    <option *ngFor="let jornada of jornadas" value="{{jornada.id_jornada}}">{{jornada.nombre}}</option>
+                                
+                            </select>
+                        </div>
+                        <div class="text-right">
+                            <button 
+                            *ngIf="!form_crear.get('jornadas').hasError('required') &&
+                            !form_crear.get('Cod').hasError('required') && 
+                            !form_crear.get('Password').hasError('minlength') && !form_crear.get('Password').hasError('required')
+                            && !form_crear.get('Correo').hasError('required') && valcorreo && !codval" (click)="Enviar();" type="submit" class="btn btn-primary text-center">
+                                Registrarse
+                            </button>
+                        </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+
+
+

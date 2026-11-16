@@ -1,0 +1,89 @@
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Alumnos de Primer Ingreso
+        </div>
+    </div>
+    <div class="tools">
+        <a [routerLink]="['../CRUDAlumno',0]" class="btn  btn-primary text-center pull-right"> <img src="assets/images2/mas.png" width="20 px" height="20px" class="text-right"> Agregar Registro    </a>
+
+
+    </div>
+    <div class="portlet-body ">
+        <div id="list" class="table table-bordered table-striped table-condensed flip-content">
+            <tbody>
+                <!--Encabezados de la tabla-->
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Clave de Acceso Utilizada</th>
+
+
+                    <th>Codigo Alumno</th>
+
+                    <th>Primer Nombre</th>
+
+                    <th>Segundo Nombre</th>
+
+                    <th>Tercer Nombre</th>
+
+                    <th>Primer Apellido</th>
+
+                    <th>Segundo Apellido</th>
+
+                    <th style="width: 50px;" class="text-center">Ver</th>
+
+                    <th style="width: 50px;" class="text-center">Editar</th>
+
+                    <th style="width: 50px;" class="text-center">Ficha</th>
+
+                   <th style="width: 50px;" class="text-center">Anexo</th>
+
+
+                </tr>
+                        <!--CONTENIDO-->
+                <tr *ngFor="let Alumno of ListadoAlumnos">
+
+                    <td>{{Alumno.alumno_id}}</td>
+
+                    <td>{{Alumno.codigo_activacion}}</td>
+                    <td>{{Alumno.alumno_codigo}}</td>
+
+                    <td>{{Alumno.alumno_primernombre}}</td>
+                    <td>{{Alumno.alumno_segundonombre}}</td>
+
+                    <td>{{Alumno.alumno_tecernombre}}</td>
+                    <td>{{Alumno.alumno_primerapellido}}</td>
+
+                    <td>{{Alumno.alumno_segundoapellido}}</td>
+
+                    <td>
+                        <a [routerLink]="['../CRUDVer',Alumno.alumno_id]"
+                        class="btn btn-info btn-xs">
+                        <img src="assets/images2/ver.png" width="20 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+
+                    <td class="text-center">
+                        <a [routerLink]="['../CRUDAlumno',Alumno.alumno_id]"
+                        class="btn btn-danger btn-xs">
+                        <img src="assets/images2/editar.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-info btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                   <td>
+                        <a (click)="Descargar();" class="btn btn-info btn-xs"> <img src="assets/images2/descarga.png" width="10 px" height="10px" class="text-right"></a>
+                    </td>
+
+                   </tr>
+
+            </tbody>
+        </div>
+    </div>
+</div>

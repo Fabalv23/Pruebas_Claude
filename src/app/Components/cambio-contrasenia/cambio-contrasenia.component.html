@@ -1,0 +1,17 @@
+
+<h1>Cambio de Contraseña Actual</h1>
+
+<form [formGroup]="cambio_pass">
+
+
+    <label>
+        Ingrese Contraseña nueva
+    </label>
+    <input type="password" name="pass" id="pass" formControlName="pass"  class="form-control">
+
+    <br>
+<button class="btn btn-primary pull-right" (click)="enviar();">
+    Cambiar
+</button>
+
+</form>

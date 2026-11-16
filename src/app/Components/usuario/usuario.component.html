@@ -1,0 +1,97 @@
+<div id="cuentainicial" class="page">
+
+  <h1 class="page-header text-center">Bienvenido: Colegio La Salle, Antigua Guatemala </h1>
+  <div style="display: inline;">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title"><strong> Proceso de Admisión </strong> <img src="assets/images2/llenar.png"
+                width="100 px" height="100px" style=" margin-left: 25%;" class="text-right"></h3>
+
+            <p class="card-text">Proceso para iniciar el proceso de admisión en nuestra institución.</p>
+            <a [routerLink]="['/admision/Index']" *ngIf="admision"><img src="assets/images2/iniciar_proceso.png"
+              width="150px" height="50px" class="text-right"></a>
+            <span class="label label-info" *ngIf="!admision">Proceso No Disponible</span>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title"><strong> Proceso Inscripción </strong><img src="assets/images2/proceso.png"
+                width="100 px" height="100px" style=" margin-left: 25%;" class="text-right"></h3>
+            <p class="card-text">Pasos completos para el proceso de inscripción del nuevo ciclo escolar
+            </p>
+            <a [routerLink]="['../Inscripcion']" ><img src="assets/images2/ir_proceso.png"
+              width="150px" height="50px" class="text-right"></a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="row" style="margin-top: 50px;">
+
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title"><strong> Control Académico </strong> <img src="assets/images2/control.png"
+                width="100 px" height="100px" style=" margin-left: 28%;" class="text-right"></h3>
+
+            <p class="card-text">Seguimiento académico del estudiante</p>
+            <a [routerLink]="['../ControlAcademico']" ><img src="assets/images2/ir_control.png"
+              width="150px" height="50px" class="text-right"></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title"><strong> Estado de Cuenta </strong> <img src="assets/images2/saldos.png"
+                width="100 px" height="100px" style=" margin-left: 28%;" class="text-right"></h3>
+
+            <p class="card-text">Control de estado de cuenta del estudiante en el ciclo escolar actual</p>
+            <a [routerLink]="['/Financiera/EstadoCuenta']"><img src="assets/images2/mas_detalles.png"
+              width="150px" height="50px" class="text-right"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 50px;">
+
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title"><strong> Convivencia </strong> <img src="assets/images2/convivencia.png" width="100 px"
+                height="100px" style=" margin-left: 37%;" class="text-right"></h3>
+
+            <p class="card-text">Seguimiento de asistencia y excusas del estudiante</p>
+            <a [routerLink]="['../Convivencia']"><img src="assets/images2/ir_convivencia.png"
+              width="150px" height="50px" class="text-right"></a>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title"><strong> Pastoral </strong> <img src="assets/images2/pastoral3.png" width="100 px"
+                height="100px" style=" margin-left: 40%;" class="text-right"></h3>
+
+            <p class="card-text">Inscripción a grupos sacramentales y grupos pastorales</p>
+            <a [routerLink]="['../Pastoral']"><img src="assets/images2/ir_pastoral.png"
+              width="150px" height="50px" class="text-right"></a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

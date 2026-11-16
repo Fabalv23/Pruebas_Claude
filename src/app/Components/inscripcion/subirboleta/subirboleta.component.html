@@ -1,0 +1,35 @@
+<h1>INGRESO DE BOLETA DE PAGO INSCRIPCIÓN</h1>
+<form [formGroup]="form_enviar"  novalidate id="Enviar" >
+    
+        <ol class="breadcrumb">
+            <li> <a href="~/">Boleta </a></li>           
+        </ol>
+    
+          
+            <label>Boleta</label>
+            <input type="file" id="Alumno_Boleta" name="imageupload" 
+            accept="image/*"
+            [ngClass]="{'Incorrecto':form_enviar.get('Alumno_Boleta').hasError('required')}"
+            formControlName="Alumno_Boleta"  (change)="fileChange($event)">
+    
+    
+        <button (click)="Enviar();"  class="btn btn-success pull-right"
+              
+        *ngIf="    
+        !form_enviar.get('Alumno_Boleta').hasError('required')       
+        "          
+        >
+        <img src="assets/images2/guardar.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">   Guardar
+        </button>
+      
+        <a  routerLink="/inscripcion/Index" class="btn btn-danger text-center pull-right"><img src="assets/images2/x.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">Cancelar</a>  
+    
+    
+    
+    
+    
+    
+        <br><br>
+        
+      </form>
+    

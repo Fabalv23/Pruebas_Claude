@@ -1,0 +1,9 @@
+input{
+    display: none;
+  }
+  label{
+    cursor:pointer;
+  }
+  #imageName{
+    color:green;
+  }

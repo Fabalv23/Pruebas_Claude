@@ -1,0 +1,63 @@
+<div class="portlet-title">
+    <div class="caption">
+        <h1 class="text-center"><strong>Listado de Profesores</strong>
+            <div class="text-right ">
+                <img src="assets/images2/maestro.png" width="100 px" height="100px" class="text-right">
+                </div>
+        </h1>
+        
+    </div>
+</div>
+<div class="tools">
+</div>
+
+<div style="display: inline-block; margin-bottom: 3%; width: 50%;" >
+<label style="font-size: x-large;">Ingresa el nombre del profesor: </label>
+<input type="text" class="form-control col"  style="width: 100%;" (change)="Filtrado_catedratico($event.target.value)" >
+<a class="btn btn-primary pull-right" style="margin-top: 3%;"> <img src="assets/images2/lupa.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;">
+    Buscar</a>
+</div>
+<br>
+<div  class="portlet-body">
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+            <tr>
+                <th colspan=3>Profesores</th>
+                
+
+
+
+            </tr>
+            <tr>
+                
+               
+                <th scope="col" class="text-center">Nombre Completo</th>
+                <th scope="col" class="text-center">Correo</th>                
+               
+
+
+                
+            </tr>   
+       
+
+        </thead>
+        
+       <tbody>
+
+         <tr *ngFor="let Profesor of ListadoProfesores_filtro"> 
+                    
+    
+                
+          
+                <td>{{Profesor.fullname}}</td> 
+          
+                <td>{{Profesor.email}}</td>
+         
+                
+                </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>

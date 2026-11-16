@@ -1,0 +1,268 @@
+<h1 class="text-center">INGRESO DE BOLETA DE PAGO MES</h1>
+<div class="loader" *ngIf="spinner">Loading...</div>
+<div style="margin-left: 20%; margin-right: 20%;">
+    <div class="table-responsive">
+
+        <table style="width:100%;">
+            <thead>
+                <th class="text-center">
+                    Mes
+                </th>
+                <th class="text-center">
+                    Subir Boleta
+                </th>
+                <th class="text-center">
+                    Ver Boleta
+                </th>
+
+            </thead>
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Enero
+                    </td>
+
+                    <td>
+                        <label for="inputTag" *ngIf="estado_enero==0">
+                            <input id="inputTag" type="file" (change)="fileChange1($event,1)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(enero)" *ngIf="enero!=''" class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Febrero
+                    </td>
+
+                    <td>
+                        <label for="inputTag2" *ngIf="estado_febrero==0">
+                            <input id="inputTag2" type="file" (change)="fileChange1($event,2)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(febrero)" *ngIf="febrero!=''"
+                            class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Marzo
+                    </td>
+
+                    <td>
+                        <label for="inputTag3" *ngIf="estado_marzo==0">
+                            <input id="inputTag3" type="file" (change)="fileChange1($event,3)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(marzo)" *ngIf="marzo!=''" class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Abril
+                    </td>
+
+                    <td>
+                        <label for="inputTag4" *ngIf="estado_abril==0">
+                            <input id="inputTag4" type="file" (change)="fileChange1($event,4)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(abril)" *ngIf="abril!=''" class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Mayo
+                    </td>
+
+                    <td>
+                        <label for="inputTag5" *ngIf="estado_mayo==0">
+                            <input id="inputTag5" type="file" (change)="fileChange1($event,5)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(mayo)" *ngIf="mayo!=''" class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        Junio
+                    </td>
+
+                    <td>
+                        <label for="inputTag6" *ngIf="estado_junio==0">
+                            <input id="inputTag6" type="file" (change)="fileChange1($event,6)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(junio)" *ngIf="junio!=''" class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        Julio
+                    </td>
+
+                    <td>
+                        <label for="inputTag7" *ngIf="estado_julio==0">
+                            <input id="inputTag7" type="file" (change)="fileChange1($event,7)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(julio)" *ngIf="julio!=''" class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        Agosto
+                    </td>
+
+                    <td>
+                        <label for="inputTag8" *ngIf="estado_agosto==0">
+                            <input id="inputTag8" type="file" (change)="fileChange1($event,8)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(agosto)" *ngIf="agosto!=''" class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        Septiembre
+                    </td>
+
+                    <td>
+                        <label for="inputTag9" *ngIf="estado_septiembre==0">
+                            <input id="inputTag9" type="file" (change)="fileChange1($event,9)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(septiembre)" *ngIf="septiembre!=''"
+                            class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        Octubre
+                    </td>
+
+                    <td>
+                        <label for="inputTag10" *ngIf="estado_octubre==0">
+                            <input id="inputTag10" type="file" (change)="fileChange1($event,10)" accept="image/*"
+                                #archivo_adjunto>
+                            <img src="assets/images2/subir.png" width="20px" height="20px" />
+                        </label>
+                    </td>
+
+
+                    <td>
+                        <a (click)="showDialog(octubre)" *ngIf="octubre!=''"
+                            class="btn  btn-primary text-center btn-xs">
+                            <img src="assets/images2/info.png" width="10 px" height="10px" class="text-right">
+                        </a>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-container #vc></ng-container>
+<ng-template #modal_1>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times; </button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><strong> Boleta de Pago</strong>
+                    </h4>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ruta}}" alt="Fjords" style="width: 250px; height: 250px;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Cerrar
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</ng-template>

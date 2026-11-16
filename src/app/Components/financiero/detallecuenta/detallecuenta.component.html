@@ -1,0 +1,56 @@
+<div class="portlet-title">
+    <div class="caption">
+        <h1 class="text-center"><strong> Estado de Cuenta Detalle                 <img src="assets/images2/detallecuenta.png" width="100 px" height="100px" class="text-right">        </strong>
+            <div class="text-right ">
+                </div>
+        </h1>
+    
+    </div>
+</div>
+<div class="tools">
+    
+</div>
+
+<div  class="portlet-body">
+    <div class="table-responsive">
+    <table  class="table table-bordered ">
+        <thead>
+         
+            <tr>
+                
+                <th style="width:100px;" class="text-center">No. Referencia</th>
+                <th style="width:100px;" class="text-center">Tipo</th>
+                <th scope="col" class="text-center">Mes</th>
+                <th scope="col" class="text-center">Cargo</th>
+                <th scope="col" class="text-center">Abono</th>                
+                <th scope="col" class="text-center">Saldo</th>                
+                <th scope="col" class="text-center">Estado</th> 
+                
+            </tr>   
+       
+
+        </thead>
+        
+       <tbody>
+
+            <tr *ngFor="let saldo of Listado_Estudiantes"> 
+                    
+    
+                
+          
+                <td class="text-center">{{saldo.no}}</td> 
+                <td class="text-center">{{saldo.concepto==1?'Factura':'Anticipo'}} </td>
+                <td class="text-center">{{saldo.mes}} </td> 
+                <td class="text-right">Q.{{saldo.cargo}} </td> 
+                <td class="text-right">Q.{{saldo.abono}} </td> 
+                <td class="text-right">Q.{{saldo.saldo}} </td> 
+                <td class="text-center"><img src="assets/images/check1.png" width="30px" height="30px" *ngIf="validardia(saldo.saldo);"><img src="assets/images/nocheck1.png" width="30px" height="30px" *ngIf="!validardia(saldo.saldo);"></td>        
+
+              
+                
+                </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>

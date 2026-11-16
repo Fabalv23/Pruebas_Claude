@@ -1,0 +1,62 @@
+<div class="portlet-title" >
+  <h1 class="text-center"><strong> DETALLE DE LA ACTIVIDAD </strong></h1>
+
+  <div class="caption" style="float: right;">
+ 
+<img src="assets/images2/detalle.png" width="100 px" height="100px" class="text-right">
+     
+    </div>
+</div>
+
+<div class="tools">
+
+  
+</div>
+
+<div  class="portlet-body">
+
+
+  <table class="table table-striped ">
+    <thead class="thead-green">
+      
+    </thead>
+    <tbody>
+      <tr>
+        <td>Título</td>
+        <td>{{titulo}}</td>
+      </tr>
+      <tr>
+        <td>Descripción:</td>
+        <td>{{descripcion}}</td>
+      </tr>
+      <tr>
+        <td>Fecha de Entrega:</td>
+        <td>{{fecha}}</td>
+      </tr>
+      <tr>
+        <td>Punteo Máximo:</td>
+        <td>{{punteo}} </td>
+      </tr>
+      <tr>
+        <td>Estado de la Entrega:</td>
+        <td>{{estado}} </td>
+      </tr>
+      <tr class="tarde" *ngIf="entrega_tarde">
+        <td>Entrega Tarde:</td>
+        <td>{{tarde}}</td>
+      </tr>
+      <tr class="" *ngIf="!entrega_tarde">
+        <td>Entrega Tarde:</td>
+        <td>{{tarde}}</td>
+      </tr>
+      <tr class="baja" *ngIf="nota_baja">
+        <td>Calificación:</td>
+        <td>{{calificacion}}</td>
+      </tr>
+      <tr class="" *ngIf="!nota_baja">
+        <td>Calificación:</td>
+        <td>{{calificacion}}</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>

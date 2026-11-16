@@ -1,0 +1,48 @@
+<h1 class="page-header text-center">Control Académico</h1>
+<div style="display: inline;">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Control Académico </strong> <img src="assets/images2/control.png"
+                            width="100 px" height="100px" style=" margin-left: 40%;" class="text-right"></h3>
+
+                    <p class="card-text">Portal académico del estudiante para dar seguimiento a su rendimiento.</p>
+                    <a [routerLink]="['/Academia/Clases']"><img src="assets/images2/mas_detalles.png"
+                        width="150px" height="50px" class="text-right"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Boletín de notas </strong> <img src="assets/images2/boletin.png"
+                            width="100 px" height="100px" style=" margin-left: 40%;" class="text-right"></h3>
+
+                    <p class="card-text">Boletín de notas del estudiante </p>
+                    <a [routerLink]="['/Academia/Boletin']" *ngIf="boletin"><img src="assets/images2/mas_detalles.png"
+                        width="150px" height="50px" class="text-right"></a> 
+                        <span class="label label-info" *ngIf="!boletin">Proceso No Disponible</span>
+                        <!--Bloquear en caso sea necesario-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 50px;">
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><strong> Horario de Clases </strong> <img src="assets/images2/horario_clases.png"
+                            width="100 px" height="100px" style=" margin-left: 42%;" class="text-right"></h3>
+
+                    <p class="card-text">Información de horario de clases del estudiante</p>
+                    <a [routerLink]="['/Academia/Horarios']" *ngIf="true"><img src="assets/images2/mas_detalles.png"
+                        width="150px" height="50px" class="text-right"></a>
+                        <span class="label label-info" *ngIf="false">Proceso No Disponible</span>
+                        <!--Bloquear en caso sea necesario-->
+                </div>
+            </div>
+        </div>
+        </div>
+</div>

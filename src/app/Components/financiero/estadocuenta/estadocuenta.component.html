@@ -1,0 +1,99 @@
+<div class="portlet-title">
+    <div class="caption">
+        <h1 class="text-center"><strong> Estado de Cuenta <img src="assets/images2/saldos.png" width="100 px"
+                    height="100px" class="text-right">
+            </strong>
+            <div class="text-right ">
+            </div>
+        </h1>
+        <div class="alert alert-info ">
+            <strong>  <img src="assets/images2/info2.png" width="40 px" height="40px" class="text-right" style="margin-right: 5%;"> Atención!    </strong> Los pagos tardarán 72 hrs aproxidamente en ser reflejados.
+        </div>
+
+    </div>
+</div>
+<div class="tools">
+
+</div>
+
+<div class="portlet-body">
+    <div class="table-responsive">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th colspan=3>Alumno</th>
+
+
+
+
+                </tr>
+                <tr>
+
+                    <th style="width:100px;" class="text-center">C&oacute;digo</th>
+                    <th scope="col" class="text-center">Nombre Completo</th>
+                    <th scope="col" class="text-center">Al Día</th>
+                    <th scope="col" class="text-center">Saldo Actual</th>
+                    <th colspan=1 class="text-center">Detalle</th>
+                    <th colspan=1 class="text-center">Subir Boleta</th>
+                    <th colspan=1 class="text-center">Información de Pago</th>
+
+                      <th colspan=1 class="text-center">Histórico</th>
+
+
+
+                </tr>
+
+
+            </thead>
+
+            <tbody>
+                <ng-container *ngFor="let Alumno of Listado_Estudiantes">
+                <tr *ngIf="Alumno.saldo>0 || year==Alumno.ciclo">
+
+
+
+
+                    <td>{{Alumno.codigo}}</td>
+
+                    <td>{{Alumno.nombre}} </td>
+                    <td class="text-center"><img src="assets/images/check1.png" width="30px" height="30px"
+                            *ngIf="validardia(Alumno.saldo);"><img src="assets/images/nocheck1.png" width="30px"
+                            height="30px" *ngIf="!validardia(Alumno.saldo);"></td>
+                    <td class="text-right">Q.{{Alumno.saldo}}</td>
+                    <td class="text-center" >
+                        <a class="btn btn-info btn-xs" [routerLink]="['../CuentaCicloActual',Alumno.estu_id]">
+
+                            <img src="assets/images2/ir.png" width="10px" height="10px">
+
+
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-info btn-xs" [routerLink]="['../SubirBoletaPago',Alumno.estu_id]">
+
+                            <img src="assets/images2/ir.png" width="10px" height="10px">
+
+
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-info btn-xs" (click)="descargar(Alumno.codigo);" *ngIf="year==Alumno.ciclo">
+                            <img src="assets/images2/descarga.png" width="10 px" height="10px" class="text-right" style="margin-right: 2%;">     Descargar Boleta
+                        </a>
+                    </td>
+                   <td class="text-center">
+                        <a class="btn btn-info btn-xs" [routerLink]="['../DetalleCuenta',Alumno.estu_id]">
+
+                            <img src="assets/images2/ir.png" width="10px" height="10px">
+
+
+                        </a>
+                    </td>
+
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+
+    </div>
+</div>
